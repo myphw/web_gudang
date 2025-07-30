@@ -1277,77 +1277,83 @@ class Form extends CI_Controller {
     }
 
     public function update_spk_item($id_spk){
-    $data['title'] = 'Form Add Item';
-    $data['users'] = $this->db->get_where('users', ['email' => 
-    $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Form Add Item';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+            $this->session->userdata('email')])->row_array();
 
-    $id_spk = $this->uri->segment(3);
-    $where = ['id_spk' => $id_spk];
+        // ✅ Get SPK data directly from DB
+        $query = $this->db->get_where('form_spk', ['id_spk' => $id_spk]);
+        $data['spk'] = $query->row_array();
 
-    $data['spk'] = $this->General_model->get_one('form_spk', $where);
-    
-    if (!$data['spk']) {
-        show_error('SPK data not found for ID: ' . $id_spk);
-        return;
+        if (!$data['spk']) {
+            show_error('SPK data not found for ID: ' . $id_spk);
+            return;
+        }
+
+        $artcolor_name = $data['spk']['artcolor_name'];
+
+        // Get related items
+        $data['item'] = $this->db->get_where('form_consrate', ['artcolor_name' => $artcolor_name])->result_array();
+
+        $data['artcolor'] = $this->db->get_where('form_ac', ['artcolor_name' => $artcolor_name])->result_array();
+
+        // Example of custom join if needed
+        $this->db->where('artcolor_name', $artcolor_name);
+        $data['spkitem'] = $this->General_model->get('form_spk_item', ['id_spk' => $id_spk]);
+
+        // Form validation
+        $this->form_validation->set_rules('item_name', 'Item Name', 'required');
+        $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
+        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        $this->form_validation->set_rules('xfd', 'xfd', 'required');
+        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
+        $this->form_validation->set_rules('cons_rate', 'Consrate', 'required|numeric');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('form/menu_item_spk', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // Prepare insert data
+            $insert_data = [
+                'po_number'      => strtoupper($this->input->post('po_number', TRUE)),
+                'xfd'            => $this->input->post('xfd', TRUE),
+                'brand_name'     => $this->input->post('brand_name', TRUE),
+                'artcolor_name'  => $this->input->post('artcolor_name', TRUE),
+                'part_name'      => strtoupper($this->input->post('part_name', TRUE)),
+                'item_name'      => strtoupper($this->input->post('item_name', TRUE)),
+                'color_name'     => strtoupper($this->input->post('color_name', TRUE)),
+                'mtrl_name'      => strtoupper($this->input->post('mtrl_name', TRUE)),
+                'unit_name'      => strtoupper($this->input->post('unit_name', TRUE)),
+                'cons_rate'      => $this->input->post('cons_rate', TRUE),
+                'id_spk'         => $id_spk,
+            ];
+
+            // Insert into both tables
+            $this->db->insert('form_spk_item', $insert_data);
+            $this->db->insert('form_checkin_item', $insert_data);
+
+            // Get total_qty from form_spk
+            $spk = $this->db->get_where('form_spk', ['id_spk' => $id_spk])->row_array();
+            $new_total = $spk['total_qty'] * $insert_data['cons_rate'];
+
+            // Update total_consrate in both tables
+            $this->db->where(['id_spk' => $id_spk, 'item_name' => $insert_data['item_name']])
+                    ->update('form_spk_item', ['total_consrate' => $new_total]);
+
+            $this->db->where(['id_spk' => $id_spk, 'item_name' => $insert_data['item_name']])
+                    ->update('form_checkin_item', ['total_consrate' => $new_total]);
+
+            // Redirect with success
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Size baru berhasil ditambahkan ke SPK!</div>');
+            redirect('form/update_spk_item/' . $id_spk);
+        }
     }
 
-    // ✅ Properly get artcolor_name from the single row
-    $artcolor_name = $data['spk'];
 
-    // ✅ Only get items from form_consrate with matching artcolor_name
-    $data['item'] = $this->General_model->get('form_consrate', ['artcolor_name' => $artcolor_name]);
-    $data['artcolor'] = $this->General_model->get('form_ac', ['artcolor_name' => $artcolor_name]);
-    $data['spkitem'] = $this->General_model->get_items_by_artcolor($artcolor_name);
-    //$data['spkitem'] = $this->General_model->get('form_spk_item', ['id_spk' => $id_spk]);
-
-    $this->form_validation->set_rules('item_name', 'Item Name', 'required');
-    $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
-    $this->form_validation->set_rules('po_number', 'Po Number', 'required');
-    $this->form_validation->set_rules('xfd', 'xfd', 'required');
-    $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
-    $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
-    $this->form_validation->set_rules('cons_rate', 'Consrate', 'required|numeric');
-
-    if($this->form_validation->run() == false) {
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('form/menu_item_spk', $data);
-        $this->load->view('templates/footer');
-    } else {
-        // 1. Capture inputs
-        $insert_data = [
-            'po_number'      => strtoupper($this->input->post('po_number', TRUE)),
-            'xfd'            => $this->input->post('xfd', TRUE),
-            'brand_name'     => $this->input->post('brand_name', TRUE),
-            'artcolor_name'  => $this->input->post('artcolor_name', TRUE),
-            'part_name'      => strtoupper($this->input->post('part_name', TRUE)),
-            'item_name'      => strtoupper($this->input->post('item_name', TRUE)),
-            'color_name'     => strtoupper($this->input->post('color_name', TRUE)),
-            'mtrl_name'      => strtoupper($this->input->post('mtrl_name', TRUE)),
-            'unit_name'      => strtoupper($this->input->post('unit_name', TRUE)),
-            'cons_rate'      => $this->input->post('cons_rate', TRUE),
-            'id_spk'         => $id_spk,
-        ];
-
-
-        // 2. Insert detail row (qty is per-item)
-        $this->General_model->insert('form_spk_item', $insert_data);
-        $this->General_model->insert('form_checkin_item', $insert_data);
-
-        // 3. Update total in form_spk
-        $summary = $this->General_model->get_ones('form_spk', ['id_spk' => $id_spk]);
-        $new_total = $summary->total_qty * $insert_data['cons_rate'];
-
-        $this->General_model->update2('form_spk_item', ['total_consrate' => $new_total], ['id_spk' => $id_spk, 'item_name' => $insert_data['item_name']]);
-        $this->General_model->update2('form_checkin_item', ['total_consrate' => $new_total], ['id_spk' => $id_spk, 'item_name' => $insert_data['item_name']]);
-
-        // 4. Notify and redirect
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Size baru berhasil ditambahkan ke SPK!</div>');
-        redirect('form/update_spk_item/'.$id_spk);
-    }
-
-    }
 
     public function delete_spk_item($id_spkitem)
     {
