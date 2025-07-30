@@ -115,7 +115,57 @@ document.addEventListener('DOMContentLoaded', function() {
         consRateInput.value = selectedOption.dataset.rate || '';
     });
 });
-</>
+</script>
+
+<script>
+$(document).ready(function() {
+
+    // When PO is selected
+    $('#po_number').on('change', function() {
+        var selectedOption = $(this).find(':selected');
+        var brand = selectedOption.data('brand');
+        var totalQty = selectedOption.data('total_qty');
+        var idSpk = selectedOption.data('id_spk');
+
+        $('#brand_name').val(brand);
+        $('#total_qty').val(totalQty);
+        $('input[name="id_spk"]').val(idSpk);
+    });
+
+    // When From Departement is selected
+    $('#dept_name1').on('change', function() {
+        var selectedOption = $(this).find(':selected');
+        var deptName2 = selectedOption.data('dept_name2');
+        var idDept = selectedOption.data('id_dept');
+
+        $('#dept_name2').val(deptName2);
+        $('input[name="id_dept"]').val(idDept);
+    });
+
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('#item_name').on('change', function() {
+        let unit = $(this).find(':selected').data('unit');
+        $('#unit_name').val(unit || '');
+    });
+
+    $('#item_type').on('change', function() {
+        let type = $(this).val();
+        if (type === 'GLOBAL') {
+            $('#global-fields').show();
+            $('#sizerun-fields').hide();
+        } else if (type === 'SIZERUN') {
+            $('#global-fields').hide();
+            $('#sizerun-fields').show();
+        } else {
+            $('#global-fields').hide();
+            $('#sizerun-fields').hide();
+        }
+    });
+});
+</script>
 
 
 </body>

@@ -669,7 +669,11 @@ class Warehouse extends CI_Controller {
 
                 } elseif ($item_type === 'SIZERUN') {
                     for ($i = 36; $i <= 50; $i++) {
+<<<<<<< HEAD
                         $sizeQty = $this->input->post('size_' . $i);
+=======
+                        $sizeQty =  $this->input->post('size_' . $i);
+>>>>>>> 8524ac0ae82457a66a9f3495c19f10191345ffa4
                         $insertData['size_' . $i] = $sizeQty;
                         $final_qty += $sizeQty;
                     }
@@ -686,7 +690,7 @@ class Warehouse extends CI_Controller {
                     ]);
                     $existing = $this->db->get('form_checkin_item')->row_array();
 
-                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
+                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? $existing['qty'] : 0;
                 $new_total_qty = $existing_qty + $final_qty;
 
                 $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? $existing['checkin_qty'] : 0;
@@ -812,7 +816,7 @@ class Warehouse extends CI_Controller {
                     ]);
                     $existing = $this->db->get('form_checkin_item')->row_array();
 
-                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
+                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? $existing['qty'] : 0;
                 $new_total_qty = $existing_qty + $final_qty;
 
                 $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? $existing['checkin_qty'] : 0;
@@ -930,7 +934,7 @@ class Warehouse extends CI_Controller {
                     ]);
                     $existing = $this->db->get('form_checkin_item')->row_array();
 
-                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
+                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? $existing['qty'] : 0;
                 $new_total_qty = $existing_qty + $final_qty;
 
                 $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? $existing['checkin_qty'] : 0;
