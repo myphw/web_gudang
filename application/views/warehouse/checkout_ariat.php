@@ -1,4 +1,7 @@
-
+<?php $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','11_5d','12d','13d','14d','15d','16d']; 
+// assign currently selected SJ
+$current_sj = !empty($insj) ? $insj[0] : null;
+?>
  <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
@@ -60,7 +63,9 @@
                         <th scope="col-lg-2">Checkin Balance</th>
                         <th scope="col-lg-2">Checkout QTY</th>
                         <th scope="col-lg-2">Checkout Balance</th>
-                       
+                        <?php foreach ($sizes as $s): ?>
+                            <th><?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?></th>
+                        <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,7 +85,9 @@
                         <td><?= $po['checkin_balance']?></td>
                         <td><?= $po['checkout_qty']?></td>
                         <td><?= $po['checkout_balance']?></td>
-                        
+                        <?php foreach ($sizes as $s): ?>
+                            <td><?= $po['size_' . $s] ?? '-' ?></td>
+                        <?php endforeach; ?>
                     </tr>
                     <?php $i++; ?>
                     <?php endif; ?>

@@ -664,12 +664,12 @@ class Warehouse extends CI_Controller {
 
                 // ✅ Add conditional fields
                 if ($item_type === 'GLOBAL') {
-                    $final_qty = (int) $this->input->post('qty');
+                    $final_qty =  $this->input->post('qty');
                     $insertData['qty'] = $final_qty;
 
                 } elseif ($item_type === 'SIZERUN') {
                     for ($i = 36; $i <= 50; $i++) {
-                        $sizeQty = (int) $this->input->post('size_' . $i);
+                        $sizeQty = $this->input->post('size_' . $i);
                         $insertData['size_' . $i] = $sizeQty;
                         $final_qty += $sizeQty;
                     }
@@ -689,8 +689,8 @@ class Warehouse extends CI_Controller {
                 $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
                 $new_total_qty = $existing_qty + $final_qty;
 
-                $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? (int)$existing['checkin_qty'] : 0;
-                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? (int)$existing['total_consrate'] : 0;
+                $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? $existing['checkin_qty'] : 0;
+                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
                 $adjusted_checkin_qty = $new_total_qty - $total_consrate;
                 // Update with new total
                 $this->General_model->update2(
@@ -815,8 +815,8 @@ class Warehouse extends CI_Controller {
                 $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
                 $new_total_qty = $existing_qty + $final_qty;
 
-                $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? (int)$existing['checkin_qty'] : 0;
-                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? (int)$existing['total_consrate'] : 0;
+                $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? $existing['checkin_qty'] : 0;
+                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
                 $adjusted_checkin_qty = $new_total_qty - $total_consrate;
                 // Update with new total
                 $this->General_model->update2(
@@ -909,12 +909,12 @@ class Warehouse extends CI_Controller {
                 $final_qty = 0;
 
                 if ($item_type === 'GLOBAL') {
-                    $final_qty = (int) $this->input->post('qty');
+                    $final_qty = $this->input->post('qty');
                     $insertData['qty'] = $final_qty;
 
                 } elseif ($item_type === 'SIZERUN') {
                     foreach ($sizes as $size) {
-                        $value = (int) $this->input->post('size_' . $size);
+                        $value = $this->input->post('size_' . $size);
                         $insertData['size_' . $size] = $value;
                         $final_qty += $value;
                     }
@@ -933,8 +933,8 @@ class Warehouse extends CI_Controller {
                 $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
                 $new_total_qty = $existing_qty + $final_qty;
 
-                $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? (int)$existing['checkin_qty'] : 0;
-                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? (int)$existing['total_consrate'] : 0;
+                $existing_checkin_qty = isset($existing['checkin_qty']) && is_numeric($existing['checkin_qty']) ? $existing['checkin_qty'] : 0;
+                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
                 $adjusted_checkin_qty = $new_total_qty - $total_consrate;
                 // Update with new total
                 $this->General_model->update2(
@@ -1690,12 +1690,12 @@ class Warehouse extends CI_Controller {
 
                 // ✅ Add conditional fields
                 if ($item_type === 'GLOBAL') {
-                    $final_qty = (int) $this->input->post('qty');
+                    $final_qty = $this->input->post('qty');
                     $insertData['qty'] = $final_qty;
 
                 } elseif ($item_type === 'SIZERUN') {
                     for ($i = 36; $i <= 50; $i++) {
-                        $sizeQty = (int) $this->input->post('size_' . $i);
+                        $sizeQty = $this->input->post('size_' . $i);
                         $insertData['size_' . $i] = $sizeQty;
                         $final_qty += $sizeQty;
                     }
@@ -1712,9 +1712,9 @@ class Warehouse extends CI_Controller {
                     ]);
                     $existing = $this->db->get('form_checkin_item')->row_array();
 
-                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
-                $current_checkout_qty = isset($existing['checkout_qty']) && is_numeric($existing['checkout_qty']) ? (int)$existing['checkout_qty'] : 0;
-                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? (int)$existing['total_consrate'] : 0;
+                $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? $existing['qty'] : 0;
+                $current_checkout_qty = isset($existing['checkout_qty']) && is_numeric($existing['checkout_qty']) ? $existing['checkout_qty'] : 0;
+                $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
 
                 $new_total_qty = $existing_qty - $final_qty;
                 
@@ -1847,9 +1847,9 @@ class Warehouse extends CI_Controller {
                     ]);
                     $existing = $this->db->get('form_checkin_item')->row_array();
 
-                    $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
-                    $current_checkout_qty = isset($existing['checkout_qty']) && is_numeric($existing['checkout_qty']) ? (int)$existing['checkout_qty'] : 0;
-                    $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? (int)$existing['total_consrate'] : 0;
+                    $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? $existing['qty'] : 0;
+                    $current_checkout_qty = isset($existing['checkout_qty']) && is_numeric($existing['checkout_qty']) ? $existing['checkout_qty'] : 0;
+                    $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
 
                     $new_total_qty = $existing_qty - $final_qty;
                     
@@ -1952,12 +1952,12 @@ class Warehouse extends CI_Controller {
                 $final_qty = 0;
 
                 if ($item_type === 'GLOBAL') {
-                    $final_qty = (int) $this->input->post('qty');
+                    $final_qty = $this->input->post('qty');
                     $insertData['qty'] = $final_qty;
 
                 } elseif ($item_type === 'SIZERUN') {
                     foreach ($sizes as $size) {
-                        $value = (int) $this->input->post('size_' . $size);
+                        $value = $this->input->post('size_' . $size);
                         $insertData['size_' . $size] = $value;
                         $final_qty += $value;
                     }
@@ -1973,9 +1973,9 @@ class Warehouse extends CI_Controller {
                     ]);
                     $existing = $this->db->get('form_checkin_item')->row_array();
 
-                    $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? (int)$existing['qty'] : 0;
-                    $current_checkout_qty = isset($existing['checkout_qty']) && is_numeric($existing['checkout_qty']) ? (int)$existing['checkout_qty'] : 0;
-                    $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? (int)$existing['total_consrate'] : 0;
+                    $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? $existing['qty'] : 0;
+                    $current_checkout_qty = isset($existing['checkout_qty']) && is_numeric($existing['checkout_qty']) ? $existing['checkout_qty'] : 0;
+                    $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
 
                     $new_total_qty = $existing_qty - $final_qty;
                     

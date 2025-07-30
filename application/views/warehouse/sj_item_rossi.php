@@ -156,7 +156,7 @@ $current_sj = !empty($insj) ? $insj[0] : null;
 
                     <div id="global-fields" style="display: none;">
                         <label>Qty</label>
-                        <input type="number" name="qty" class="form-control">
+                        <input type="text" name="qty" class="form-control">
                     </div>
 
                     <div id="sizerun-fields" style="display: none;">
@@ -164,7 +164,7 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <div class="row">
                             <?php foreach ($sizes as $label): ?>
                                 <div class="col-2 mb-2">
-                                    <input type="number" name="size_<?= $label ?>" class="form-control" placeholder="<?= strtoupper($label) ?>">
+                                    <input type="text" name="size_<?= $label ?>" class="form-control" placeholder="<?= strtoupper($label) ?>">
                                 </div>
                             <?php endforeach; ?>
                         </div>

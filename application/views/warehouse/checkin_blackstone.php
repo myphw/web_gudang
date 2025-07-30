@@ -60,6 +60,9 @@
                         <th scope="col-lg-2">Checkin Balance</th>
                         <th scope="col-lg-2">Checkout QTY</th>
                         <th scope="col-lg-2">Checkout Balance</th>
+                        <?php for ($s = 36; $s <= 50; $s++): ?>
+                            <th><?= $s ?></th>
+                        <?php endfor; ?>
                         
                     </tr>
                 </thead>
@@ -80,7 +83,9 @@
                         <td><?= $po['checkin_balance']?></td>
                         <td><?= $po['checkout_qty']?></td>
                         <td><?= $po['checkout_balance']?></td>
-                        
+                        <?php for ($s = 36; $s <= 50; $s++): ?>
+                            <td><?= $po['size_' . $s] ?></td>
+                        <?php endfor; ?>
                     </tr>
                     <?php $i++; ?>
                     <?php endif; ?>

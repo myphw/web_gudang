@@ -174,7 +174,7 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                     <div id="global-fields" style="display: none;">
                         <div class="form-group">
                             <label>Qty</label>
-                            <input type="number" name="qty" class="form-control">
+                            <input type="text" name="qty" class="form-control">
                         </div>
                     </div>
 
@@ -184,7 +184,7 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <div class="row">
                             <?php for ($i = 36; $i <= 50; $i++): ?>
                                 <div class="col-2 mb-2">
-                                    <input type="number" name="size_<?= $i ?>" class="form-control" placeholder="<?= $i ?>">
+                                    <input type="text" name="size_<?= $i ?>" class="form-control" placeholder="<?= $i ?>">
                                 </div>
                             <?php endfor; ?>
                         </div>

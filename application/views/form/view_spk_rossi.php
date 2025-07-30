@@ -40,11 +40,11 @@
             <a class="badge badge-primary mb-3" data-toggle="modal" data-target="#newSpkSizeModal">INPUT SIZE</a>
             <a class="badge badge-warning mb-3" href="<?= base_url('form/spk') ?>">BACK</a>                  
                 
-                <table class="table table-bordered">
+                <table class="table table-bordered table-responsive" >
                 <thead>
                     <tr>
                         <?php 
-                            $sizes = ['3','3T','4','4T','5','5T','6','6T','7','7T','8','8T','9','9T','10','10T','11','11T','12','13','14','15'];
+                            $sizes = ['3','3T','4','4T','5','5T','6','6T','7','7T','8','8T','9','9T','10','10T','11','11T','12','12T','13','13T','14','15'];
                             foreach($sizes as $sz) echo "<th>$sz</th>";
                         ?>
                     </tr>

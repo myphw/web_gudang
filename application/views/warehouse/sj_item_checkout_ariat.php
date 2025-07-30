@@ -171,7 +171,7 @@ $current_sj = !empty($outsj) ? $outsj[0] : null;
                         <div class="row">
                             <?php foreach ($sizes as $s): ?>
                                 <div class="col-2 mb-2">
-                                <input type="number" name="size_<?= $s ?>" class="form-control" placeholder="<?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?>">
+                                <input type="text" name="size_<?= $s ?>" class="form-control" placeholder="<?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?>">
                                 </div>
                             <?php endforeach; ?>
                         </div>

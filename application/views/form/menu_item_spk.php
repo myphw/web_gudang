@@ -106,11 +106,22 @@
             </div>
             <form action="<?= base_url('form/update_spk_item/'.$sp['id_spk']);?>" method="post">
                 <div class="modal-body">
+                
+                <div class="form-group">
+                        <select name="artcolor_name" id="artcolor_name" class="form-control" required>
+                            <option value="">Select Art Color</option>
+                            <?php foreach($artcolor as $c): ?>
+                                <option value="<?= $c['artcolor_name']; ?>">
+                                    <?= $c['artcolor_name']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
                 <input type="hidden" name="id_spk" value="<?= $sp['id_spk']; ?>">
                 <input type="hidden" name="po_number" value="<?= $sp['po_number']; ?>">
                 <input type="hidden" name="xfd" value="<?= $sp['xfd']; ?>">
                 <input type="hidden" name="brand_name" value="<?= $sp['brand_name']; ?>">
-                <input type="hidden" name="artcolor_name" value="<?= $sp['artcolor_name']; ?>">
                 <div class="form-group">
                         <input type="text" class="form-control" id="part_name" name="part_name" placeholder="Part Name">
                     </div>
@@ -150,3 +161,35 @@
 <?php endforeach; ?>
 
      
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$('#artcolor_name').on('change', function() {
+    let selectedColor = $(this).val();
+
+    if (selectedColor !== '') {
+        $.ajax({
+            url: '<?= base_url("Form/get_items_by_color"); ?>',
+            type: 'POST',
+            data: { artcolor_name: selectedColor },
+            dataType: 'json',
+            success: function(response) {
+                let options = '<option value="">Select Item</option>';
+                $.each(response, function(i, item) {
+                    options += `<option value="${item.item_name}" data-unit="${item.unit_name}" data-rate="${item.cons_rate}">
+                        ${item.item_name}
+                    </option>`;
+                });
+                $('#item_name').html(options);
+            },
+            error: function(xhr, status, error) {
+                alert("Terjadi kesalahan saat mengambil item.");
+                console.error(error);
+            }
+        });
+    } else {
+        $('#item_name').html('<option value="">Select Item</option>');
+    }
+});
+</script>

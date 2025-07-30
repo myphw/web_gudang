@@ -1,4 +1,9 @@
+<?php
+$sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9', '9t', '10', '10t', '11', '11t', '12', '13', '14', '15'];
 
+// assign currently selected SJ
+$current_sj = !empty($insj) ? $insj[0] : null;
+?>
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
@@ -59,7 +64,9 @@
                         <th scope="col-lg-2">Checkin Balance</th>
                         <th scope="col-lg-2">Checkout QTY</th>
                         <th scope="col-lg-2">Checkout Balance</th>
-                       
+                        <?php foreach ($sizes as $label): ?>
+                            <th><?= strtoupper($label) ?></th>
+                        <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,7 +86,9 @@
                         <td><?= $po['checkin_balance']?></td>
                         <td><?= $po['checkout_qty']?></td>
                         <td><?= $po['checkout_balance']?></td>
-                        
+                        <?php foreach ($sizes as $label): ?>
+                                <td><?= $po['size_' . $label] ?? '-' ?></td>
+                        <?php endforeach; ?>
                     </tr>
                     <?php $i++; ?>
                     <?php endif; ?>

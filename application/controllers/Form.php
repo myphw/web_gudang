@@ -833,7 +833,7 @@ class Form extends CI_Controller {
             '3', '3t', '4', '4t', '5', '5t',
             '6', '6t', '7', '7t', '8', '8t',
             '9', '9t', '10', '10t', '11', '11t',
-            '12', '13', '14', '15'
+            '12', '12t', '13', '13t', '14', '15'
         ];
 
         // Required input rules
@@ -908,7 +908,7 @@ class Form extends CI_Controller {
             '3', '3t', '4', '4t', '5', '5t',
             '6', '6t', '7', '7t', '8', '8t',
             '9', '9t', '10', '10t', '11', '11t',
-            '12', '13', '14', '15'
+            '12', '12t', '13', '13t', '14', '15'
         ];
 
         // Required input rules
@@ -1296,8 +1296,9 @@ class Form extends CI_Controller {
 
     // ✅ Only get items from form_consrate with matching artcolor_name
     $data['item'] = $this->General_model->get('form_consrate', ['artcolor_name' => $artcolor_name]);
-
-    $data['spkitem'] = $this->General_model->get('form_spk_item', ['id_spk' => $id_spk]);
+    $data['artcolor'] = $this->General_model->get('form_ac', ['artcolor_name' => $artcolor_name]);
+    $data['spkitem'] = $this->General_model->get_items_by_artcolor($artcolor_name);
+    //$data['spkitem'] = $this->General_model->get('form_spk_item', ['id_spk' => $id_spk]);
 
     $this->form_validation->set_rules('item_name', 'Item Name', 'required');
     $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');

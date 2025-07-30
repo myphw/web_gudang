@@ -22,6 +22,16 @@ class General_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function get_items_by_artcolor($artcolor_name) 
+    {
+    $this->db->select('item_name, unit_name, cons_rate');
+    $this->db->from('form_consrate');
+    $this->db->where('artcolor_name', $artcolor_name);
+    $query = $this->db->get();
+
+    return $query->result_array();
+    }
+
     public function get_sort($table, $order_by)
     {
         $this->db->select('*');
