@@ -530,5 +530,141 @@ class Production extends CI_Controller {
         }
     }
 
+    public function production_report()
+    {
+        $data['title'] = 'Menu Production Report';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
 
+        $data['artcolor'] = $this->db->get('form_ac')->result_array();
+        $data['brand'] = $this->db->get('form_brand')->result_array();
+        $data['spk'] = $this->db->get('production_spk_report')->result_array();
+        $data['size'] = $this->General_model->get('form_spk_detail');
+
+        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        $this->form_validation->set_rules('xfd', 'xfd', 'required');
+        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
+        
+        if($this->form_validation->run() == false)
+        {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('production/production_report', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $po_number      = strtoupper($this->input->post('po_number',TRUE)); 
+            $xfd      = $this->input->post('xfd',TRUE); 
+            $brand      = strtoupper($this->input->post('brand_name',TRUE));
+            $artcolor      = $this->input->post('artcolor_name',TRUE);    
+
+            $data = array(
+                    'po_number' => $po_number,
+                    'xfd' => $xfd,
+                    'brand_name' => $brand,
+                    'artcolor_name' => $artcolor,
+            );
+            $this->db->insert('form_spk_checkin', $data);
+            $insert_id = $this->db->insert_id(); // Get ID for detail views
+
+            $brand_lower = strtolower($brand);
+
+            if ($brand_lower === 'black stone') {
+                redirect('production/td_report_blackstone/' . $insert_id);
+            } elseif ($brand_lower === 'rossi') {
+                redirect('production/td_report_rossi/' . $insert_id);
+            } elseif ($brand_lower === 'ariat') {
+                redirect('production/td_report_ariat/' . $insert_id);
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Brand not recognized. Showing default view.</div>');
+                redirect('production/production_report');
+            }
+        }
+    }
+
+    public function pr_detail_item($id_spk)
+    {
+        $spk = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
+
+        if (!$spk) {
+            redirect('production/progress_report');
+        }
+
+        $brand_name = $spk['brand_name'];
+
+        // Redirect to the correct handler
+        if ($brand_name === 'BLACK STONE') {
+            redirect('production/td_report_blackstone/' . $id_spk);
+        } elseif ($brand_name === 'ROSSI') {
+            redirect('production/td_report_rossi/' . $id_spk);
+        } elseif ($brand_name === 'ARIAT') {
+            redirect('production/td_report_ariat/' . $id_spk);
+        } else {
+            redirect('production/progress_report');
+        }
+    }
+
+    public function production_report_blackstone($id)
+    {
+        $data['title'] = 'Black Stone Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id])->result_array();
+        $data['in'] = $this->General_model->get_data('form_checkin_blackstone', ['id_spk' => $id])->result_array();
+        $data['spkall'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
+        $data['spkitem'] = $this->General_model->get('form_checkin_item', ['id_spk' => $id]);
+        $active_artcolor = $data['spk'];
+        $data['item'] = $this->General_model->get('form_consrate', ['artcolor_name' => $active_artcolor]);
+
+        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        $this->form_validation->set_rules('xfd', 'xfd', 'required');
+        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
+        for ($i = 36; $i <= 50; $i++) {
+            $this->form_validation->set_rules('size_' . $i, 'Size ' . $i, 'numeric|greater_than_equal_to[0]');
+        }
+
+            
+
+        if ($this->form_validation->run() == false) {
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('warehouse/checkin_blackstone', $data);
+        $this->load->view('templates/footer');
+        } else {
+            // Prepare data
+            $insertData = [
+                'id_spk' => $id,
+                'po_number' => $this->input->post('po_number'),
+                'xfd' => $this->input->post('xfd'),
+                'brand_name' => $this->input->post('brand_name'),
+                'artcolor_name' => $this->input->post('artcolor_name'),
+            ];
+
+            for ($i = 36; $i <= 50; $i++) {
+                $insertData['size_' . $i] = $this->input->post('size_' . $i);
+            }
+
+            $total_qty = $this->_sum_sizes();
+            $insertData['total_qty'] = $total_qty;
+            // Check if id_spk already exists in tb_blackstone_size
+            $existing = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->row();
+
+            if ($existing) {
+                // Update existing
+                $this->General_model->update('tb_blackstone_size', $insertData, ['id_spk' => $id], 'id_spk');
+                $this->session->set_flashdata('message', '<div class="alert alert-success">SPK updated successfully.</div>');
+            } else {
+                // Insert new
+                $this->General_model->insert('tb_blackstone_size', $insertData);
+                $this->session->set_flashdata('message', '<div class="alert alert-success">SPK added successfully.</div>');
+            }
+
+            $this->General_model->update('form_spk', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
+
+            redirect('form/view_spk_blackstone/' . $id);
+        }
+    }
 }
