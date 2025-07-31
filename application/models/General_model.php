@@ -915,4 +915,23 @@ class General_model extends CI_Model
 		return $no_dojadi;  
 	}
 
+    public function buat_dataterima_auto()   {
+
+		$this->db->select('RIGHT(production_progress_report.no_pr,3) as no_pr', FALSE);
+		$this->db->order_by('no_pr','DESC');
+		$this->db->limit(1);
+		$query = $this->db->get('production_progress_report');    
+		if($query->num_rows() <> 0){          
+			$data = $query->row();      
+			$no_pr = intval($data->no_pr) + 1;    
+		}
+		else {          
+			$no_pr = 1;    
+		}
+		
+		$no_prmax = str_pad($no_pr, 4, "0", STR_PAD_LEFT);
+		$no_prjadi = "OUTPUT-AI-".$no_prmax;
+		return $no_prjadi;  
+	}
+
 }

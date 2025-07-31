@@ -67,7 +67,7 @@ class Production extends CI_Controller {
         $data['title'] = 'Production Progress';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
-        $data['datanosj'] = $this->General_model->buat_do_auto();
+        $data['datanosj'] = $this->General_model->buat_dataterima_auto();
         $data['spk'] = $this->General_model->get('form_spk');
         $data['dept'] = $this->General_model->get('production_departement');
         $data['report'] = $this->General_model->get('production_progress_report');
