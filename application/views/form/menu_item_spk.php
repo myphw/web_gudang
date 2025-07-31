@@ -55,7 +55,7 @@
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($spkitem as $po): ?>
-                        
+                        <?php if ($po['id_spk'] == $spk['id_spk']): ?>
                             <tr>
                                 <th><?= $i++ ?></th>
                                 <td><?= $po['part_name'] ?></td>
@@ -69,6 +69,7 @@
                                     <a href="<?= base_url('form/delete_spk_item/' . $po['id_spkitem']) ?>" class="badge badge-danger">delete</a>
                                 </td>
                             </tr>
+                            <?php endif; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -148,36 +149,29 @@
 </div>
 
 <script>
-$('#artcolor_name').on('change', function () {
-    let selectedColor = $(this).val();
+$('#newSpkItemModal').on('show.bs.modal', function () {
+    let artcolor = $('#artcolor_name').val();
+    let id_spk = <?= $spk['id_spk'] ?>;
 
-    if (selectedColor !== '') {
-        $.ajax({
-            url: '<?= base_url("Form/get_items_by_color"); ?>',
-            type: 'POST',
-            data: { artcolor_name: selectedColor },
-            dataType: 'json',
-            success: function (response) {
-                let options = '<option value="">Select Item</option>';
-                $.each(response, function (i, item) {
-                    options += `<option value="${item.item_name}" data-unit="${item.unit_name}" data-rate="${item.cons_rate}">${item.item_name}</option>`;
-                });
-                $('#item_name').html(options);
-            },
-            error: function () {
-                alert("Terjadi kesalahan saat mengambil item.");
-            }
-        });
-    } else {
-        $('#item_name').html('<option value="">Select Item</option>');
-    }
+    $.ajax({
+        url: '<?= base_url("Form/get_items_by_color"); ?>',
+        type: 'POST',
+        data: {
+            artcolor_name: artcolor,
+            id_spk: id_spk
+        },
+        dataType: 'json',
+        success: function (response) {
+            let options = '<option value="">Select Item</option>';
+            $.each(response, function (i, item) {
+                options += `<option value="${item.item_name}" data-unit="${item.unit_name}" data-rate="${item.cons_rate}">${item.item_name}</option>`;
+            });
+            $('#item_name').html(options);
+        },
+        error: function () {
+            alert("Terjadi kesalahan saat mengambil item.");
+        }
+    });
 });
 
-$('#item_name').on('change', function () {
-    let unit = $(this).find(':selected').data('unit');
-    let rate = $(this).find(':selected').data('rate');
-
-    $('#unit_name').val(unit || '');
-    $('#cons_rate').val(rate || '');
-});
 </script>

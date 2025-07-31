@@ -216,8 +216,6 @@ class Production extends CI_Controller {
             }
             $insertData['qty'] = $final_qty;
 
-            // ✅ Insert to Blackstone
-            $this->General_model->insert('production_progress_blackstone', $insertData);
 
             // ✅ Insert or Update report table
             $exists = $this->db->get_where('production_progress_report_blackstone', [
@@ -236,6 +234,21 @@ class Production extends CI_Controller {
                 $this->db->update('production_progress_report_blackstone');
             } else {
                 $this->General_model->insert('production_progress_report_blackstone', $insertData);
+            }
+
+            // ✅ Check if a row already exists for the same id_pr and id_spk
+            $existing = $this->db->get_where('production_progress_blackstone', [
+                'id_pr'  => $id_pr,
+                'id_spk' => $id_spk
+            ])->row();
+
+            if ($existing) {
+                // Replace (update) the existing row with new data
+                $this->db->where(['id_pr' => $id_pr, 'id_spk' => $id_spk]);
+                $this->db->update('production_progress_blackstone', $insertData);
+            } else {
+                // Insert new row if it doesn't exist
+                $this->General_model->insert('production_progress_blackstone', $insertData);
             }
 
             $this->session->set_flashdata('message', '<div class="alert alert-success">Data saved successfully.</div>');
@@ -309,8 +322,20 @@ class Production extends CI_Controller {
             }
             $insertData['qty'] = $final_qty;
 
-            // Insert into production_progress_rossi
-            $this->General_model->insert('production_progress_rossi', $insertData);
+            // ✅ Check if a row already exists for the same id_pr and id_spk
+            $existing = $this->db->get_where('production_progress_rossi', [
+                'id_pr'  => $id_pr,
+                'id_spk' => $id_spk
+            ])->row();
+
+            if ($existing) {
+                // Replace (update) the existing row with new data
+                $this->db->where(['id_pr' => $id_pr, 'id_spk' => $id_spk]);
+                $this->db->update('production_progress_rossi', $insertData);
+            } else {
+                // Insert new row if it doesn't exist
+                $this->General_model->insert('production_progress_rossi', $insertData);
+            }
 
             // Insert or update report table
             $exists = $this->db->get_where('production_progress_report_rossi', [
@@ -404,8 +429,20 @@ class Production extends CI_Controller {
             }
             $insertData['qty'] = $final_qty;
 
-            // Insert into production_progress_rossi
-            $this->General_model->insert('production_progress_ariat', $insertData);
+            // ✅ Check if a row already exists for the same id_pr and id_spk
+            $existing = $this->db->get_where('production_progress_ariat', [
+                'id_pr'  => $id_pr,
+                'id_spk' => $id_spk
+            ])->row();
+
+            if ($existing) {
+                // Replace (update) the existing row with new data
+                $this->db->where(['id_pr' => $id_pr, 'id_spk' => $id_spk]);
+                $this->db->update('production_progress_ariat', $insertData);
+            } else {
+                // Insert new row if it doesn't exist
+                $this->General_model->insert('production_progress_ariat', $insertData);
+            }
 
             // Insert or update report table
             $exists = $this->db->get_where('production_progress_report_ariat', [
@@ -541,46 +578,15 @@ class Production extends CI_Controller {
         $data['spk'] = $this->db->get('production_spk_report')->result_array();
         $data['size'] = $this->General_model->get('form_spk_detail');
 
-        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
-        $this->form_validation->set_rules('xfd', 'xfd', 'required');
-        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
-        $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
-        
-        if($this->form_validation->run() == false)
-        {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('production/production_report', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $po_number      = strtoupper($this->input->post('po_number',TRUE)); 
-            $xfd      = $this->input->post('xfd',TRUE); 
-            $brand      = strtoupper($this->input->post('brand_name',TRUE));
-            $artcolor      = $this->input->post('artcolor_name',TRUE);    
-
-            $data = array(
-                    'po_number' => $po_number,
-                    'xfd' => $xfd,
-                    'brand_name' => $brand,
-                    'artcolor_name' => $artcolor,
-            );
-            $this->db->insert('form_spk_checkin', $data);
-            $insert_id = $this->db->insert_id(); // Get ID for detail views
-
-            $brand_lower = strtolower($brand);
-
-            if ($brand_lower === 'black stone') {
-                redirect('production/td_report_blackstone/' . $insert_id);
-            } elseif ($brand_lower === 'rossi') {
-                redirect('production/td_report_rossi/' . $insert_id);
-            } elseif ($brand_lower === 'ariat') {
-                redirect('production/td_report_ariat/' . $insert_id);
-            } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Brand not recognized. Showing default view.</div>');
-                redirect('production/production_report');
-            }
-        }
+        // $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        // $this->form_validation->set_rules('xfd', 'xfd', 'required');
+        // $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        // $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/production_report', $data);
+        $this->load->view('templates/footer');
     }
 
     public function pr_detail_item($id_spk)
@@ -588,20 +594,20 @@ class Production extends CI_Controller {
         $spk = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
 
         if (!$spk) {
-            redirect('production/progress_report');
+            redirect('production/production_report');
         }
 
         $brand_name = $spk['brand_name'];
 
         // Redirect to the correct handler
         if ($brand_name === 'BLACK STONE') {
-            redirect('production/td_report_blackstone/' . $id_spk);
+            redirect('production/production_report_blackstone/' . $id_spk);
         } elseif ($brand_name === 'ROSSI') {
-            redirect('production/td_report_rossi/' . $id_spk);
+            redirect('production/production_report_rossi/' . $id_spk);
         } elseif ($brand_name === 'ARIAT') {
-            redirect('production/td_report_ariat/' . $id_spk);
+            redirect('production/production_report_ariat/' . $id_spk);
         } else {
-            redirect('production/progress_report');
+            redirect('production/production_report');
         }
     }
 
@@ -610,61 +616,250 @@ class Production extends CI_Controller {
         $data['title'] = 'Black Stone Report View';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
-        $data['spk'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id])->result_array();
-        $data['in'] = $this->General_model->get_data('form_checkin_blackstone', ['id_spk' => $id])->result_array();
-        $data['spkall'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
-        $data['spkitem'] = $this->General_model->get('form_checkin_item', ['id_spk' => $id]);
-        $active_artcolor = $data['spk'];
-        $data['item'] = $this->General_model->get('form_consrate', ['artcolor_name' => $active_artcolor]);
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->result_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
 
-        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
-        $this->form_validation->set_rules('xfd', 'xfd', 'required');
-        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
-        $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
-        for ($i = 36; $i <= 50; $i++) {
-            $this->form_validation->set_rules('size_' . $i, 'Size ' . $i, 'numeric|greater_than_equal_to[0]');
-        }
+        // $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        // $this->form_validation->set_rules('xfd', 'xfd', 'required');
+        // $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        // $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
 
-            
-
-        if ($this->form_validation->run() == false) {
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('warehouse/checkin_blackstone', $data);
+        $this->load->view('production/td_report_blackstone', $data);
         $this->load->view('templates/footer');
-        } else {
-            // Prepare data
-            $insertData = [
-                'id_spk' => $id,
-                'po_number' => $this->input->post('po_number'),
-                'xfd' => $this->input->post('xfd'),
-                'brand_name' => $this->input->post('brand_name'),
-                'artcolor_name' => $this->input->post('artcolor_name'),
-            ];
 
-            for ($i = 36; $i <= 50; $i++) {
-                $insertData['size_' . $i] = $this->input->post('size_' . $i);
-            }
-
-            $total_qty = $this->_sum_sizes();
-            $insertData['total_qty'] = $total_qty;
-            // Check if id_spk already exists in tb_blackstone_size
-            $existing = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->row();
-
-            if ($existing) {
-                // Update existing
-                $this->General_model->update('tb_blackstone_size', $insertData, ['id_spk' => $id], 'id_spk');
-                $this->session->set_flashdata('message', '<div class="alert alert-success">SPK updated successfully.</div>');
-            } else {
-                // Insert new
-                $this->General_model->insert('tb_blackstone_size', $insertData);
-                $this->session->set_flashdata('message', '<div class="alert alert-success">SPK added successfully.</div>');
-            }
-
-            $this->General_model->update('form_spk', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
-
-            redirect('form/view_spk_blackstone/' . $id);
-        }
     }
+
+    public function production_report_rossi($id)
+    {
+        $data['title'] = 'Rossi Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->result_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
+
+        // $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        // $this->form_validation->set_rules('xfd', 'xfd', 'required');
+        // $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        // $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_report_rossi', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function production_report_ariat($id)
+    {
+        $data['title'] = 'Ariat Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->result_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
+
+        // $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        // $this->form_validation->set_rules('xfd', 'xfd', 'required');
+        // $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        // $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_report_ariat', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function dept_detail_item($id_spk, $id_dept)
+{
+    $spk = $this->General_model->get_data('production_progress_report', [
+        'id_spk' => $id_spk,
+        'id_dept' => $id_dept
+    ])->row_array();
+
+    if (!$spk) {
+        redirect('production/pr_detail_item/' . $id_spk);
+    }
+
+    $dept_name1 = $spk['dept_name1'];
+
+    if ($dept_name1 === 'CUTTING') {
+        redirect('production/production_detail_cutting/' . $id_spk . '/' . $id_dept);
+    } elseif ($dept_name1 === 'SEWING') {
+        redirect('production/production_detail_sewing/' . $id_spk . '/' . $id_dept);
+    } elseif ($dept_name1 === 'SEMI WAREHOUSE') {
+        redirect('production/production_detail_semi/' . $id_spk . '/' . $id_dept);
+    } elseif ($dept_name1 === 'LASTING') {
+        redirect('production/production_detail_lasting/' . $id_spk . '/' . $id_dept);
+    } elseif ($dept_name1 === 'FINISHING') {
+        redirect('production/production_detail_finishing/' . $id_spk . '/' . $id_dept);
+    } elseif ($dept_name1 === 'PACKAGING') {
+        redirect('production/production_detail_packaging/' . $id_spk . '/' . $id_dept);
+    } else {
+        redirect('production/pr_detail_item/' . $id_spk);
+    }
+}
+
+
+    public function production_detail_cutting($id, $id_dept)
+    {
+        $data['title'] = 'Cutting Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
+        $data['item'] = $this->General_model->get('production_progress_blackstone', ['id_spk' => $id]);
+        $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
+        $data['spkitemRossi'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
+        $data['itemRossi'] = $this->General_model->get('production_progress_rossi', ['id_spk' => $id]);
+        $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id])->result_array();
+        $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
+        $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
+        $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
+        $data['dept'] = ['id_dept' => $id_dept]; 
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_detail_report_cutting', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function production_detail_sewing($id, $id_dept)
+    {
+        $data['title'] = 'Sewing Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
+        $data['item'] = $this->General_model->get('production_progress_blackstone', ['id_spk' => $id]);
+        $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
+        $data['spkitemRossi'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
+        $data['itemRossi'] = $this->General_model->get('production_progress_rossi', ['id_spk' => $id]);
+        $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id])->result_array();
+        $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
+        $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
+        $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
+        $data['dept'] = ['id_dept' => $id_dept]; 
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_detail_report_sewing', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function production_detail_semi($id, $id_dept)
+    {
+        $data['title'] = 'Semi Warehouse Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
+        $data['item'] = $this->General_model->get('production_progress_blackstone', ['id_spk' => $id]);
+        $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
+        $data['spkitemRossi'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
+        $data['itemRossi'] = $this->General_model->get('production_progress_rossi', ['id_spk' => $id]);
+        $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id])->result_array();
+        $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
+        $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
+        $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
+        $data['dept'] = ['id_dept' => $id_dept]; 
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_detail_report_semi', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function production_detail_lasting($id, $id_dept)
+    {
+        $data['title'] = 'Lasting Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
+        $data['item'] = $this->General_model->get('production_progress_blackstone', ['id_spk' => $id]);
+        $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
+        $data['spkitemRossi'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
+        $data['itemRossi'] = $this->General_model->get('production_progress_rossi', ['id_spk' => $id]);
+        $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id])->result_array();
+        $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
+        $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
+        $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
+        $data['dept'] = ['id_dept' => $id_dept]; 
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_detail_report_lasting', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function production_detail_finishing($id, $id_dept)
+    {
+        $data['title'] = 'Finishing Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
+        $data['item'] = $this->General_model->get('production_progress_blackstone', ['id_spk' => $id]);
+        $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
+        $data['spkitemRossi'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
+        $data['itemRossi'] = $this->General_model->get('production_progress_rossi', ['id_spk' => $id]);
+        $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id])->result_array();
+        $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
+        $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
+        $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
+        $data['dept'] = ['id_dept' => $id_dept]; 
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_detail_report_finishing', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function production_detail_packaging($id, $id_dept)
+    {
+        $data['title'] = 'Packaging Report View';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
+        $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
+        $data['item'] = $this->General_model->get('production_progress_blackstone', ['id_spk' => $id]);
+        $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id])->result_array();
+        $data['spkitemRossi'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
+        $data['itemRossi'] = $this->General_model->get('production_progress_rossi', ['id_spk' => $id]);
+        $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id])->result_array();
+        $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
+        $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
+        $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
+        $data['dept'] = ['id_dept' => $id_dept]; 
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('production/td_detail_report_packaging', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    
 }

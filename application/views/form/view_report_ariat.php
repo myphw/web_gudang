@@ -49,9 +49,9 @@
                         <thead class="thead-light">
                             <tr>
                                 <?php
-                                $sizes = ['6D','6.5D','7D','7.5D','8D','8.5D','9D','9.5D','10D','10.5D','11D','11.5D','12D','13D','14D','15D','16D'];
+                                $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','11_5d','12d','13d','14d','15d','16d'];
                                 foreach ($sizes as $s) {
-                                    echo "<th>{$s}</th>";
+                                    echo "<th>" . strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) . "</th>";
                                 }
                                 ?>
                             </tr>
@@ -60,23 +60,9 @@
                             <?php foreach ($spkall as $po) : ?>
                                 <?php if ($po['id_spk'] == $sp['id_spk']) : ?>
                                     <tr>
-                                        <td><?= $po['size_6_d'] ?></td>
-                                        <td><?= $po['size_6_5_d'] ?></td>
-                                        <td><?= $po['size_7_d'] ?></td>
-                                        <td><?= $po['size_7_5_d'] ?></td>
-                                        <td><?= $po['size_8_d'] ?></td>
-                                        <td><?= $po['size_8_5_d'] ?></td>
-                                        <td><?= $po['size_9_d'] ?></td>
-                                        <td><?= $po['size_9_5_d'] ?></td>
-                                        <td><?= $po['size_10_d'] ?></td>
-                                        <td><?= $po['size_10_5_d'] ?></td>
-                                        <td><?= $po['size_11_d'] ?></td>
-                                        <td><?= $po['size_11_5_d'] ?></td>
-                                        <td><?= $po['size_12_d'] ?></td>
-                                        <td><?= $po['size_13_d'] ?></td>
-                                        <td><?= $po['size_14_d'] ?></td>
-                                        <td><?= $po['size_15_d'] ?></td>
-                                        <td><?= $po['size_16_d'] ?></td>
+                                        <?php foreach ($sizes as $s): ?>
+                                            <td><?= $po['size_' . $s] ?></td>
+                                        <?php endforeach; ?>
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?>
