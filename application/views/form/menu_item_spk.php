@@ -55,7 +55,7 @@
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($spkitem as $po): ?>
-                        
+                        <?php if ($po['id_spk'] == $spk['id_spk']): ?>
                             <tr>
                                 <th><?= $i++ ?></th>
                                 <td><?= $po['part_name'] ?></td>
@@ -69,6 +69,7 @@
                                     <a href="<?= base_url('form/delete_spk_item/' . $po['id_spkitem']) ?>" class="badge badge-danger">delete</a>
                                 </td>
                             </tr>
+                            <?php endif; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
