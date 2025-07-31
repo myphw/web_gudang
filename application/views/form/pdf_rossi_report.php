@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <h3 class="center">MATERIAL CONSUMPTION SHEET<br>PT. MANGUL JAYA</h3>
+    <h3 class="center">MATERIAL CONSUMPTION SHEET<br>AERROSTAR INDONESIA</h3>
 
     <table class="header-table">
         <tr>
