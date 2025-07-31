@@ -715,6 +715,7 @@ class Form extends CI_Controller {
             $this->General_model->update('form_spk', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
             $this->General_model->update('form_spk_checkin', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
             $this->General_model->update('form_spk_checkout', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
+            $this->General_model->update('production_spk_report', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
 
             redirect('form/view_spk_blackstone/' . $id);
         }
@@ -888,6 +889,7 @@ class Form extends CI_Controller {
             $this->General_model->update('form_spk', ['total_qty' => $total_qty], ['id_spk' => $id], 'id_spk');
             $this->General_model->update('form_spk_checkin', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
             $this->General_model->update('form_spk_checkout', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
+            $this->General_model->update('production_spk_report', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
 
             // Redirect to the same view
             redirect('form/view_spk_rossi/' . $id);
@@ -1058,6 +1060,7 @@ class Form extends CI_Controller {
             $this->General_model->update('form_spk', ['total_qty' => $total_qty], ['id_spk' => $id], 'id_spk');
             $this->General_model->update('form_spk_checkin', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
             $this->General_model->update('form_spk_checkout', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
+            $this->General_model->update('production_spk_report', ['total_qty' => $total_qty], ['id_spk' => $id],'id_spk');
 
             redirect('form/view_spk_ariat/' . $id);
         }
