@@ -653,6 +653,7 @@ class Form extends CI_Controller {
             $data['id_spk'] = $id_spk;
             $this->db->insert('form_spk_checkin', $data);
             $this->db->insert('form_spk_checkout', $data);
+            $this->db->insert('production_spk_report', $data);
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">SPK baru berhasil ditambahkan!</div>');
                 redirect('form/spk');
@@ -1279,6 +1280,20 @@ class Form extends CI_Controller {
         }
     }
 
+    public function get_items_by_color()
+        {
+            $artcolor_name = $this->input->post('artcolor_name');
+            $id_spk = $this->input->post('id_spk');
+
+            $items = $this->db->get_where('form_spk_item', [
+                'artcolor_name' => $artcolor_name,
+                'id_spk' => $id_spk
+            ])->result_array();
+
+            echo json_encode($items);
+        }
+
+
     public function update_spk_item($id_spk){
         $data['title'] = 'Form Add Item';
         $data['users'] = $this->db->get_where('users', ['email' => 
@@ -1302,7 +1317,10 @@ class Form extends CI_Controller {
 
         // Example of custom join if needed
         $this->db->where('artcolor_name', $artcolor_name);
-        $data['spkitem'] = $this->General_model->get('form_spk_item', ['id_spk' => $id_spk]);
+        $data['spkitem'] = $this->General_model->get('form_spk_item', [
+            'id_spk' => $id_spk,
+        ]);
+
 
         // Form validation
         $this->form_validation->set_rules('item_name', 'Item Name', 'required');

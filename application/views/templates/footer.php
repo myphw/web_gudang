@@ -166,7 +166,23 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+    $(document).on('click', '.item-option', function (e) {
+        e.preventDefault();
 
+        const itemName = $(this).data('value');
+        const unitName = $(this).data('unit');
+        const consRate = $(this).data('rate');
+
+        // Fill input
+        $('#item_name_input').val(itemName);
+        $('#item_name_hidden').val(itemName);
+
+        // If you have dependent fields like unit_name or cons_rate:
+        $('#unit_name').val(unitName);
+        $('#cons_rate').val(consRate);
+    });
+</script>
 
 </body>
 

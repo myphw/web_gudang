@@ -49,7 +49,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <?php
-                                $sizes = ['6_d','6_5_d','7_d','7_5_d','8_d','8_5_d','9_d','9_5_d','10_d','10_5_d','11_d','11_5_d','12_d','13_d','14_d','15_d','16_d'];
+                                $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','11_5d','12d','13d','14d','15d','16d'];
                                 foreach ($sizes as $s) {
                                     echo "<th>" . strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) . "</th>";
                                 }
