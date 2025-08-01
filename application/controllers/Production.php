@@ -782,6 +782,288 @@ class Production extends CI_Controller {
         redirect('production/pr_detail_item/' . $id_spk);
     }
 }
+    public function export_cutting_pdf($id_spk)
+    { // Assuming Dompdf is aliased as 'pdf' in autoload or config
+
+        // Fetch user and SPK data
+        $data['title'] = 'Cutting Report';
+        $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sp'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_departement', ['dept_name1' => 'Cutting'])->row_array();
+
+        // Detect brand
+        $brand = $data['sp']['brand_name'];
+
+        // Load data based on brand
+        if ($brand == 'BLACK STONE') {
+            $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitem'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id_spk])->result_array();
+            $data['item'] = $this->General_model->get_data('production_progress_blackstone', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ROSSI') {
+            $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemRossi'] = $this->General_model->get_data('production_progress_report_rossi', ['id_spk' => $id_spk])->result_array();
+            $data['itemRossi'] = $this->General_model->get_data('production_progress_rossi', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ARIAT') {
+            $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemAriat'] = $this->General_model->get_data('production_progress_report_ariat', ['id_spk' => $id_spk])->result_array();
+            $data['itemAriat'] = $this->General_model->get_data('production_progress_ariat', ['id_spk' => $id_spk])->result_array();
+        } else {
+            show_error("Unknown brand: " . $brand);
+            return;
+        }
+
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_production_cutting', $data, true);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream('Cutting_Report_' . $id_spk . '.pdf', ['Attachment' => false]);
+        // Load Dompdf
+    }
+
+    public function export_sewing_pdf($id_spk)
+    { // Assuming Dompdf is aliased as 'pdf' in autoload or config
+
+        // Fetch user and SPK data
+        $data['title'] = 'Sewwing Report';
+        $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sp'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_departement', ['dept_name1' => 'Cutting'])->row_array();
+
+        // Detect brand
+        $brand = $data['sp']['brand_name'];
+
+        // Load data based on brand
+        if ($brand == 'BLACK STONE') {
+            $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitem'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id_spk])->result_array();
+            $data['item'] = $this->General_model->get_data('production_progress_blackstone', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ROSSI') {
+            $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemRossi'] = $this->General_model->get_data('production_progress_report_rossi', ['id_spk' => $id_spk])->result_array();
+            $data['itemRossi'] = $this->General_model->get_data('production_progress_rossi', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ARIAT') {
+            $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemAriat'] = $this->General_model->get_data('production_progress_report_ariat', ['id_spk' => $id_spk])->result_array();
+            $data['itemAriat'] = $this->General_model->get_data('production_progress_ariat', ['id_spk' => $id_spk])->result_array();
+        } else {
+            show_error("Unknown brand: " . $brand);
+            return;
+        }
+
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_production_sewing', $data, true);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream('Sewing_Report_' . $id_spk . '.pdf', ['Attachment' => false]);
+        // Load Dompdf
+    }
+
+    public function export_semi_pdf($id_spk)
+    { // Assuming Dompdf is aliased as 'pdf' in autoload or config
+
+        // Fetch user and SPK data
+        $data['title'] = 'Semi Warehouse Report';
+        $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sp'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_departement', ['dept_name1' => 'Cutting'])->row_array();
+
+        // Detect brand
+        $brand = $data['sp']['brand_name'];
+
+        // Load data based on brand
+        if ($brand == 'BLACK STONE') {
+            $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitem'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id_spk])->result_array();
+            $data['item'] = $this->General_model->get_data('production_progress_blackstone', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ROSSI') {
+            $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemRossi'] = $this->General_model->get_data('production_progress_report_rossi', ['id_spk' => $id_spk])->result_array();
+            $data['itemRossi'] = $this->General_model->get_data('production_progress_rossi', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ARIAT') {
+            $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemAriat'] = $this->General_model->get_data('production_progress_report_ariat', ['id_spk' => $id_spk])->result_array();
+            $data['itemAriat'] = $this->General_model->get_data('production_progress_ariat', ['id_spk' => $id_spk])->result_array();
+        } else {
+            show_error("Unknown brand: " . $brand);
+            return;
+        }
+
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_production_semi', $data, true);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream('Semi_Report_' . $id_spk . '.pdf', ['Attachment' => false]);
+        // Load Dompdf
+    }
+
+    public function export_lasting_pdf($id_spk)
+    { // Assuming Dompdf is aliased as 'pdf' in autoload or config
+
+        // Fetch user and SPK data
+        $data['title'] = 'Lasting Report';
+        $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sp'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_departement', ['dept_name1' => 'Cutting'])->row_array();
+
+        // Detect brand
+        $brand = $data['sp']['brand_name'];
+
+        // Load data based on brand
+        if ($brand == 'BLACK STONE') {
+            $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitem'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id_spk])->result_array();
+            $data['item'] = $this->General_model->get_data('production_progress_blackstone', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ROSSI') {
+            $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemRossi'] = $this->General_model->get_data('production_progress_report_rossi', ['id_spk' => $id_spk])->result_array();
+            $data['itemRossi'] = $this->General_model->get_data('production_progress_rossi', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ARIAT') {
+            $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemAriat'] = $this->General_model->get_data('production_progress_report_ariat', ['id_spk' => $id_spk])->result_array();
+            $data['itemAriat'] = $this->General_model->get_data('production_progress_ariat', ['id_spk' => $id_spk])->result_array();
+        } else {
+            show_error("Unknown brand: " . $brand);
+            return;
+        }
+
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_production_lasting', $data, true);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream('Lasting_Report_' . $id_spk . '.pdf', ['Attachment' => false]);
+        // Load Dompdf
+    }
+
+    public function export_finishing_pdf($id_spk)
+    { // Assuming Dompdf is aliased as 'pdf' in autoload or config
+
+        // Fetch user and SPK data
+        $data['title'] = 'Finishing Report';
+        $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sp'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_departement', ['dept_name1' => 'Cutting'])->row_array();
+
+        // Detect brand
+        $brand = $data['sp']['brand_name'];
+
+        // Load data based on brand
+        if ($brand == 'BLACK STONE') {
+            $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitem'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id_spk])->result_array();
+            $data['item'] = $this->General_model->get_data('production_progress_blackstone', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ROSSI') {
+            $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemRossi'] = $this->General_model->get_data('production_progress_report_rossi', ['id_spk' => $id_spk])->result_array();
+            $data['itemRossi'] = $this->General_model->get_data('production_progress_rossi', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ARIAT') {
+            $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemAriat'] = $this->General_model->get_data('production_progress_report_ariat', ['id_spk' => $id_spk])->result_array();
+            $data['itemAriat'] = $this->General_model->get_data('production_progress_ariat', ['id_spk' => $id_spk])->result_array();
+        } else {
+            show_error("Unknown brand: " . $brand);
+            return;
+        }
+
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_production_finishing', $data, true);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream('Finishing_Report_' . $id_spk . '.pdf', ['Attachment' => false]);
+        // Load Dompdf
+    }
+
+    public function export_packaging_pdf($id_spk)
+    { // Assuming Dompdf is aliased as 'pdf' in autoload or config
+
+        // Fetch user and SPK data
+        $data['title'] = 'Packaging Report';
+        $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+        $data['sp'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id_spk])->row_array();
+        $data['dept'] = $this->General_model->get_data('production_departement', ['dept_name1' => 'Cutting'])->row_array();
+
+        // Detect brand
+        $brand = $data['sp']['brand_name'];
+
+        // Load data based on brand
+        if ($brand == 'BLACK STONE') {
+            $data['size'] = $this->General_model->get_data('tb_blackstone_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitem'] = $this->General_model->get_data('production_progress_report_blackstone', ['id_spk' => $id_spk])->result_array();
+            $data['item'] = $this->General_model->get_data('production_progress_blackstone', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ROSSI') {
+            $data['sizeRossi'] = $this->General_model->get_data('tb_rossi_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemRossi'] = $this->General_model->get_data('production_progress_report_rossi', ['id_spk' => $id_spk])->result_array();
+            $data['itemRossi'] = $this->General_model->get_data('production_progress_rossi', ['id_spk' => $id_spk])->result_array();
+        } elseif ($brand == 'ARIAT') {
+            $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id_spk])->result_array();
+            $data['spkitemAriat'] = $this->General_model->get_data('production_progress_report_ariat', ['id_spk' => $id_spk])->result_array();
+            $data['itemAriat'] = $this->General_model->get_data('production_progress_ariat', ['id_spk' => $id_spk])->result_array();
+        } else {
+            show_error("Unknown brand: " . $brand);
+            return;
+        }
+
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_production_packaging', $data, true);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream('Packaging_Report_' . $id_spk . '.pdf', ['Attachment' => false]);
+        // Load Dompdf
+    }
+
 
 
     public function production_detail_cutting($id, $id_dept)

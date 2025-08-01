@@ -38,6 +38,7 @@ $sizesRossi = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t',
                         <input type="text" name="total_qty" class="form-control" value="<?= $sp['total_qty'] ?>" readonly>
                     </div>
                 </div>
+                <a href="<?= base_url('production/export_packaging_pdf/' . $sp['id_spk']) ?>" class="btn btn-danger mb-3" target="_blank">Export PDF</a>
                 <a href="<?= base_url('production/pr_detail_item/'.$sp['id_spk']); ?>" class="btn btn-secondary mb-3">
                     <i class="fas fa-reply"></i> BACK
                 </a>
