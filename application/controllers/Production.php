@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class Production extends CI_Controller {
     public function __construct()
     {
@@ -34,6 +37,7 @@ class Production extends CI_Controller {
             $data = array(
                     'dept_name1' => $dept_name1,
                     'dept_name2' => $dept_name2,
+                    'created_at' => date('Y-m-d H:i:s'),
             );
             $this->db->insert('production_departement', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">New Departement is Added</div>');
@@ -256,6 +260,31 @@ class Production extends CI_Controller {
         }
     }
 
+    public function export_progress_blackstone($id_spk)
+    {
+        $this->load->model('General_model'); // or your model name
+        $data['title'] = 'Production Progress Blackstone';
+
+        $data['spk'] = $this->General_model->get_data('production_progress_report', ['id_pr' => $id_spk])->row_array();
+        $data['in'] = $this->General_model->get_data('production_progress_blackstone', ['id_pr' => $id_spk])->row_array();
+
+        
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_progress_blackstone', $data, TRUE);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream("progress_blackstone_$id_spk.pdf", ['Attachment' => false]); // true = force download
+    }
+
     public function td_item_rossi($id) // $id = id_pr
     {
         $data['title'] = 'Rossi Tanda Terima View';
@@ -359,6 +388,31 @@ class Production extends CI_Controller {
             $this->session->set_flashdata('message', '<div class="alert alert-success">Data berhasil disimpan.</div>');
             redirect('production/td_item_rossi/' . $id_pr);
         }
+    }
+
+    public function export_progress_rossi($id_spk)
+    {
+        $this->load->model('General_model'); // or your model name
+        $data['title'] = 'Production Progress Rossi';
+
+        $data['spk'] = $this->General_model->get_data('production_progress_report', ['id_pr' => $id_spk])->row_array();
+        $data['in'] = $this->General_model->get_data('production_progress_rossi', ['id_pr' => $id_spk])->row_array();
+
+        
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_progress_rossi', $data, TRUE);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream("progress_rossi_$id_spk.pdf", ['Attachment' => false]); // true = force download
     }
 
 
@@ -466,6 +520,31 @@ class Production extends CI_Controller {
             $this->session->set_flashdata('message', '<div class="alert alert-success">Data berhasil disimpan.</div>');
             redirect('production/td_item_ariat/' . $id_pr);
         }
+    }
+
+    public function export_progress_ariat($id_spk)
+    {
+        $this->load->model('General_model'); // or your model name
+        $data['title'] = 'Production Progress Ariat';
+
+        $data['spk'] = $this->General_model->get_data('production_progress_report', ['id_pr' => $id_spk])->row_array();
+        $data['in'] = $this->General_model->get_data('production_progress_ariat', ['id_pr' => $id_spk])->row_array();
+
+        
+        // Load view into HTML
+        $html = $this->load->view('production/pdf_progress_ariat', $data, TRUE);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream("progress_ariat_$id_spk.pdf", ['Attachment' => false]); // true = force download
     }
 
     public function delete_sj_blackstone($id)

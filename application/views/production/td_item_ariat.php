@@ -44,6 +44,7 @@ $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','1
                         </div>
                     </div>
                 </div>
+                <a href="<?= base_url('production/export_progress_ariat/' . $sp['id_pr']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
             <?php endforeach; ?>
 
             <a href="<?= base_url('production/progress') ?>" class="badge badge-warning mb-3">BACK TO SJ</a>

@@ -41,6 +41,7 @@
                         </div>
                     </div>
                 </div>
+                <a href="<?= base_url('production/export_progress_blackstone/' . $sp['id_pr']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
             <?php endforeach; ?>
 
             <a href="<?= base_url('production/progress') ?>" class="badge badge-warning mb-3">BACK TO SJ</a>
