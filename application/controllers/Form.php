@@ -14,7 +14,7 @@ class Form extends CI_Controller {
 
     public function index()
     {
-        $data['title'] = 'Form Menu Brand';
+        $data['title'] = 'BRAND';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 
@@ -94,7 +94,7 @@ class Form extends CI_Controller {
     }
 
     public function artColor(){
-        $data['title'] = 'Form Menu Art&Color';
+        $data['title'] = 'ART & COLOR';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
         $uri = $this->uri->segment(3);
@@ -251,7 +251,7 @@ class Form extends CI_Controller {
 
     public function unit()
     {
-        $data['title'] = 'Form Menu Unit';
+        $data['title'] = 'UNIT';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 
@@ -332,7 +332,7 @@ class Form extends CI_Controller {
 
     public function listitem()
     {
-        $data['title'] = 'Form Menu List Item';
+        $data['title'] = 'ITEM LIST';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 
@@ -424,7 +424,7 @@ class Form extends CI_Controller {
 
     public function consumption()
     {
-        $data['title'] = 'Form Menu Consumption';
+        $data['title'] = 'MATERIAL CONSUMPTION';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 

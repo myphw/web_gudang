@@ -14,7 +14,48 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping data for table web_gudang.form_checkin_item: ~172 rows (approximately)
+-- Dumping data for table web_gudang.form_ac: ~1 rows (approximately)
+REPLACE INTO `form_ac` (`id_ac`, `artcolor_name`) VALUES
+	(13, '301 BLACK'),
+	(14, '4046 BLACK'),
+	(15, '666 CLARET'),
+	(16, '666 TAN'),
+	(17, '4003 TAN');
+
+-- Dumping data for table web_gudang.form_art: ~1 rows (approximately)
+REPLACE INTO `form_art` (`id_art`, `art_name`) VALUES
+	(13, '301'),
+	(14, '4046'),
+	(15, '666'),
+	(16, '4003');
+
+-- Dumping data for table web_gudang.form_artcolor: ~4 rows (approximately)
+REPLACE INTO `form_artcolor` (`id_artcolor`, `art_name`, `color_name`, `artcolor_name`) VALUES
+	(44, '301', NULL, NULL),
+	(45, NULL, 'BLACK', NULL),
+	(46, NULL, NULL, '301 BLACK'),
+	(47, '4046', NULL, NULL),
+	(48, NULL, NULL, '4046 BLACK'),
+	(49, '666', NULL, NULL),
+	(50, NULL, 'claret', NULL),
+	(51, NULL, 'CLARET', NULL),
+	(52, NULL, NULL, '666 CLARET'),
+	(53, NULL, 'TAN', NULL),
+	(54, NULL, NULL, '666 TAN'),
+	(55, '4003', NULL, NULL),
+	(56, NULL, NULL, '4003 TAN');
+
+-- Dumping data for table web_gudang.form_brand: ~3 rows (approximately)
+REPLACE INTO `form_brand` (`id_brand`, `brand_name`) VALUES
+	(3, 'ROSSI'),
+	(4, 'BLACK STONE'),
+	(5, 'ARIAT');
+
+-- Dumping data for table web_gudang.form_checkin_ariat: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_checkin_blackstone: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_checkin_item: ~39 rows (approximately)
 REPLACE INTO `form_checkin_item` (`id_spkitem`, `id_spk`, `po_number`, `xfd`, `artcolor_name`, `brand_name`, `part_name`, `item_name`, `color_name`, `mtrl_name`, `unit_name`, `checkin_qty`, `checkout_qty`, `checkin_balance`, `checkout_balance`, `qty`, `cons_rate`, `total_consrate`, `size_36`, `size_37`, `size_38`, `size_39`, `size_40`, `size_41`, `size_42`, `size_43`, `size_44`, `size_45`, `size_46`, `size_47`, `size_48`, `size_49`, `size_50`, `size_3`, `size_3t`, `size_4`, `size_4t`, `size_5`, `size_5t`, `size_6`, `size_6t`, `size_7`, `size_7t`, `size_8`, `size_8t`, `size_9`, `size_9t`, `size_10`, `size_10t`, `size_11`, `size_11t`, `size_12`, `size_13`, `size_14`, `size_15`, `size_6d`, `size_6_5d`, `size_7d`, `size_7_5d`, `size_8d`, `size_8_5d`, `size_9d`, `size_9_5d`, `size_10d`, `size_10_5d`, `size_11d`, `size_11_5d`, `size_12d`, `size_13d`, `size_14d`, `size_15d`, `size_16d`) VALUES
 	(55, 34, 'PO-1690', '2025-07-02', '301 BLACK', 'ROSSI', 'UPPER (V,BS,JV,TTL)', ' BLACK KIP (HARVEST GLORY) ', 'BLACK', '2.2 - 2.4', 'FTK', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 2.9000, 849.70, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	(56, 34, 'PO-1690', '2025-07-02', '301 BLACK', 'ROSSI', 'INSOLE', ' TEXON T-480 2.7 MM ', 'NATURAL', '100 X 150', 'MTK', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0540, 15.82, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -189,12 +230,367 @@ REPLACE INTO `form_checkin_item` (`id_spkitem`, `id_spk`, `po_number`, `xfd`, `a
 	(226, 38, 'PO-1695', '2025-07-02', '666 TAN', 'ROSSI', 'ATTACH (PACKING)', ' POLYPROPELINE (PP) TAPE 3', 'CLEAR', '3"', 'RO', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0026, 1.16, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	(227, 38, 'PO-1695', '2025-07-02', '666 TAN', 'ROSSI', 'ATTACH ', ' DOUBLE TAPE 6 MM ', '', '', 'RO', 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0430, 19.22, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
--- Dumping data for table web_gudang.form_spk: ~4 rows (approximately)
+-- Dumping data for table web_gudang.form_checkin_rossi: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_checkout_ariat: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_checkout_blackstone: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_checkout_item: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_checkout_rossi: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_color: ~1 rows (approximately)
+REPLACE INTO `form_color` (`id_color`, `color_name`) VALUES
+	(12, 'BLACK'),
+	(14, 'CLARET'),
+	(15, 'TAN');
+
+-- Dumping data for table web_gudang.form_consrate: ~73 rows (approximately)
+REPLACE INTO `form_consrate` (`id_consrate`, `artcolor_name`, `item_name`, `color_name`, `unit_name`, `cons_rate`) VALUES
+	(38, '301 BLACK', ' BLACK KIP (HARVEST GLORY) ', '', 'FTK', 2.90000),
+	(39, '301 BLACK', ' TEXON T-480 2.7 MM ', '', 'MTK', 0.05400),
+	(40, '301 BLACK', ' EVA 2 MM HD 35 - 40 MM ', '', 'MTR', 0.03500),
+	(41, '301 BLACK', ' TEXON G 565 (N587) ', '', 'MTK', 0.02980),
+	(42, '301 BLACK', ' TEXON RITE 1.5 MM ', '', 'MTK', 0.02720),
+	(43, '301 BLACK', ' POLYURETHANE SYNTHETIC LEATHER 0.8 - 1.0 MM (H-8080)  ', '', 'MTR', 0.01940),
+	(44, '301 BLACK', ' SATIN LABEL AS/NZS 2210.5.2019 EN ISO 20347:2012 BMP 714442, 714443 OCCUPATIONAL BOOT ', '', 'PCS', 2.00000),
+	(45, '301 BLACK', ' SATIN SIZE + STYLE ', '', 'PCS', 2.00000),
+	(46, '301 BLACK', ' WEBBING TAPE ROSSI HERRINGBONE 21 MM ', '', 'PCS', 2.00000),
+	(47, '301 BLACK', ' ELASTIC 115MM  ', '', 'MTR', 0.39000),
+	(48, '301 BLACK', ' TKT 20 ', '', 'CJ', 0.01200),
+	(49, '301 BLACK', ' TKT 30 ', '', 'CJ', 0.00620),
+	(50, '301 BLACK', ' TKT 40 ', '', 'CJ', 0.00200),
+	(51, '301 BLACK', ' LEM 168 G/W ', '', 'KGM', 0.01500),
+	(52, '301 BLACK', ' LEM 7300 TF ', '', 'KGM', 0.00200),
+	(53, '301 BLACK', ' ENDURA CUPSOLE (SBR)', '', 'NPR', 1.00000),
+	(54, '301 BLACK', ' BONDING AGENT 224 - 2 ', '', 'KGM', 0.01100),
+	(55, '301 BLACK', ' LEM 5100 AB ', '', 'KGM', 0.06000),
+	(56, '301 BLACK', ' PRIMER D-PLY 008 F ', '', 'KGM', 0.00500),
+	(57, '301 BLACK', ' PRIMER D-PLY 1402 ', '', 'KGM', 0.00500),
+	(59, '301 BLACK', ' PRIMER D-PLY 232 ', '', 'KGM', 0.01100),
+	(60, '301 BLACK', ' D-TAC 7100 ', '', 'KGM', 0.02000),
+	(61, '301 BLACK', ' UNIDUR 1001 ', '', 'TIN', 0.00390),
+	(62, '301 BLACK', ' LATEX CAIR 60%  ', '', 'KGM', 0.03500),
+	(63, '301 BLACK', ' MEK ', '', 'KGM', 0.00500),
+	(64, '301 BLACK', ' HOTMELT ROD CEMENT ', '', 'KGM', 0.01330),
+	(65, '301 BLACK', ' GLUE STICK ', '', 'KGM', 0.00180),
+	(66, '301 BLACK', ' MASKING TAPE 1', '', 'ROLL', 0.00110),
+	(67, '301 BLACK', ' PP BAG BENING/POLOS 0.03X40X45 ', '', 'KGM', 0.01670),
+	(68, '301 BLACK', ' ANTISTATIC FOOTBED ', '', 'NPR', 1.00000),
+	(69, '301 BLACK', ' KERTAS DOORSLAG ', '', 'PCS', 4.00000),
+	(70, '301 BLACK', ' KERTAS DUPLEX 250 GR 21 X 29 CM ', '', 'SHT', 0.07690),
+	(71, '301 BLACK', ' KERTAS DUPLEX 500 GR 8 X 30 CM ', '', 'SHT', 0.06250),
+	(72, '301 BLACK', ' BARCODE STICKER ART. 301 (FROM TEKHAN) ', '', 'PCS', 1.00000),
+	(73, '301 BLACK', ' SWING TAG ENDURA SOLE ART. 301 (MAN) (AVERY DENNISON) ', '', 'EA', 1.00000),
+	(74, '301 BLACK', ' CARE CARD (NEW FROM AVERY DENNISON) ', '', 'PCS', 1.00000),
+	(75, '301 BLACK', ' QUICK SNAP LOOP  ', '', 'PCS', 1.00000),
+	(76, '301 BLACK', ' WRAPPING SHOE ', '', 'PCS', 1.00000),
+	(77, '301 BLACK', ' MICROGARDE GREEN STICKER ', '', 'PCE', 2.00000),
+	(79, '301 BLACK', ' ISI 5 UK. ', '', 'PCS', 0.20000),
+	(80, '301 BLACK', ' POLYPROPELINE (PP) TAPE 3', '', 'RO', 0.00760),
+	(81, '301 BLACK', ' DOUBLE TAPE 6 MM ', '', 'RO', 0.04300),
+	(82, '301 BLACK', ' 6" INNER BOX (GOODBOX) ', '', 'PCS', 1.00000),
+	(84, '4046 BLACK', ' MOSS BACK SUEDE (DONG-YI) ', '', 'FTK', 3.26700),
+	(85, '4046 BLACK', ' POLYURETHANE SYNTHETIC LEATHER 0.8 - 1.0 MM (H-8080)  ', '', 'MTR', 0.02860),
+	(86, '4046 BLACK', ' POLYURETHANE SYNTHETIC LEATHER (NON WOVEN CLARINO) POT. 18 MM ', '', 'MTR', 0.01770),
+	(87, '4046 BLACK', ' TEXON T-90 2.5MM BLACK + MIDSOLE EVA 5MM HD 68 - 70 (EVA CHEMICAL) ', '', 'SHT', 0.06250),
+	(88, '4046 BLACK', ' TEXON G 565 (N587) ', '', 'MTK', 0.02550),
+	(89, '4046 BLACK', ' TEXON RITE 1.5 MM ', '', 'MTK', 0.03060),
+	(90, '4046 BLACK', ' EMBOSS QTR ROSSI BOOTS ', '', 'PCE', 2.00000),
+	(91, '4046 BLACK', ' HEAT TRANSPAPER HOTMELT PRINT ', '', 'PCS', 2.00000),
+	(92, '4046 BLACK', ' ROUND EYELET #350+WASHER ', '', 'PCE', 12.00000),
+	(93, '4046 BLACK', ' TKT 20 ', '', 'CJ', 0.01070),
+	(94, '4046 BLACK', ' TKT 30 ', '', 'CJ', 0.00580),
+	(95, '4046 BLACK', ' LEM 168 G/W ', '', 'KGM', 0.01000),
+	(96, '4046 BLACK', ' RIPPLE OUTSOLE+LOGO RED (ROSSI)', '', 'NPR', 1.00000),
+	(97, '4046 BLACK', ' POLYESTER BARDED WAXY 1.2 MM (TRANCILO)  ', '', 'CJ', 0.03750),
+	(98, '4046 BLACK', ' 4 PLY COTTON ', '', 'CJ', 0.00690),
+	(99, '4046 BLACK', ' STAPLES 406 J ', '', 'PAK', 0.00320),
+	(100, '4046 BLACK', ' D-TAC 7100 ', '', 'KGM', 0.03000),
+	(101, '4046 BLACK', ' LEM 5100  AU+AB ', '', 'KGM', 0.06000),
+	(102, '4046 BLACK', ' BONDING AGENT 224 - 2 ', '', 'KGM', 0.02500),
+	(103, '4046 BLACK', ' PRIMER D-PLY 232 ', '', 'KGM', 0.00700),
+	(104, '4046 BLACK', ' PRIMER D-PLY 008 F ', '', 'KGM', 0.01200),
+	(105, '4046 BLACK', ' PRIMER D-PLY 007 F ', '', 'KGM', 0.01000),
+	(106, '4046 BLACK', ' UNIDUR 1001 ', '', 'TIN', 0.01300),
+	(107, '4046 BLACK', ' MEK ', '', 'KGM', 0.02500),
+	(108, '4046 BLACK', ' MASKING TAPE 1', '', 'ROLL', 0.00110),
+	(109, '4046 BLACK', ' PP BAG BENING/POLOS 0.03X40X45 ', '', 'KGM', 0.01670),
+	(110, '4046 BLACK', ' ANTISTATIC FOOTBED ', '', 'NPR', 1.00000),
+	(111, '4046 BLACK', ' ROUND POLYESTER 4 MM  ', '', 'NPR', 1.00000),
+	(112, '4046 BLACK', ' KERTAS DOORSLAG ', '', 'PCS', 4.00000),
+	(113, '4046 BLACK', ' KERTAS DUPLEX 250 GR 21 X 29 CM ', '', 'SHT', 0.07690),
+	(114, '4046 BLACK', ' KERTAS DUPLEX 500 GR  ', '', 'PCS', 2.00000),
+	(115, '4046 BLACK', ' BARCODE FOR INNERBOX ', '', 'PCS', 1.00000),
+	(116, '4046 BLACK', ' SWING TAG RIPPLE ', '', 'EA', 1.00000),
+	(117, '4046 BLACK', ' CARE CARD TAG ', '', 'EA', 1.00000),
+	(118, '4046 BLACK', ' QUICK SNAP LOOP  ', '', 'PCS', 1.00000),
+	(119, '4046 BLACK', ' WRAPPING SHOE ', '', 'PCS', 1.00000),
+	(120, '4046 BLACK', ' MICROGARDE GREEN STICKER ', '', 'PCE', 2.00000),
+	(121, '4046 BLACK', ' 6', '', 'PCS', 1.00000),
+	(122, '4046 BLACK', ' ISI 5 UK. ', '', 'PCS', 0.16670),
+	(123, '4046 BLACK', ' POLYPROPELINE (PP) TAPE 3', '', 'RO', 0.00260),
+	(124, '4046 BLACK', ' DOUBLE TAPE 6 MM ', '', 'RO', 0.04300),
+	(125, '666 CLARET', ' CLARET KIP (HARVEST GLORY) ', '', 'FTK', 4.20900),
+	(126, '666 CLARET', ' POLYURETHANE SYNTHETIC LEATHER 0.8 - 1.0 MM (H-8080)  ', '', 'MTR', 0.02830),
+	(127, '666 CLARET', ' POLYURETHANE SYNTHETIC LEATHER (NON WOVEN CLARINO) POT. 18 MM ', '', 'MTR', 0.01770),
+	(128, '666 CLARET', ' TEXON T-90 3 MM ', '', 'SHT', 0.06250),
+	(129, '666 CLARET', ' TEXON G 565 (N587) ', '', 'MTK', 0.02550),
+	(130, '666 CLARET', ' TEXON RITE 1.5 MM ', '', 'MTK', 0.03060),
+	(131, '666 CLARET', ' EMBOSS ROSSI BOOTS 4.5 X 2.5 CM ', '', 'PCE', 2.00000),
+	(132, '666 CLARET', ' HEAT TRANSPAPER HOTMELT PRINT ', '', 'PCS', 2.00000),
+	(133, '666 CLARET', ' SATIN TAPE 14 MM ', '', 'MTR', 0.20000),
+	(134, '666 CLARET', ' BUCKLE 2 CM ', '', 'PCE', 2.00000),
+	(135, '666 CLARET', ' TKT 20 ', '', 'CJ', 0.01330),
+	(136, '666 CLARET', ' TKT 30 ', '', 'CJ', 0.01200),
+	(137, '666 CLARET', ' TKT 40 ', '', 'CJ', 0.00330),
+	(138, '666 CLARET', ' LEM 168 G/W ', '', 'KGM', 0.01000),
+	(139, '666 CLARET', ' GUM CREEPE OUTSOLE ', '', 'NPR', 1.00000),
+	(140, '666 CLARET', ' EVA 5 MM ', '', 'SHT', 0.12500),
+	(141, '666 CLARET', ' POLYESTER BARDED WAXY 1.2 MM (TRANCILO)  ', '', 'CJ', 0.03750),
+	(142, '666 CLARET', ' 4 PLY POLYESTER ', '', 'CJ', 0.00690),
+	(143, '666 CLARET', ' STAPLES 406 J ', '', 'PAK', 0.00320),
+	(144, '666 CLARET', ' D-TAC 7100 ', '', 'KGM', 0.03000),
+	(145, '666 CLARET', ' LEM 5100  AU+AB ', '', 'KGM', 0.06000),
+	(147, '666 CLARET', ' PRIMER D-PLY 232 ', '', 'KGM', 0.00700),
+	(148, '666 CLARET', ' PRIMER D-PLY 008 F ', '', 'KGM', 0.01200),
+	(149, '666 CLARET', ' PRIMER D-PLY 007 F ', '', 'KGM', 0.01000),
+	(150, '666 CLARET', ' UNIDUR 1001 ', '', 'TIN', 0.01300),
+	(151, '666 CLARET', ' MEK ', '', 'KGM', 0.02500),
+	(152, '666 CLARET', ' MASKING TAPE 1', '', 'ROLL', 0.00110),
+	(153, '666 CLARET', ' PP BAG BENING/POLOS 0.03X40X45 ', '', 'KGM', 0.01670),
+	(154, '666 CLARET', ' ANTISTATIC FOOTBED ', '', 'NPR', 1.00000),
+	(155, '666 CLARET', ' ROUND POLYESTER 3 MM  ', '', 'NPR', 1.00000),
+	(156, '666 CLARET', ' KERTAS DOORSLAG ', '', 'PCS', 4.00000),
+	(157, '666 CLARET', ' KERTAS DUPLEX 250 GR 21 X 29 CM ', '', 'SHT', 0.07690),
+	(158, '666 CLARET', ' KERTAS DUPLEX 500 GR  ', '', 'PCS', 2.00000),
+	(159, '666 CLARET', ' BARCODE FOR INNERBOX ', '', 'PCS', 1.00000),
+	(160, '666 CLARET', ' SWING TAG 666 SHEARER ', '', 'EA', 1.00000),
+	(161, '666 CLARET', ' CARE CARD (NEW FROM AVERY DENNISON) ', '', 'PCS', 1.00000),
+	(162, '666 CLARET', ' QUICK SNAP LOOP  ', '', 'PCS', 1.00000),
+	(163, '666 CLARET', ' WRAPPING SHOE ', '', 'PCS', 1.00000),
+	(164, '666 CLARET', ' MICROGARDE GREEN STICKER ', '', 'PCE', 2.00000),
+	(165, '666 CLARET', ' 6', '', 'PCS', 1.00000),
+	(166, '666 CLARET', ' ISI 5 UK. ', '', 'PCS', 0.16670),
+	(167, '666 CLARET', ' POLYPROPELINE (PP) TAPE 3', '', 'RO', 0.00260),
+	(168, '666 CLARET', ' DOUBLE TAPE 6 MM ', '', 'RO', 0.04300),
+	(169, '666 CLARET', ' BONDING AGENT 224 - 2 ', '', 'KGM', 0.02500),
+	(170, '666 TAN', ' WILD YAK (HARVEST GLORY) ', '', 'FTK', 4.20900),
+	(171, '666 TAN', ' POLYURETHANE SYNTHETIC LEATHER 0.8 - 1.0 MM (H-8080)  ', '', 'MTR', 0.02830),
+	(172, '666 TAN', ' POLYURETHANE SYNTHETIC LEATHER (NON WOVEN CLARINO) POT. 18 MM ', '', 'MTR', 0.01770),
+	(173, '666 TAN', ' TEXON T-90 3 MM ', '', 'SHT', 0.06250),
+	(174, '666 TAN', ' TEXON G 565 (N587) ', '', 'MTK', 0.02550),
+	(175, '666 TAN', ' TEXON RITE 1.5 MM ', '', 'MTK', 0.03060),
+	(176, '666 TAN', ' EMBOSS ROSSI BOOTS 4.5 X 2.5 CM ', '', 'PCE', 2.00000),
+	(177, '666 TAN', ' HEAT TRANSPAPER HOTMELT PRINT ', '', 'PCS', 2.00000),
+	(178, '666 TAN', ' SATIN TAPE 14 MM ', '', 'MTR', 0.20000),
+	(179, '666 TAN', ' BUCKLE 2 CM ', '', 'PCE', 2.00000),
+	(180, '666 TAN', ' TKT 20 ', '', 'CJ', 0.01330),
+	(181, '666 TAN', ' TKT 30 ', '', 'CJ', 0.01200),
+	(182, '666 TAN', ' TKT 40 ', '', 'CJ', 0.00330),
+	(183, '666 TAN', ' LEM 168 G/W ', '', 'KGM', 0.01000),
+	(184, '666 TAN', ' GUM CREEPE OUTSOLE ', '', 'NPR', 1.00000),
+	(185, '666 TAN', ' EVA 5 MM ', '', 'SHT', 0.12500),
+	(186, '666 TAN', ' POLYESTER BARDED WAXY 1.2 MM (TRANCILO)  ', '', 'CJ', 0.03750),
+	(187, '666 TAN', ' 4 PLY POLYESTER ', '', 'CJ', 0.00690),
+	(188, '666 TAN', ' STAPLES 406 J ', '', 'PAK', 0.00320),
+	(189, '666 TAN', ' D-TAC 7100 ', '', 'KGM', 0.03000),
+	(190, '666 TAN', ' LEM 5100  AU+AB ', '', 'KGM', 0.06000),
+	(191, '666 TAN', ' BONDING AGENT 224 - 2 ', '', 'KGM', 0.02500),
+	(192, '666 TAN', ' PRIMER D-PLY 232 ', '', 'KGM', 0.00700),
+	(193, '666 TAN', ' PRIMER D-PLY 008 F ', '', 'KGM', 0.01200),
+	(194, '666 TAN', ' PRIMER D-PLY 007 F ', '', 'KGM', 0.01000),
+	(195, '666 TAN', ' UNIDUR 1001 ', '', 'TIN', 0.01300),
+	(196, '666 TAN', ' MEK ', '', 'KGM', 0.02500),
+	(197, '666 TAN', ' MASKING TAPE 1', '', 'ROLL', 0.00110),
+	(198, '666 TAN', ' PP BAG BENING/POLOS 0.03X40X45 ', '', 'KGM', 0.01670),
+	(199, '666 TAN', ' ANTISTATIC FOOTBED ', '', 'NPR', 1.00000),
+	(200, '666 TAN', ' ROUND POLYESTER 3 MM  ', '', 'NPR', 1.00000),
+	(201, '666 TAN', ' KERTAS DOORSLAG ', '', 'PCS', 4.00000),
+	(202, '666 TAN', ' KERTAS DUPLEX 250 GR 21 X 29 CM ', '', 'SHT', 0.07690),
+	(203, '666 TAN', ' KERTAS DUPLEX 500 GR  ', '', 'PCS', 2.00000),
+	(204, '666 TAN', ' BARCODE FOR INNERBOX ', '', 'PCS', 1.00000),
+	(205, '666 TAN', ' SWING TAG 666 SHEARER ', '', 'EA', 1.00000),
+	(206, '666 TAN', ' CARE CARD (NEW FROM AVERY DENNISON) ', '', 'PCS', 1.00000),
+	(207, '666 TAN', ' QUICK SNAP LOOP  ', '', 'PCS', 1.00000),
+	(208, '666 TAN', ' WRAPPING SHOE ', '', 'PCS', 1.00000),
+	(209, '666 TAN', ' MICROGARDE GREEN STICKER ', '', 'PCE', 2.00000),
+	(210, '666 TAN', ' 6', '', 'PCS', 1.00000),
+	(211, '666 TAN', ' ISI 5 UK. ', '', 'PCS', 0.16670),
+	(212, '666 TAN', ' POLYPROPELINE (PP) TAPE 3', '', 'RO', 0.00260),
+	(213, '666 TAN', ' DOUBLE TAPE 6 MM ', '', 'RO', 0.04300),
+	(214, '4003 TAN', ' WILD YAK (AUSTAN) ', '', 'FTK', 2.95000),
+	(215, '4003 TAN', ' POLYURETHANE SYNTHETIC LEATHER 0.8 - 1.0 MM (H-8080)  ', '', 'MTR', 0.01800),
+	(216, '4003 TAN', ' POLYURETHANE SYNTHETIC LEATHER (NON WOVEN CLARINO) POT. 18 MM ', '', 'MTR', 0.01770),
+	(217, '4003 TAN', ' TEXON T-90 3 MM BLACK + MIDSOLE EVA 5MM HD 68 - 70 (EVA CHEMICAL) ', '', 'SHT', 0.06250),
+	(218, '4003 TAN', ' TEXON G 565 (N587) ', '', 'MTK', 0.02980),
+	(219, '4003 TAN', ' TEXON RITE 1.5 MM ', '', 'MTK', 0.02720),
+	(220, '4003 TAN', ' HEAT TRANSPAPER HOTMELT PRINT ', '', 'PCS', 2.00000),
+	(221, '4003 TAN', ' WEBBING TAPE ROSSI HERRINGBONE 21 MM ', '', 'PCS', 2.00000),
+	(222, '4003 TAN', ' ELASTIC 115MM  ', '', 'MTR', 0.39000),
+	(223, '4003 TAN', ' TKT 20 ', '', 'CJ', 0.00530),
+	(224, '4003 TAN', ' TKT 30 ', '', 'CJ', 0.01400),
+	(225, '4003 TAN', ' TKT 40 ', '', 'CJ', 0.00200),
+	(226, '4003 TAN', ' CLEATED HIKER OUTSOLE+LOGO (ROSSI) ', '', 'NPR', 1.00000),
+	(227, '4003 TAN', ' TRANCILO 1.2 ', '', 'CJ', 0.03750),
+	(228, '4003 TAN', ' 4 PLY COTTON ', '', 'CJ', 0.00690),
+	(229, '4003 TAN', ' STAPLES 406 J ', '', 'PAK', 0.00320),
+	(230, '4003 TAN', ' D-TAC 7100 ', '', 'KGM', 0.03000),
+	(231, '4003 TAN', ' LEM 5100  AU+AB ', '', 'KGM', 0.06000),
+	(232, '4003 TAN', ' BONDING AGENT 224 - 2 ', '', 'KGM', 0.02500),
+	(233, '4003 TAN', ' PRIMER D-PLY 232 ', '', 'KGM', 0.00700),
+	(234, '4003 TAN', ' PRIMER D-PLY 008 F ', '', 'KGM', 0.01200),
+	(235, '4003 TAN', ' PRIMER D-PLY 007 F ', '', 'KGM', 0.01000),
+	(236, '4003 TAN', ' UNIDUR 1001 ', '', 'TIN', 0.01300),
+	(237, '4003 TAN', ' MEK ', '', 'KGM', 0.02500),
+	(238, '4003 TAN', ' MASKING TAPE 1', '', 'ROLL', 0.01100),
+	(239, '4003 TAN', ' PP BAG BENING/POLOS 0.03X40X45 ', '', 'KGM', 0.01670),
+	(240, '4003 TAN', ' ANTISTATIC FOOTBED ', '', 'NPR', 1.00000),
+	(241, '4003 TAN', ' KERTAS DOORSLAG ', '', 'PCS', 4.00000),
+	(242, '4003 TAN', ' KERTAS DUPLEX 250 GR 21 X 29 CM ', '', 'SHT', 0.07690),
+	(243, '4003 TAN', ' KERTAS DUPLEX 500 GR 8 X 30 CM ', '', 'SHT', 0.06250),
+	(244, '4003 TAN', ' BARCODE FOR INNERBOX ', '', 'PCS', 1.00000),
+	(245, '4003 TAN', ' SWING TAG SIMPSON ', '', 'EA', 1.00000),
+	(246, '4003 TAN', ' CARE CARD (NEW FROM AVERY DENNISON) ', '', 'PCS', 1.00000),
+	(247, '4003 TAN', ' QUICK SNAP LOOP  ', '', 'PCS', 1.00000),
+	(248, '4003 TAN', ' WRAPPING SHOE ', '', 'PCS', 1.00000),
+	(249, '4003 TAN', ' MICROGARDE GREEN STICKER ', '', 'PCE', 2.00000),
+	(250, '4003 TAN', ' 6', '', 'PCS', 1.00000),
+	(251, '4003 TAN', ' ISI 5 UK. ', '', 'PCS', 0.16670),
+	(252, '4003 TAN', ' POLYPROPELINE (PP) TAPE 3', '', 'RO', 0.00260),
+	(253, '4003 TAN', ' DOUBLE TAPE 6 MM ', '', 'RO', 0.04300);
+
+-- Dumping data for table web_gudang.form_listitem: ~54 rows (approximately)
+REPLACE INTO `form_listitem` (`id_listitem`, `item_name`, `unit_name`, `item_type`) VALUES
+	(28, ' BLACK KIP (HARVEST GLORY) ', 'FTK', NULL),
+	(29, ' TEXON T-480 2.7 MM ', 'MTK', NULL),
+	(30, ' EVA 2 MM HD 35 - 40 MM ', 'MTR', NULL),
+	(31, ' TEXON G 565 (N587) ', 'MTK', NULL),
+	(32, ' TEXON RITE 1.5 MM ', 'MTK', NULL),
+	(33, ' POLYURETHANE SYNTHETIC LEATHER 0.8 - 1.0 MM (H-8080)  ', 'MTR', NULL),
+	(34, ' SATIN LABEL AS/NZS 2210.5.2019 EN ISO 20347:2012 BMP 714442, 714443 OCCUPATIONAL BOOT ', 'PCS', NULL),
+	(35, ' SATIN SIZE + STYLE ', 'PCS', NULL),
+	(36, ' WEBBING TAPE ROSSI HERRINGBONE 21 MM ', 'PCS', NULL),
+	(37, ' ELASTIC 115MM  ', 'MTR', NULL),
+	(38, ' TKT 20 ', 'CJ', NULL),
+	(39, ' TKT 30 ', 'CJ', NULL),
+	(40, ' TKT 40 ', 'CJ', NULL),
+	(41, ' LEM 168 G/W ', 'KGM', NULL),
+	(42, ' LEM 7300 TF ', 'KGM', NULL),
+	(43, ' ENDURA CUPSOLE (SBR)', 'NPR', NULL),
+	(44, ' BONDING AGENT 224 - 2 ', 'KGM', NULL),
+	(45, ' LEM 5100 AB ', 'KGM', NULL),
+	(46, ' PRIMER D-PLY 008 F ', 'KGM', NULL),
+	(47, ' PRIMER D-PLY 1402 ', 'KGM', NULL),
+	(48, ' PRIMER D-PLY 232 ', 'KGM', NULL),
+	(49, ' D-TAC 7100 ', 'KGM', NULL),
+	(50, ' UNIDUR 1001 ', 'TIN', NULL),
+	(51, ' LATEX CAIR 60%  ', 'KGM', NULL),
+	(52, ' MEK ', 'KGM', NULL),
+	(53, ' HOTMELT ROD CEMENT ', 'KGM', NULL),
+	(54, ' GLUE STICK ', 'KGM', NULL),
+	(55, ' MASKING TAPE 1" ', 'ROLL', NULL),
+	(56, ' PP BAG BENING/POLOS 0.03X40X45 ', 'KGM', NULL),
+	(57, ' ANTISTATIC FOOTBED ', 'NPR', NULL),
+	(58, ' KERTAS DOORSLAG ', 'PCS', NULL),
+	(59, ' KERTAS DUPLEX 250 GR 21 X 29 CM ', 'SHT', NULL),
+	(60, ' KERTAS DUPLEX 500 GR 8 X 30 CM ', 'SHT', NULL),
+	(61, ' BARCODE STICKER ART. 301 (FROM TEKHAN) ', 'PCS', NULL),
+	(62, ' SWING TAG ENDURA SOLE ART. 301 (MAN) (AVERY DENNISON) ', 'EA', NULL),
+	(63, ' CARE CARD (NEW FROM AVERY DENNISON) ', 'PCS', NULL),
+	(64, ' QUICK SNAP LOOP  ', 'PCS', NULL),
+	(65, ' WRAPPING SHOE "ROSSI" PRINT 17 GR UK. 400 X 900 ', 'PCS', NULL),
+	(66, ' MICROGARDE GREEN STICKER ', 'PCE', NULL),
+	(67, ' 6" INNER BOX (GOODBOX) ', 'PCS', NULL),
+	(68, ' ISI 5 UK. ', 'PCS', NULL),
+	(69, ' POLYPROPELINE (PP) TAPE 3" ', 'RO', NULL),
+	(70, ' DOUBLE TAPE 6 MM ', 'RO', NULL),
+	(71, ' MOSS BACK SUEDE (DONG-YI) ', 'FTK', NULL),
+	(72, ' POLYURETHANE SYNTHETIC LEATHER (NON WOVEN CLARINO) POT. 18 MM ', 'MTR', NULL),
+	(73, ' TEXON T-90 2.5MM BLACK + MIDSOLE EVA 5MM HD 68 - 70 (EVA CHEMICAL) ', 'SHT', NULL),
+	(74, ' EMBOSS QTR ROSSI BOOTS ', 'PCE', NULL),
+	(75, ' HEAT TRANSPAPER HOTMELT PRINT ', 'PCS', NULL),
+	(76, ' ROUND EYELET #350+WASHER ', 'PCE', NULL),
+	(77, ' RIPPLE OUTSOLE+LOGO RED (ROSSI)', 'NPR', NULL),
+	(78, ' POLYESTER BARDED WAXY 1.2 MM (TRANCILO)  ', 'CJ', NULL),
+	(79, ' 4 PLY COTTON ', 'CJ', NULL),
+	(80, ' STAPLES 406 J ', 'PAK', NULL),
+	(81, ' PRIMER D-PLY 007 F ', 'KGM', NULL),
+	(82, ' SWING TAG RIPPLE ', 'EA', NULL),
+	(83, ' CARE CARD TAG ', 'EA', NULL),
+	(84, ' LEM 5100  AU+AB ', 'KGM', NULL),
+	(85, ' ROUND POLYESTER 4 MM  ', 'NPR', NULL),
+	(86, ' KERTAS DUPLEX 500 GR  ', 'PCS', NULL),
+	(87, ' BARCODE FOR INNERBOX ', 'PCS', NULL),
+	(88, ' CLARET KIP (HARVEST GLORY) ', 'FTK', NULL),
+	(89, ' TEXON T-90 3 MM ', 'SHT', NULL),
+	(90, ' EMBOSS ROSSI BOOTS 4.5 X 2.5 CM ', 'PCE', NULL),
+	(91, ' SATIN TAPE 14 MM ', 'MTR', NULL),
+	(92, ' BUCKLE 2 CM ', 'PCE', NULL),
+	(93, ' GUM CREEPE OUTSOLE ', 'NPR', NULL),
+	(94, ' EVA 5 MM ', 'SHT', NULL),
+	(95, ' 4 PLY POLYESTER ', 'CJ', NULL),
+	(96, ' SWING TAG 666 SHEARER ', 'EA', NULL),
+	(97, ' ROUND POLYESTER 3 MM  ', 'NPR', NULL),
+	(98, ' WILD YAK (HARVEST GLORY) ', 'FTK', NULL),
+	(99, ' WILD YAK (AUSTAN) ', 'FTK', NULL),
+	(100, ' TEXON T-90 3 MM BLACK + MIDSOLE EVA 5MM HD 68 - 70 (EVA CHEMICAL) ', 'SHT', NULL),
+	(101, ' CLEATED HIKER OUTSOLE+LOGO (ROSSI) ', 'NPR', NULL),
+	(102, ' TRANCILO 1.2 ', 'CJ', NULL),
+	(103, ' SWING TAG SIMPSON ', 'EA', NULL);
+
+-- Dumping data for table web_gudang.form_size: ~3 rows (approximately)
+REPLACE INTO `form_size` (`id_size`, `size_name`) VALUES
+	(2, '49'),
+	(3, '50'),
+	(4, '51');
+
+-- Dumping data for table web_gudang.form_sj: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sjitem_ariat: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sjitem_blackstone: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sjitem_checkout_ariat: ~1 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sjitem_checkout_blackstone: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sjitem_checkout_rossi: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sjitem_rossi: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sj_checkout: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_sj_item: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_spk: ~5 rows (approximately)
 REPLACE INTO `form_spk` (`id_spk`, `po_number`, `xfd`, `brand_name`, `artcolor_name`, `total_qty`, `created_at`) VALUES
 	(34, 'PO-1690', '2025-07-02', 'ROSSI', '301 BLACK', '293', '2025-07-30 07:18:44'),
 	(35, 'PO-1692', '2025-07-02', 'ROSSI', '4046 BLACK', '597', '2025-07-30 08:35:07'),
 	(37, 'PO-1694', '2025-07-02', 'ROSSI', '666 CLARET', '351', '2025-07-31 03:21:19'),
-	(38, 'PO-1695', '2025-07-02', 'ROSSI', '666 TAN', '447', '2025-07-31 05:06:50');
+	(38, 'PO-1695', '2025-07-02', 'ROSSI', '666 TAN', '447', '2025-07-31 05:06:50'),
+	(39, 'PO-1691', '2025-07-02', 'ROSSI', '4003 TAN', '', '2025-07-31 09:14:45');
+
+-- Dumping data for table web_gudang.form_spk_checkin: ~1 rows (approximately)
+REPLACE INTO `form_spk_checkin` (`id_spkcheckin`, `id_spk`, `po_number`, `xfd`, `brand_name`, `artcolor_name`, `total_qty`, `created_at`) VALUES
+	(33, 34, 'PO-1690', '2025-07-02', 'ROSSI', '301 BLACK', '293', '2025-07-30 07:18:44'),
+	(34, 35, 'PO-1692', '2025-07-02', 'ROSSI', '4046 BLACK', '597', '2025-07-30 08:35:07'),
+	(35, 36, 'IO25 - 0001', '2025-07-31', 'ARIAT', '301 BLACK', '', '2025-07-31 02:49:58'),
+	(36, 37, 'PO-1694', '2025-07-02', 'ROSSI', '666 CLARET', '351', '2025-07-31 03:21:19'),
+	(37, 38, 'PO-1695', '2025-07-02', 'ROSSI', '666 TAN', '447', '2025-07-31 05:06:50'),
+	(38, 39, 'PO-1691', '2025-07-02', 'ROSSI', '4003 TAN', '', '2025-07-31 09:14:45');
+
+-- Dumping data for table web_gudang.form_spk_checkout: ~1 rows (approximately)
+REPLACE INTO `form_spk_checkout` (`id_spkcheckout`, `id_spk`, `po_number`, `xfd`, `brand_name`, `artcolor_name`, `total_qty`, `created_at`) VALUES
+	(51, 34, 'PO-1690', '2025-07-02', 'ROSSI', '301 BLACK', '293', '2025-07-30 07:18:44'),
+	(52, 35, 'PO-1692', '2025-07-02', 'ROSSI', '4046 BLACK', '597', '2025-07-30 08:35:07'),
+	(53, 36, 'IO25 - 0001', '2025-07-31', 'ARIAT', '301 BLACK', '', '2025-07-31 02:49:58'),
+	(54, 37, 'PO-1694', '2025-07-02', 'ROSSI', '666 CLARET', '351', '2025-07-31 03:21:19'),
+	(55, 38, 'PO-1695', '2025-07-02', 'ROSSI', '666 TAN', '447', '2025-07-31 05:06:50'),
+	(56, 39, 'PO-1691', '2025-07-02', 'ROSSI', '4003 TAN', '', '2025-07-31 09:14:45');
+
+-- Dumping data for table web_gudang.form_spk_detail: ~0 rows (approximately)
 
 -- Dumping data for table web_gudang.form_spk_item: ~172 rows (approximately)
 REPLACE INTO `form_spk_item` (`id_spkitem`, `id_spk`, `po_number`, `xfd`, `artcolor_name`, `brand_name`, `part_name`, `item_name`, `color_name`, `mtrl_name`, `unit_name`, `cons_rate`, `total_consrate`) VALUES
@@ -370,6 +766,194 @@ REPLACE INTO `form_spk_item` (`id_spkitem`, `id_spk`, `po_number`, `xfd`, `artco
 	(227, 38, 'PO-1695', '2025-07-02', '666 TAN', 'ROSSI', 'CTN BOX', ' ISI 5 UK. ', '', '', 'PCS', 0.1667, 74.51),
 	(228, 38, 'PO-1695', '2025-07-02', '666 TAN', 'ROSSI', 'ATTACH (PACKING)', ' POLYPROPELINE (PP) TAPE 3', 'CLEAR', '3"', 'RO', 0.0026, 1.16),
 	(229, 38, 'PO-1695', '2025-07-02', '666 TAN', 'ROSSI', 'ATTACH ', ' DOUBLE TAPE 6 MM ', '', '', 'RO', 0.0430, 19.22);
+
+-- Dumping data for table web_gudang.form_spk_item_dump: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_spk_sizerun: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_spk_sizerun_dump: ~17 rows (approximately)
+REPLACE INTO `form_spk_sizerun_dump` (`id_sizerun`, `id_spk`, `po_number`, `xfd`, `brand_name`, `artcolor_name`, `size_name`, `qty`, `total_qty`) VALUES
+	(17, 5, 'IO24-0152', '2025-07-17', 'ROSSI', 'CG 104 BLACK COFFEE', '49', '20', '20'),
+	(18, 5, 'IO24-0152', '2025-07-17', 'ROSSI', 'CG 104 BLACK COFFEE', '49', '20', '20'),
+	(19, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '49', '20', '65'),
+	(20, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '50', '15', '20'),
+	(21, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '51', '30', '65'),
+	(22, 7, 'IO24-0152', '2025-07-17', 'ROSSI', 'EG 555 GUN METAL', '50', '20', '50'),
+	(23, 7, 'IO24-0152', '2025-07-17', 'ROSSI', 'EG 555 GUN METAL', '49', '30', '40'),
+	(24, 7, 'IO24-0152', '2025-07-17', 'ROSSI', 'EG 555 GUN METAL', '50', '10', '10'),
+	(25, 7, 'IO24-0152', '2025-07-17', 'ROSSI', 'EG 555 GUN METAL', '50', '10', '40'),
+	(26, 7, 'IO24-0152', '2025-07-17', 'ROSSI', 'EG 555 GUN METAL', '49', '30', '40'),
+	(27, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '49', '20', '20'),
+	(28, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '49', '20', '50'),
+	(29, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '50', '30', '50'),
+	(30, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '49', '20', '20'),
+	(31, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '49', '20', '30'),
+	(32, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '50', '10', '30'),
+	(34, 4, 'IO25-0140', '2025-07-16', 'ROSSI', 'CG 104 BLACK COFFEE', '50', '10', '30');
+
+-- Dumping data for table web_gudang.form_total_item: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.form_total_sizerun: ~3 rows (approximately)
+REPLACE INTO `form_total_sizerun` (`id_totalsize`, `id_spk`, `total_qty`) VALUES
+	(4, 5, '0'),
+	(5, 4, '20'),
+	(6, 7, '0');
+
+-- Dumping data for table web_gudang.form_transaksi: ~12 rows (approximately)
+REPLACE INTO `form_transaksi` (`id_trans`, `brand`, `keterangan`, `id_transaksi`, `no_sj`, `tanggal_masuk`, `tanggal_keluar`, `supplier`, `po_number`, `art`, `jenis_material`, `kode_material`, `nama_material`, `qty`, `unit`, `ket`, `dept_tujuan`, `s36`, `s37`, `s38`, `s39`, `s40`, `s41`, `s42`, `s43`, `s44`, `s45`, `s46`, `s47`, `s48`, `s49`, `s50`, `s3`, `s3t`, `s4`, `s4t`, `s5`, `s5t`, `s6`, `s6t`, `s7`, `s7t`, `s8`, `s8t`, `s9`, `s9t`, `s10`, `s10t`, `s11`, `s11t`, `s12`, `s13`, `s14`, `s15`, `s6d`, `s6td`, `s7d`, `s7td`, `s8d`, `s8td`, `s9d`, `s9td`, `s10d`, `s10td`, `s11d`, `s11td`, `s12d`, `s13d`, `s14d`, `s15d`) VALUES
+	(20, 'BLACKSTONE', 'CHECK IN', 'WG-202554302791', 'B1', '2025-07-18', NULL, 'MANGUL JAYA', 'B1', 'B1', 'B1', 'B1', 'B1', 10, 'KGM', '11 JULY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(21, 'BLACKSTONE', 'CHECK IN', 'WG-202534186095', 'B2', '2025-07-18', NULL, 'MANGUL JAYA', 'B2', 'B2', 'B2', 'B2', 'B2', 100, 'FTK', '11 JULY', NULL, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(22, 'ROSSI', 'CHECK IN', 'WG-202517523869', 'R1', '2025-07-18', NULL, 'MANGUL JAYA', 'R1', 'R1', 'R1', 'R1', 'R1', 10, 'FTK', '11 JULY', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(23, 'ROSSI', 'CHECK IN', 'WG-202525048369', 'R2', '2025-07-18', NULL, 'MANGUL JAYA', 'R2', 'R2', 'R2', 'R2', 'R2', 100, 'KGM', '11 JULY', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(26, 'BLACKSTONE', 'CHECK OUT', 'WG-202554302791', 'B1', '2025-07-18', '2025-08-01', 'MANGUL JAYA', 'B1', 'B1', 'B1', 'B1', 'B1', 5, 'KGM', '11 JULY', 'CUTTING', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(27, 'BLACKSTONE', 'CHECK OUT', 'WG-202534186095', 'B2', '2025-07-18', '2025-08-01', 'MANGUL JAYA', 'B2', 'B2', 'B2', 'B2', 'B2', 50, 'FTK', '11 JULY', 'LASTING', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(28, 'ROSSI', 'CHECK OUT', 'WG-202517523869', 'R1', '2025-07-18', '2025-08-02', 'MANGUL JAYA', 'R1', 'R1', 'R1', 'R1', 'R1', 5, 'FTK', '11 JULY', 'SEMI WH', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(29, 'ROSSI', 'CHECK OUT', 'WG-202525048369', 'R2', '2025-07-18', '2025-08-02', 'MANGUL JAYA', 'R2', 'R2', 'R2', 'R2', 'R2', 50, 'KGM', '11 JULY', 'PACKING', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(37, 'ARIAT', 'CHECK IN', 'WG-202575046231', 'A1', '2025-07-18', NULL, 'A1', 'A1', 'A1', 'A1', 'A1', 'A1', 100, 'FTK', '11 JULY', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(38, 'ARIAT', 'CHECK IN', 'WG-202546095238', 'A2', '2025-07-18', NULL, 'A2', 'A2', 'A2', 'A2', 'A2', 'A2', 150, 'KGM', '20 JULY', NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4),
+	(39, 'ARIAT', 'CHECK OUT', 'WG-202575046231', 'A1', '2025-07-18', '2025-08-03', 'A1', 'A1', 'A1', 'A1', 'A1', 'A1', 50, 'FTK', '11 JULY', 'SEMI WH', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(40, 'ARIAT', 'CHECK OUT', 'WG-202546095238', 'A2', '2025-07-18', '2025-08-03', 'A2', 'A2', 'A2', 'A2', 'A2', 'A2', 50, 'KGM', '20 JULY', 'LASTING', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+-- Dumping data for table web_gudang.form_unit: ~16 rows (approximately)
+REPLACE INTO `form_unit` (`id_unit`, `unit_name`) VALUES
+	(3, 'LTR'),
+	(4, 'PCE'),
+	(5, 'FTK'),
+	(6, 'MTR'),
+	(7, 'SHT'),
+	(8, 'NPR'),
+	(9, 'SET'),
+	(10, 'TIN'),
+	(11, 'KGM'),
+	(12, 'YRD'),
+	(13, 'MTK'),
+	(14, 'CONE'),
+	(15, 'ROLL'),
+	(16, 'PCS'),
+	(17, 'CJ'),
+	(18, 'EA'),
+	(19, 'RO'),
+	(20, 'PAK');
+
+-- Dumping data for table web_gudang.production_departement: ~6 rows (approximately)
+REPLACE INTO `production_departement` (`id_dept`, `dept_name1`, `dept_name2`, `created_at`) VALUES
+	(1, 'CUTTING', 'SEWING', NULL),
+	(2, 'SEWING', 'SEMI WAREHOUSE', NULL),
+	(3, 'SEMI WAREHOUSE', 'LASTING', NULL),
+	(4, 'LASTING', 'FINISHING', NULL),
+	(5, 'FINISHING', 'PACKAGING', NULL),
+	(6, 'PACKAGING', 'WAREHOUSE', NULL);
+
+-- Dumping data for table web_gudang.production_progress_ariat: ~2 rows (approximately)
+REPLACE INTO `production_progress_ariat` (`id_pritem`, `id_pr`, `id_spk`, `id_dept`, `po_number`, `brand_name`, `total_qty`, `no_pr`, `tgl_pr`, `dept_name1`, `dept_name2`, `qty`, `size_6d`, `size_6_5d`, `size_7d`, `size_7_5d`, `size_8d`, `size_8_5d`, `size_9d`, `size_9_5d`, `size_10d`, `size_10_5d`, `size_11d`, `size_11_5d`, `size_12d`, `size_13d`, `size_14d`, `size_15d`, `size_16d`) VALUES
+	(1, 7, 27, 1, '5', 'ARIAT', '37', 'NEW-DO-AI-0002', '2025-07-30 09:09:30', 'CUTTING', 'SEWING', '37', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '11', '1', '1', '11', '1', '1'),
+	(2, 8, 27, 1, '5', 'ARIAT', '37', 'NEW-DO-AI-0002', '2025-07-30 09:09:53', 'CUTTING', 'SEWING', '17', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+
+-- Dumping data for table web_gudang.production_progress_blackstone: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.production_progress_report: ~8 rows (approximately)
+REPLACE INTO `production_progress_report` (`id_pr`, `id_spk`, `id_dept`, `po_number`, `brand_name`, `total_qty`, `no_pr`, `dept_name1`, `dept_name2`, `created_at`) VALUES
+	(1, 25, 1, '2', 'BLACK STONE', '15', 'NEW-DO-AI-0002', 'CUTTING', 'SEWING', '2025-07-30 06:28:10'),
+	(2, 25, 1, '2', 'BLACK STONE', '15', 'NEW-DO-AI-0002', 'CUTTING', 'SEWING', '2025-07-30 08:18:36'),
+	(3, 25, 1, '2', 'BLACK STONE', '15', 'NEW-DO-AI-0002', 'CUTTING', 'SEWING', '2025-07-30 08:28:48'),
+	(5, 26, 1, '4', 'ROSSI', '32', 'NEW-DO-AI-0002', 'CUTTING', 'SEWING', '2025-07-30 08:57:23'),
+	(6, 26, 1, '4', 'ROSSI', '32', 'NEW-DO-AI-0002', 'CUTTING', 'SEWING', '2025-07-30 09:02:11'),
+	(7, 27, 1, '5', 'ARIAT', '37', 'NEW-DO-AI-0002', 'CUTTING', 'SEWING', '2025-07-30 09:07:17'),
+	(8, 27, 1, '5', 'ARIAT', '37', 'NEW-DO-AI-0002', 'CUTTING', 'SEWING', '2025-07-30 09:09:41'),
+	(9, 34, 1, 'PO-1690', 'ROSSI', '293', 'OUTPUT-AI-0003', 'CUTTING', 'SEWING', '2025-07-31 08:05:54');
+
+-- Dumping data for table web_gudang.production_progress_report_ariat: ~0 rows (approximately)
+REPLACE INTO `production_progress_report_ariat` (`id_pritem`, `id_pr`, `id_spk`, `id_dept`, `po_number`, `brand_name`, `total_qty`, `no_pr`, `tgl_pr`, `dept_name1`, `dept_name2`, `qty`, `size_6d`, `size_6_5d`, `size_7d`, `size_7_5d`, `size_8d`, `size_8_5d`, `size_9d`, `size_9_5d`, `size_10d`, `size_10_5d`, `size_11d`, `size_11_5d`, `size_12d`, `size_13d`, `size_14d`, `size_15d`, `size_16d`) VALUES
+	(1, 7, 27, 1, '5', 'ARIAT', '37', 'NEW-DO-AI-0002', '2025-07-30 09:09:30', 'CUTTING', 'SEWING', '54', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '12', '2', '2', '12', '2', '2');
+
+-- Dumping data for table web_gudang.production_progress_report_blackstone: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.production_progress_report_rossi: ~0 rows (approximately)
+REPLACE INTO `production_progress_report_rossi` (`id_pritem`, `id_pr`, `id_spk`, `id_dept`, `po_number`, `brand_name`, `total_qty`, `no_pr`, `tgl_pr`, `dept_name1`, `dept_name2`, `qty`, `size_3`, `size_3t`, `size_4`, `size_4t`, `size_5`, `size_5t`, `size_6`, `size_6t`, `size_7`, `size_7t`, `size_8`, `size_8t`, `size_9`, `size_9t`, `size_10`, `size_10t`, `size_11`, `size_11t`, `size_12`, `size_13`, `size_14`, `size_15`) VALUES
+	(1, 5, 26, 1, '4', 'ROSSI', '32', 'NEW-DO-AI-0002', '2025-07-30 09:01:56', 'CUTTING', 'SEWING', '44', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2');
+
+-- Dumping data for table web_gudang.production_progress_rossi: ~0 rows (approximately)
+REPLACE INTO `production_progress_rossi` (`id_pritem`, `id_pr`, `id_spk`, `id_dept`, `po_number`, `brand_name`, `total_qty`, `no_pr`, `tgl_pr`, `dept_name1`, `dept_name2`, `qty`, `size_3`, `size_3t`, `size_4`, `size_4t`, `size_5`, `size_5t`, `size_6`, `size_6t`, `size_7`, `size_7t`, `size_8`, `size_8t`, `size_9`, `size_9t`, `size_10`, `size_10t`, `size_11`, `size_11t`, `size_12`, `size_13`, `size_14`, `size_15`) VALUES
+	(1, 5, 26, 1, '4', 'ROSSI', '32', 'NEW-DO-AI-0002', '2025-07-30 09:01:56', 'CUTTING', 'SEWING', '22', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'),
+	(2, 6, 26, 1, '4', 'ROSSI', '32', 'NEW-DO-AI-0002', '2025-07-30 09:02:32', 'CUTTING', 'SEWING', '22', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+
+-- Dumping data for table web_gudang.production_report: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.production_spk_report: ~6 rows (approximately)
+REPLACE INTO `production_spk_report` (`id_spkcheckin`, `id_spk`, `po_number`, `xfd`, `brand_name`, `artcolor_name`, `total_qty`, `created_at`) VALUES
+	(24, 25, '2', '2025-07-30', 'BLACK STONE', 'CG 104 BLACK COFFEE', '15', '2025-07-29 09:30:08'),
+	(25, 26, '4', '2025-07-23', 'ROSSI', 'CG 104 BLACK COFFEE', '32', '2025-07-30 08:39:01'),
+	(26, 27, '5', '2025-07-31', 'ARIAT', 'CG177 BLACK COFFEE', '37', '2025-07-30 08:39:14'),
+	(27, 28, '4', '2025-07-31', 'BLACK STONE', 'EG 555 GUN METAL', '', '2025-07-30 10:27:21'),
+	(35, 37, '35', '2025-07-16', 'BLACK STONE', '301 BLACK', '50', '2025-07-31 02:47:15'),
+	(36, 38, '123', '2025-07-25', 'ARIAT', '303 CLARET', '102', '2025-07-31 08:04:29');
+
+-- Dumping data for table web_gudang.tb_ariat_size: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.tb_blackstone_size: ~0 rows (approximately)
+
+-- Dumping data for table web_gudang.tb_rossi_size: ~4 rows (approximately)
+REPLACE INTO `tb_rossi_size` (`id_bs`, `id_spk`, `po_number`, `id_brand`, `brand_name`, `artcolor_name`, `xfd`, `total_qty`, `size_3`, `size_3t`, `size_4`, `size_4t`, `size_5`, `size_5t`, `size_6`, `size_6t`, `size_7`, `size_7t`, `size_8`, `size_8t`, `size_9`, `size_9t`, `size_10`, `size_10t`, `size_11`, `size_11t`, `size_12`, `size_12t`, `size_13`, `size_13t`, `size_14`, `size_15`) VALUES
+	(7, 34, 'PO-1690', 0, 'ROSSI', '301 BLACK', '2025-07-02', '293', '0', '0', '10', '4', '16', '10', '10', '18', '19', '19', '30', '30', '30', '8', '16', '8', '8', '5', '11', '15', '4', '15', '7', '0'),
+	(8, 35, 'PO-1692', 0, 'ROSSI', '4046 BLACK', '2025-07-02', '597', '0', '0', '5', '0', '5', '5', '15', '6', '15', '30', '49', '63', '75', '40', '60', '94', '35', '50', '10', '15', '10', '15', '0', '0'),
+	(9, 37, 'PO-1694', 0, 'ROSSI', '666 CLARET', '2025-07-02', '351', '0', '0', '0', '0', '0', '0', '4', '25', '13', '0', '48', '0', '1', '8', '25', '10', '14', '20', '100', '20', '48', '15', '0', '0'),
+	(10, 38, 'PO-1695', 0, 'ROSSI', '666 TAN', '2025-07-02', '447', '0', '0', '6', '9', '6', '10', '10', '15', '0', '0', '30', '10', '79', '35', '62', '61', '20', '15', '30', '15', '19', '15', '0', '0');
+
+-- Dumping data for table web_gudang.users: ~3 rows (approximately)
+REPLACE INTO `users` (`id_user`, `name`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
+	(1, 'Syafiq Wisnu', 's.wisnu1106@gmail.com', 'default.jpg', '$2y$10$u5nt.lm9P1rH1wNMicQ4/uLN4G9FG52/4PKaQrkZoa9r259X9Jkdu', 1, 1, 1752225591),
+	(2, 'bagas', 'bagas@mail.com', 'default.jpg', '$2y$10$0j1zRpHEh1tsQvgHQ9Y3X.uvhsrlyWbZcUixpsGKifPNYxdFfNcNa', 2, 1, 1752226175),
+	(4, 'admin', 'admin@mail.com', 'default.jpg', '$2y$10$pkiqMNERvnwjI2Iwv3gG2eQgjH9X7rFDEz3mjz95.L8WcYVGr5/RS', 1, 1, 1752226340),
+	(5, 'Nathan Tannady', 'tannady.nathan@gmail.com', 'default.jpg', '$2y$10$9mu9j/Rd1iChUhZKLkL/B.vf4oUIVAu1ETH3F122/InFK6bY8Uw.2', 1, 1, 1753771235);
+
+-- Dumping data for table web_gudang.user_access_menu: ~7 rows (approximately)
+REPLACE INTO `user_access_menu` (`id_access`, `role_id`, `menu_id`) VALUES
+	(1, 1, 1),
+	(2, 1, 2),
+	(3, 2, 2),
+	(4, 1, 3),
+	(5, 1, 4),
+	(6, 2, 4),
+	(7, 1, 5),
+	(8, 1, 6);
+
+-- Dumping data for table web_gudang.user_menu: ~5 rows (approximately)
+REPLACE INTO `user_menu` (`id_menu`, `menu`) VALUES
+	(1, 'Admin'),
+	(2, 'User'),
+	(3, 'Menu'),
+	(4, 'Form'),
+	(5, 'Warehouse'),
+	(6, 'Production');
+
+-- Dumping data for table web_gudang.user_role: ~4 rows (approximately)
+REPLACE INTO `user_role` (`id_role`, `role`) VALUES
+	(1, 'Admin'),
+	(2, 'Reguler'),
+	(3, 'Admin SPK'),
+	(4, 'Admin Warehouse');
+
+-- Dumping data for table web_gudang.user_sub_menu: ~19 rows (approximately)
+REPLACE INTO `user_sub_menu` (`id_submenu`, `menu_id`, `menu_name`, `url`, `icon`, `is_active`) VALUES
+	(1, 1, 'Dashboard', 'admin', 'fas fa-fw fa-tachometer-alt', 1),
+	(2, 2, 'My Profile', 'user', 'fas fa-fw fa-user', 1),
+	(3, 2, 'Edit Profile', 'user/edit', 'fas fa-fw fa-user-edit', 1),
+	(4, 3, 'Menu Management', 'menu', 'fas fa-fw fa-folder', 1),
+	(5, 3, 'Submenu Management', 'menu/submenu', 'fas fa-fw fa-folder-open', 1),
+	(6, 4, 'Menu Brand', 'form', 'fab fa-fw fa-bandcamp', 1),
+	(7, 1, 'Role', 'admin/role', 'fas fa-fw fa-user-tie', 1),
+	(8, 4, 'Menu Art&Color', 'form/artcolor', 'fab fa-fw fa-artstation', 1),
+	(9, 4, 'Menu Unit', 'form/unit', 'fas fa-fw fa-balance-scale', 1),
+	(10, 4, 'Menu List Item', 'form/listitem', 'fas fa-fw fa-list-alt', 1),
+	(11, 4, 'Menu Consumption', 'form/consumption', 'fas fa-fw fa-weight-hanging', 1),
+	(12, 4, 'Menu Size', 'form/size', 'fas fa-fw fa-shoe-prints', 0),
+	(13, 4, 'Menu SPK', 'form/spk', 'fas fa-fw fa-file-invoice', 1),
+	(14, 5, 'Check IN', 'warehouse/index_checkin', 'fas fa-fw fa-download', 1),
+	(15, 5, 'Check OUT', 'warehouse/index_checkout', 'fas fa-fw fa-truck', 1),
+	(16, 5, 'Transaksi', 'warehouse/transaksi', 'fas fa-fw fa-clipboard', 1),
+	(17, 6, 'Departement', 'production/dept', 'fas fa-fw fa-code-branch', 1),
+	(18, 6, 'Progress Report', 'production/progress', 'fas fa-fw fa-spinner', 1),
+	(19, 6, 'Production Report', 'production/production_report', 'fas fa-fw fa-box', 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
