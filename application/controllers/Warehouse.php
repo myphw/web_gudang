@@ -14,7 +14,7 @@ class Warehouse extends CI_Controller {
 
     public function index_checkin()
     {
-        $data['title'] = 'Form Menu Check IN';
+        $data['title'] = 'CHECK IN WAREHOUSE';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 
@@ -1251,7 +1251,7 @@ class Warehouse extends CI_Controller {
 
     public function index_checkout()
     {
-        $data['title'] = 'Form Menu Check OUT';
+        $data['title'] = 'CHECK OUT FROM WH';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 

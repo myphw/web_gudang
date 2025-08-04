@@ -612,7 +612,7 @@ class Form extends CI_Controller {
 
     public function spk()
     {
-        $data['title'] = 'Form Menu SPK';
+        $data['title'] = 'P.O. SPK';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 
