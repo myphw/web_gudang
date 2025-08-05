@@ -86,9 +86,18 @@ $current_sj = !empty($outsj) ? $outsj[0] : null;
             <div><span class="label">From:</span> <?= $sj['from'] ?></div>
             <div><span class="label">TO Department:</span> <?= $sj['to_dept'] ?></div>
             <div><span class="label">Tanggal Checkout:</span> <?= $sj['tgl_checkout'] ?></div>
-            <?php endforeach; ?>
+            
         </td>
     </tr>
+    <?php if (!empty($sj['keterangan'])): ?>
+        <div class="section">
+            <span class="label">Keterangan:</span>
+            <div style="margin-top: 5px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;">
+                <?= nl2br(htmlspecialchars($sj['keterangan'])) ?>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php endforeach; ?>
 </table>
 
 <?php

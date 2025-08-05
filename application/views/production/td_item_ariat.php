@@ -44,12 +44,20 @@ $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','1
                         </div>
                     </div>
                 </div>
+                <?php if (!empty($sp['keterangan'])): ?>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="keterangan">Keterangan</label>
+                            <div class="alert alert-info" id="keterangan">
+                                <?= nl2br(htmlspecialchars($sp['keterangan'])) ?>
+                            </div>
+                        </div>  
+                        <?php endif; ?>
                 <a href="<?= base_url('production/export_progress_ariat/' . $sp['id_pr']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
             <?php endforeach; ?>
 
             <a href="<?= base_url('production/progress') ?>" class="badge badge-warning mb-3">BACK TO SJ</a>
             <a href="#" class="badge badge-success mb-3" data-toggle="modal" data-target="#newTdItemModal">INPUT ITEM</a>
-
+            <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newKeteranganModal">KETERANGAN</a>
             <table class="table table-bordered table-responsive">
                 <thead>
                     <tr>
@@ -130,4 +138,28 @@ $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','1
     </div>
 </div>
 <?php endif; ?>
-
+<?php if (!empty($spk)) : $sp = $spk[0]; ?>
+<div class="modal fade" id="newKeteranganModal" tabindex="-1" aria-labelledby="newKeteranganModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="<?= base_url('production/update_production_keterangan_ariat/' . $sp['id_pr']); ?>" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newKeteranganModalLabel">Keterangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea name="keterangan" class="form-control" placeholder="Masukkan keterangan"><?= isset($sp['keterangan']) ? $sp['keterangan'] : '' ?></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

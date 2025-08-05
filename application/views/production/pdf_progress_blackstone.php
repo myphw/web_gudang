@@ -49,6 +49,14 @@
             <div><strong>Tanggal Dibuat:</strong> <?= date('d-m-Y H:i', strtotime($spk['created_at'])) ?></div>
         </td>
     </tr>
+    <?php if (!empty($spk['keterangan'])): ?>
+        <div class="section">
+            <span class="label">Keterangan:</span>
+            <div style="margin-top: 5px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;">
+                <?= nl2br(htmlspecialchars($spk['keterangan'])) ?>
+            </div>
+        </div>
+    <?php endif; ?>
 </table>
 
 <!-- Size Table -->

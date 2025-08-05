@@ -62,11 +62,20 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <input type="date" class="form-control" value="<?= $sj['tgl_checkin'] ?>" readonly>
                     </div>
                 </div>
+                <?php if (!empty($sj['keterangan'])): ?>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="keterangan">Keterangan</label>
+                            <div class="alert alert-info" id="keterangan">
+                                <?= nl2br(htmlspecialchars($sj['keterangan'])) ?>
+                            </div>
+                        </div>  
+                        <?php endif; ?>
                 <a href="<?= base_url('warehouse/update_sj_item/' . $sj['id_spk']) ?>" class="badge badge-warning mb-3">BACK</a>
             <?php endif; ?>
 
             <!-- Buttons -->
             <a href="#" class="badge badge-success mb-3" data-toggle="modal" data-target="#newSjItemModal">INPUT ITEM</a>
+            <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newKeteranganModal">KETERANGAN</a>
             <a type="button" class="badge badge-primary"  href="<?=base_url('warehouse/update_spk_checkin_brand/'.$sp['id_spk'])?>" name="btn_add" style="margin:auto;">MASTER DATA</a>
             <a href="<?= base_url('warehouse/export_sj_rossi/'.$sp['id_spk']. '/' . $sj['id_sj']) ?>" class="badge badge-danger mb-3" target="_blank">PDF</a>
 
@@ -173,6 +182,31 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Add</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if (!empty($insj)) : $sp = $insj[0]; ?>
+<div class="modal fade" id="newKeteranganModal" tabindex="-1" aria-labelledby="newKeteranganModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="<?= base_url('warehouse/update_keterangan_rossi/' . $sp['id_spk'] . '/' . $sp['id_sj']); ?>" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newKeteranganModalLabel">Keterangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea name="keterangan" class="form-control" placeholder="Masukkan keterangan"><?= isset($sp['keterangan']) ? $sp['keterangan'] : '' ?></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
