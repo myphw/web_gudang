@@ -84,7 +84,7 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                                     <td><?= $po['size_' . $s] ?></td>
                                 <?php endfor; ?>
                             <td>
-                                <a href="<?= base_url('warehouse/delete_retur_rossi/' . $po['id_iritem']) ?>" class="badge badge-danger">Delete</a>
+                                <a href="<?= base_url('warehouse/delete_retur_blackstone/' . $po['id_iritem']) ?>" class="badge badge-danger">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -131,19 +131,24 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                     <!-- Common Fields -->
                     <div id="common-fields">
                         <div class="form-group">
-                        <select name="item_name" id="item_name" class="form-control" required>
-                            <option value="">Select Item</option>
-                            <?php foreach($uns as $c): ?>
-                                <option value="<?= $c['item_name']; ?>" 
-                                        data-unit="<?= $c['unit_name']; ?>">
-                                    <?= $c['item_name']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="ui fluid search selection dropdown" id="item_name_dropdown">
+                            <input type="hidden" name="item_name">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Item</div>
+                            <div class="menu">
+                                <?php foreach ($uns as $c): ?>
+                                <div class="item" 
+                                    data-value="<?= $c['item_name'] ?>"
+                                    data-unit="<?= $c['unit_name'] ?>">
+                                    <?= $c['item_name'] ?>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-                            <div class="form-group">
-                            <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" readonly>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" readonly>
+                    </div>
                     </div>
 
                     <!-- GLOBAL Fields -->
@@ -204,3 +209,21 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
 </div>
 <?php endif; ?>
 
+
+
+
+<script>
+$(document).ready(function() {
+    $('#item_name_dropdown').dropdown();
+});
+$('#item_name_dropdown').dropdown({
+    onChange: function(value, text, $selectedItem) {
+        let unit = $selectedItem.data('unit');
+        let rate = $selectedItem.data('rate');
+
+        $('#unit_name').val(unit);
+        $('#cons_rate').val(rate);
+        // you can also use `rate` if needed
+    }
+});
+</script>

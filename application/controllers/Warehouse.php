@@ -2653,6 +2653,99 @@ class Warehouse extends CI_Controller {
     $this->load->view('templates/footer');
 }
 
+public function sj_item_retur_blackstone($id)
+{
+    $data['title'] = 'RETURN ITEM BLACKSTONE';
+    $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+    
+    // Ambil data return_sj berdasarkan ID
+    $data['spk'] = $this->General_model->get_data('return_sj', ['id_ir' => $id])->result_array();
+    $retur = end($data['spk']); // Ambil data terakhir
+    $id_spk = $retur['id_spk'];
+    
+
+    $data['id_spk'] = $id_spk;
+    $data['id_ir'] = $id;
+
+    // Ambil item yang belum dikurangi qty-nya
+    $data['uns'] = $this->General_model->get_data('form_checkin_item', ['id_spk' => $id_spk])->result_array();
+
+    // Ambil data retur item
+    $data['in'] = $this->General_model->get_data('return_sj_item_blackstone', ['id_ir' => $id])->result_array();
+
+    // Proses simpan jika form disubmit
+    if ($this->input->server('REQUEST_METHOD') == 'POST') {
+        $item_type   = $this->input->post('item_type');
+        $item_name   = $this->input->post('item_name');
+        $unit_name   = $this->input->post('unit_name');
+        $qty_return  = 0;
+
+        $input_data = [
+            'id_ir'       => $id,
+            'id_spk'      => $id_spk,
+            'po_number'   => $this->input->post('po_number'),
+            'brand_name'  => $this->input->post('brand_name'),
+            'dept_name1'  => $this->input->post('dept_name1'),
+            'to'          => $this->input->post('to'),
+            'item_name'   => $item_name,
+            'unit_name'   => $unit_name,
+            'no_ir'       => $this->input->post('no_ir'),
+            'tgl_ir'      => date('Y-m-d H:i:s'),
+        ];
+
+        // Jika tipe GLOBAL
+        if ($item_type === 'GLOBAL') {
+            $qty_return = $this->input->post('qty');
+        }
+
+        // Jika tipe SIZERUN
+        if ($item_type === 'SIZERUN') {
+            $sizes = ['36', '37', '38', '39', '40', '41', '42', '43', '43', '44', '45', '46',
+                      '47', '48', '49', '50'];
+
+            foreach ($sizes as $sz) {
+                $val = (int)$this->input->post('size_' . $sz);
+                $input_data['size_' . $sz] = $val;
+                $qty_return += $val;
+            }
+        }
+
+        $input_data['qty_return'] = $qty_return;
+        $input_data['total_qty'] = $qty_return;
+
+        // Simpan ke tabel return_sj_item_rossi
+        $this->General_model->insert('return_sj_item_blackstone', $input_data);
+
+        // Update qty di form_checkin_item
+        $check = $this->db->get_where('form_checkin_item', [
+            'id_spk'     => $id_spk,
+            'item_name'  => $item_name,
+            'unit_name'  => $unit_name
+        ])->row_array();
+
+        if ($check) {
+            $new_qty = $check['qty'] - $qty_return;
+            $this->General_model->update2('form_checkin_item', [
+                'qty' => $new_qty
+            ], [
+                'id_spk'     => $id_spk,
+                'item_name'  => $item_name,
+                'unit_name'  => $unit_name
+            ]);
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Item retur berhasil ditambahkan.</div>');
+        redirect('warehouse/sj_item_retur_blackstone/' . $id);
+    }
+
+    // Load view
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/sidebar', $data);
+    $this->load->view('templates/topbar', $data);
+    $this->load->view('warehouse/sj_item_retur_blackstone', $data);
+    $this->load->view('templates/footer');
+}
+
 public function sj_item_retur_ariat($id)
 {
     $data['title'] = 'RETURN ITEM ARIAT';
@@ -2857,6 +2950,70 @@ public function sj_item_retur_ariat($id)
         }
     }
 
+    public function delete_retur_blackstone($id)
+    {
+        $this->load->model('General_model');
+
+        if (!$id) {
+            show_error("Missing brand ID");
+            return;
+        }
+        $item = $this->General_model->get('return_sj_item_blackstone', ['id_iritem' => $id]);
+        if (!$item) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Item not found.</div>');
+            redirect('warehouse/sj_item_retur_blacstone'); // Or another fallback
+            return;
+        }
+
+        $item = $item[0]; // Get the first record
+
+        $id_spk   = $item['id_spk'];
+        $id_ir    = $item['id_ir'];
+
+        $deleted = $this->General_model->delete('return_sj_item_blackstone', 'id_iritem', $id);
+
+        if ($deleted > 0) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data deleted successfully.</div>');
+                redirect('warehouse/sj_item_retur_blackstone/' . $id_ir);
+
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data not found.</div>');
+            redirect('warehouse/sj_item_retur_blackstone/' . $id_ir);
+        }
+    }
+
+    public function delete_retur_ariat($id)
+    {
+        $this->load->model('General_model');
+
+        if (!$id) {
+            show_error("Missing brand ID");
+            return;
+        }
+        $item = $this->General_model->get('return_sj_item_ariat', ['id_iritem' => $id]);
+        if (!$item) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Item not found.</div>');
+            redirect('warehouse/sj_item_retur_blacstone'); // Or another fallback
+            return;
+        }
+
+        $item = $item[0]; // Get the first record
+
+        $id_spk   = $item['id_spk'];
+        $id_ir    = $item['id_ir'];
+
+        $deleted = $this->General_model->delete('return_sj_item_ariat', 'id_iritem', $id);
+
+        if ($deleted > 0) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data deleted successfully.</div>');
+                redirect('warehouse/sj_item_retur_ariat/' . $id_ir);
+
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data not found.</div>');
+            redirect('warehouse/sj_item_retur_ariat/' . $id_ir);
+        }
+    }
+
     public function update_keterangan_return_rossi($id_ir)
     {
         $keterangan = $this->input->post('keterangan');
@@ -2870,6 +3027,36 @@ public function sj_item_retur_ariat($id)
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
         redirect('warehouse/sj_item_retur_rossi/' . $id_ir);
+    }
+
+    public function update_keterangan_return_blacksone($id_ir)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_ir', $id_ir);
+        $this->db->update('return_sj', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_retur_blackstone/' . $id_ir);
+    }
+
+    public function update_keterangan_return_ariat($id_ir)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_ir', $id_ir);
+        $this->db->update('return_sj', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_retur_ariat/' . $id_ir);
     }
 
     public function delete_sj_retur($id)
@@ -2894,97 +3081,6 @@ public function sj_item_retur_ariat($id)
     }
 
 
-    public function sj_item_retur_blackstone($id)
-{
-    $data['title'] = 'RETURN ITEM BLACKSTONE';
-    $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
     
-    // Ambil data return_sj berdasarkan ID
-    $data['spk'] = $this->General_model->get_data('return_sj', ['id_ir' => $id])->result_array();
-    $retur = end($data['spk']); // Ambil data terakhir
-    $id_spk = $retur['id_spk'];
-    
-
-    $data['id_spk'] = $id_spk;
-    $data['id_ir'] = $id;
-
-    // Ambil item yang belum dikurangi qty-nya
-    $data['uns'] = $this->General_model->get_data('form_checkin_item', ['id_spk' => $id_spk])->result_array();
-
-    // Ambil data retur item
-    $data['in'] = $this->General_model->get_data('return_sj_item_blackstone', ['id_ir' => $id])->result_array();
-
-    // Proses simpan jika form disubmit
-    if ($this->input->server('REQUEST_METHOD') == 'POST') {
-        $item_type   = $this->input->post('item_type');
-        $item_name   = $this->input->post('item_name');
-        $unit_name   = $this->input->post('unit_name');
-        $qty_return  = 0;
-
-        $input_data = [
-            'id_ir'       => $id,
-            'id_spk'      => $id_spk,
-            'po_number'   => $this->input->post('po_number'),
-            'brand_name'  => $this->input->post('brand_name'),
-            'dept_name1'  => $this->input->post('dept_name1'),
-            'to'          => $this->input->post('to'),
-            'item_name'   => $item_name,
-            'unit_name'   => $unit_name,
-            'no_ir'       => $this->input->post('no_ir'),
-            'tgl_ir'      => date('Y-m-d H:i:s'),
-        ];
-
-        // Jika tipe GLOBAL
-        if ($item_type === 'GLOBAL') {
-            $qty_return = $this->input->post('qty');
-        }
-
-        // Jika tipe SIZERUN
-        if ($item_type === 'SIZERUN') {
-            $sizes = ['36', '37', '38', '39', '40', '41', '42', '43', '43', '44', '45', '46',
-                      '47', '48', '49', '50'];
-
-            foreach ($sizes as $sz) {
-                $val = (int)$this->input->post('size_' . $sz);
-                $input_data['size_' . $sz] = $val;
-                $qty_return += $val;
-            }
-        }
-
-        $input_data['qty_return'] = $qty_return;
-        $input_data['total_qty'] = $qty_return;
-
-        // Simpan ke tabel return_sj_item_rossi
-        $this->General_model->insert('return_sj_item_blackstone', $input_data);
-
-        // Update qty di form_checkin_item
-        $check = $this->db->get_where('form_checkin_item', [
-            'id_spk'     => $id_spk,
-            'item_name'  => $item_name,
-            'unit_name'  => $unit_name
-        ])->row_array();
-
-        if ($check) {
-            $new_qty = $check['qty'] - $qty_return;
-            $this->General_model->update2('form_checkin_item', [
-                'qty' => $new_qty
-            ], [
-                'id_spk'     => $id_spk,
-                'item_name'  => $item_name,
-                'unit_name'  => $unit_name
-            ]);
-        }
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success">Item retur berhasil ditambahkan.</div>');
-        redirect('warehouse/sj_item_retur_blackstone/' . $id);
-    }
-
-    // Load view
-    $this->load->view('templates/header', $data);
-    $this->load->view('templates/sidebar', $data);
-    $this->load->view('templates/topbar', $data);
-    $this->load->view('warehouse/sj_item_retur_blackstone', $data);
-    $this->load->view('templates/footer');
-}
 
 }
