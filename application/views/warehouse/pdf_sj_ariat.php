@@ -85,6 +85,14 @@ $current_sj = !empty($insj) ? $insj[0] : null;
             <div><span class="label">Tanggal Checkin:</span> <?= $sj['tgl_checkin'] ?></div>
         </td>
     </tr>
+    <?php if (!empty($sj['keterangan'])): ?>
+        <div class="section">
+            <span class="label">Keterangan:</span>
+            <div style="margin-top: 5px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;">
+                <?= nl2br(htmlspecialchars($sj['keterangan'])) ?>
+            </div>
+        </div>
+    <?php endif; ?>
 </table>
 
     <table>

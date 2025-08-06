@@ -589,6 +589,54 @@ class Warehouse extends CI_Controller {
         }
     }
 
+    public function update_keterangan_blackstone($id_spk, $id_sj)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_spk', $id_spk);
+        $this->db->where('id_sj', $id_sj);
+        $this->db->update('form_sj', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_blackstone/' . $id_spk . '/' . $id_sj);
+    }
+
+    public function update_keterangan_ariat($id_spk, $id_sj)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_spk', $id_spk);
+        $this->db->where('id_sj', $id_sj);
+        $this->db->update('form_sj', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_ariat/' . $id_spk . '/' . $id_sj);
+    }
+
+    public function update_keterangan_rossi($id_spk, $id_sj)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_spk', $id_spk);
+        $this->db->where('id_sj', $id_sj);
+        $this->db->update('form_sj', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_rossi/' . $id_spk . '/' . $id_sj);
+    }
+
 
     public function sj_item_blackstone($id, $id_sj)
     {
@@ -1620,6 +1668,53 @@ class Warehouse extends CI_Controller {
         } else {
             redirect('warehouse/index_checkout');
         }
+    }
+    public function update_checkout_keterangan_rossi($id_spk, $id_sj)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_spk', $id_spk);
+        $this->db->where('id_sj', $id_sj);
+        $this->db->update('form_sj_checkout', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_checkout_rossi/' . $id_spk . '/' . $id_sj);
+    }
+
+    public function update_checkout_keterangan_ariat($id_spk, $id_sj)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_spk', $id_spk);
+        $this->db->where('id_sj', $id_sj);
+        $this->db->update('form_sj_checkout', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_checkout_ariat/' . $id_spk . '/' . $id_sj);
+    }
+
+    public function update_checkout_keterangan_blackstone($id_spk, $id_sj)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_spk', $id_spk);
+        $this->db->where('id_sj', $id_sj);
+        $this->db->update('form_sj_checkout', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('warehouse/sj_item_checkout_blackstone/' . $id_spk . '/' . $id_sj);
     }
 
     public function sj_item_checkout_blackstone($id, $id_sj)

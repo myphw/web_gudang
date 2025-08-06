@@ -62,9 +62,18 @@ $current_sj = !empty($outsj) ? $outsj[0] : null;
                             <input type="date" name="tgl_checkin" style="width: 110%;margin-right: 0px;margin-left: px;" class="form-control" id="tgl_checkin" value="<?=$sj['tgl_checkout']?>" readonly placeholder="">
                         </div>
                     </div>   
+                    <?php if (!empty($sj['keterangan'])): ?>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="keterangan">Keterangan</label>
+                            <div class="alert alert-info" id="keterangan">
+                                <?= nl2br(htmlspecialchars($sj['keterangan'])) ?>
+                            </div>
+                        </div>  
+                        <?php endif; ?>
                     <a type="button" class="badge badge-warning mb-3"  href="<?=base_url('warehouse/update_sj_checkout/'.$sj['id_spk'])?>" name="btn_add" style="margin:auto;">BACK</a>  
                 <?php endforeach; ?>
                 <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newSjItemModal">INPUT ITEM</a>
+                <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newKeteranganModal">KETERANGAN</a>
                 <a type="button" class="badge badge-primary mb-3"  href="<?=base_url('warehouse/update_spk_checkout_brand/'.$sp['id_spk'])?>" name="btn_add" style="margin:auto;">MASTER DATA</a>   
                 <a href="<?= base_url('warehouse/export_sj_checkout_blackstone_pdf/' . $sp['id_spk'] . '/' . $sj['id_sj']); ?>" class="badge badge-danger mb-3" target="_blank">PDF</a>                
                 <table class="table table-bordered">
@@ -148,17 +157,23 @@ $current_sj = !empty($outsj) ? $outsj[0] : null;
                     <!-- Common Fields -->
                     <div id="common-fields">
                         <div class="form-group">
-                        <select name="item_name" id="item_name" class="form-control" required>
-                            <option value="">Select Item</option>
-                            <?php foreach($uns as $c): ?>
-                                <option value="<?= $c['item_name']; ?>" 
-                                        data-unit="<?= $c['unit_name']; ?>">
-                                    <?= $c['item_name']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="ui fluid search selection dropdown" id="item_name_dropdown">
+                            <input type="hidden" name="item_name">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Item</div>
+                            <div class="menu">
+                                <?php foreach ($uns as $c): ?>
+                                <div class="item" 
+                                    data-value="<?= $c['item_name'] ?>"
+                                    data-unit="<?= $c['unit_name'] ?>"
+                                    data-rate="<?= $c['cons_rate'] ?>">
+                                    <?= $c['item_name'] ?>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     </div>
-                        <div class="form-group">
+                    <div class="form-group">
                         <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" readonly>
                     </div>
                     </div>
@@ -193,5 +208,44 @@ $current_sj = !empty($outsj) ? $outsj[0] : null;
     </div>
 </div>
 <?php endif; ?>
+<?php if (!empty($insj)) : $sp = $insj[0]; ?>
+<div class="modal fade" id="newKeteranganModal" tabindex="-1" aria-labelledby="newKeteranganModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="<?= base_url('warehouse/update_checkout_keterangan_blackstone/' . $sp['id_spk'] . '/' . $sp['id_sj']); ?>" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newKeteranganModalLabel">Keterangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea name="keterangan" class="form-control" placeholder="Masukkan keterangan"><?= isset($sp['keterangan']) ? $sp['keterangan'] : '' ?></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<script>
+$(document).ready(function() {
+    $('#item_name_dropdown').dropdown();
+});
+$('#item_name_dropdown').dropdown({
+    onChange: function(value, text, $selectedItem) {
+        let unit = $selectedItem.data('unit');
+        let rate = $selectedItem.data('rate');
 
+        $('#unit_name').val(unit);
+        $('#cons_rate').val(rate);
+        // you can also use `rate` if needed
+    }
+});
+</script>
      

@@ -102,24 +102,24 @@
                     <div class="form-group">
                         <input type="text" class="form-control" name="part_name" placeholder="Part Name">
                     </div>
-
+                    
                     <div class="form-group">
-                        <select name="item_name" id="item_name" class="form-control" required>
-                            <option value="">Select Item</option>
-                            <?php if (!empty($item)) : ?>
+                        <div class="ui fluid search selection dropdown" id="item_name_dropdown">
+                            <input type="hidden" name="item_name">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Item</div>
+                            <div class="menu">
                                 <?php foreach ($item as $c): ?>
-                                    <option value="<?= $c['item_name'] ?>" 
-                                            data-unit="<?= $c['unit_name'] ?>" 
-                                            data-rate="<?= $c['cons_rate'] ?>">
-                                        <?= $c['item_name'] ?>
-                                    </option>
+                                <div class="item" 
+                                    data-value="<?= $c['item_name'] ?>"
+                                    data-unit="<?= $c['unit_name'] ?>"
+                                    data-rate="<?= $c['cons_rate'] ?>">
+                                    <?= $c['item_name'] ?>
+                                </div>
                                 <?php endforeach; ?>
-                            <?php else: ?>
-                                <option value="">No items found for this ArtColor</option>
-                            <?php endif; ?>
-                        </select>
+                            </div>
+                        </div>
                     </div>
-
 
                     <div class="form-group">
                         <input type="text" class="form-control" name="color_name" placeholder="Colour Name">
@@ -147,7 +147,11 @@
         </div>
     </div>
 </div>
-
+<script>
+$(document).ready(function() {
+    $('#item_name_dropdown').dropdown();
+});
+</script>
 <script>
 $('#newSpkItemModal').on('show.bs.modal', function () {
     let artcolor = $('#artcolor_name').val();
@@ -173,5 +177,40 @@ $('#newSpkItemModal').on('show.bs.modal', function () {
         }
     });
 });
+$('#item_name_dropdown').dropdown({
+    onChange: function(value, text, $selectedItem) {
+        let unit = $selectedItem.data('unit');
+        let rate = $selectedItem.data('rate');
 
+        $('#unit_name').val(unit);
+        $('#cons_rate').val(rate);
+        // you can also use `rate` if needed
+    }
+});
+$(document).ready(function () {
+    // Initialize Semantic UI dropdown
+    $('.ui.dropdown').dropdown();
+
+    // Handle item selection
+    $('#item_name').on('change', function () {
+        const selectedOption = $(this).find(':selected');
+        const unit = selectedOption.data('unit') || '';
+        $('#unit_name').val(unit);
+    });
+
+    // Toggle fields by item_type
+    $('#item_type').on('change', function () {
+        const type = $(this).val();
+        if (type === 'GLOBAL') {
+            $('#global-fields').show();
+            $('#sizerun-fields').hide();
+        } else if (type === 'SIZERUN') {
+            $('#global-fields').hide();
+            $('#sizerun-fields').show();
+        } else {
+            $('#global-fields').hide();
+            $('#sizerun-fields').hide();
+        }
+    });
+});
 </script>

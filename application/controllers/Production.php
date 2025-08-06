@@ -161,6 +161,51 @@ class Production extends CI_Controller {
         }
     }
 
+    public function update_production_keterangan_blackstone($id_pr)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_pr', $id_pr);
+        $this->db->update('production_progress_report', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('production/td_item_blackstone/' . $id_pr);
+    }
+
+    public function update_production_keterangan_ariat($id_pr)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_pr', $id_pr);
+        $this->db->update('production_progress_report', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('production/td_item_ariat/' . $id_pr);
+    }
+
+    public function update_production_keterangan_rossi($id_pr)
+    {
+        $keterangan = $this->input->post('keterangan');
+
+        $data = [
+            'keterangan' => $keterangan
+        ];
+
+        $this->db->where('id_pr', $id_pr);
+        $this->db->update('production_progress_report', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Keterangan updated successfully!</div>');
+        redirect('production/td_item_rossi/' . $id_pr);
+    }
+
     public function td_item_blackstone($id) // $id = id_pr
     {
         $data['title'] = 'Black Stone Tanda Terima View';
