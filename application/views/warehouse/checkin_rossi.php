@@ -58,12 +58,10 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <th scope="col-lg-2">Colour</th>
                         <th scope="col-lg-2">Ukuran MTRL</th>
                         <th scope="col-lg-2">Unit</th>
-                        <th scope="col-lg-2">QTY</th>
                         <th scope="col-lg-2">Total Cons Rate</th>
                         <th scope="col-lg-2">Checkin QTY</th>
-                        <th scope="col-lg-2">Checkin Balance</th>
                         <th scope="col-lg-2">Checkout QTY</th>
-                        <th scope="col-lg-2">Checkout Balance</th>
+                        <th scope="col-lg-2">Total Stock</th>
                         <?php foreach ($sizes as $label): ?>
                             <th><?= strtoupper($label) ?></th>
                         <?php endforeach; ?>
@@ -80,12 +78,10 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <td><?= $po['color_name']?></td>
                         <td><?= $po['mtrl_name']?></td>
                         <td><?= $po['unit_name']?></td>
-                        <td><?= $po['qty']?></td>
                         <td><?= $po['total_consrate']?></td>
                         <td><?= $po['checkin_qty']?></td>
-                        <td><?= $po['checkin_balance']?></td>
                         <td><?= $po['checkout_qty']?></td>
-                        <td><?= $po['checkout_balance']?></td>
+                        <td><?= $po['qty']?></td>
                         <?php foreach ($sizes as $label): ?>
                                 <td><?= $po['size_' . $label] ?? '-' ?></td>
                         <?php endforeach; ?>

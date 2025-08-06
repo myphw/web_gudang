@@ -53,13 +53,11 @@
                         <th scope="col-lg-2">Descriptions</th>
                         <th scope="col-lg-2">Colour</th>
                         <th scope="col-lg-2">Ukuran MTRL</th>
-                        <th scope="col-lg-2">Unit</th>
-                        <th scope="col-lg-2">QTY</th>
+                        <th scope="col-lg-2">Unit</th>                        
                         <th scope="col-lg-2">Total Cons Rate</th>
-                        <th scope="col-lg-2">Checkin QTY</th>
-                        <th scope="col-lg-2">Checkin Balance</th>
+                        <th scope="col-lg-2">Checkin QTY</th>                
                         <th scope="col-lg-2">Checkout QTY</th>
-                        <th scope="col-lg-2">Checkout Balance</th>
+                        <th scope="col-lg-2">Total Stok</th>
                         <?php for ($s = 36; $s <= 50; $s++): ?>
                             <th><?= $s ?></th>
                         <?php endfor; ?>
@@ -79,10 +77,8 @@
                         <td><?= $po['unit_name']?></td>
                         <td><?= $po['qty']?></td>
                         <td><?= $po['total_consrate']?></td>
-                        <td><?= $po['checkin_qty']?></td>
-                        <td><?= $po['checkin_balance']?></td>
+                        <td><?= $po['checkin_qty']?></td>                       
                         <td><?= $po['checkout_qty']?></td>
-                        <td><?= $po['checkout_balance']?></td>
                         <?php for ($s = 36; $s <= 50; $s++): ?>
                             <td><?= $po['size_' . $s] ?></td>
                         <?php endfor; ?>

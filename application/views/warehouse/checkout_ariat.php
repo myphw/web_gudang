@@ -56,13 +56,11 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <th scope="col-lg-2">Descriptions</th>
                         <th scope="col-lg-2">Colour</th>
                         <th scope="col-lg-2">Ukuran MTRL</th>
-                        <th scope="col-lg-2">Unit</th>
-                        <th scope="col-lg-2">QTY</th>
+                        <th scope="col-lg-2">Unit</th>                        
                         <th scope="col-lg-2">Total Cons Rate</th>
                         <th scope="col-lg-2">Checkin QTY</th>
-                        <th scope="col-lg-2">Checkin Balance</th>
                         <th scope="col-lg-2">Checkout QTY</th>
-                        <th scope="col-lg-2">Checkout Balance</th>
+                        <th scope="col-lg-2">Total Stock</th>
                         <?php foreach ($sizes as $s): ?>
                             <th><?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?></th>
                         <?php endforeach; ?>
@@ -78,13 +76,11 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <td><?= $po['item_name']?></td>
                         <td><?= $po['color_name']?></td>
                         <td><?= $po['mtrl_name']?></td>
-                        <td><?= $po['unit_name']?></td>
-                        <td><?= $po['qty']?></td>
+                        <td><?= $po['unit_name']?></td>                        
                         <td><?= $po['total_consrate']?></td>
                         <td><?= $po['checkin_qty']?></td>
-                        <td><?= $po['checkin_balance']?></td>
                         <td><?= $po['checkout_qty']?></td>
-                        <td><?= $po['checkout_balance']?></td>
+                        <td><?= $po['qty']?></td>
                         <?php foreach ($sizes as $s): ?>
                             <td><?= $po['size_' . $s] ?? '-' ?></td>
                         <?php endforeach; ?>

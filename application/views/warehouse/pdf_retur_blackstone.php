@@ -62,9 +62,9 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
             <th>Item Name</th>
             <th>Unit</th>
             <th>QTY</th>
-            <?php foreach ($sizes as $label): ?>
-                <th><?= strtoupper($label) ?></th>
-            <?php endforeach; ?>
+            <?php for ($s = 36; $s <= 50; $s++): ?>
+                            <th><?= $s ?></th>
+                        <?php endfor; ?>
         </tr>
     </thead>
     <tbody>
@@ -73,9 +73,9 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                     <td><?= $in['item_name'] ?></td>
                     <td><?= $in['unit_name'] ?></td>
                     <td><?= $in['total_qty'] ?></td>
-                    <?php foreach ($sizes as $label): ?>
-                    <td><?= $in['size_' . $label] ?? '-' ?></td>
-                    <?php endforeach; ?>
+                    <?php for ($s = 36; $s <= 50; $s++): ?>
+                        <td><?= $in['size_' . $s] ?></td>
+                    <?php endfor; ?>
                 </tr>
     </tbody>
 </table>

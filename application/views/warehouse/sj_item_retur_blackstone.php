@@ -52,24 +52,23 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                             </div>
                         </div>  
                         <?php endif; ?>
-                <a href="<?= base_url('warehouse/export_retur_rossi/' . $sp['id_ir']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
+                <a href="<?= base_url('warehouse/export_retur_blackstone/' . $sp['id_ir']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
             <?php endforeach; ?>
 
             <a href="<?= base_url('warehouse/retur') ?>" class="badge badge-warning mb-3">BACK TO SJ</a>
             <a href="#" class="badge badge-success mb-3" data-toggle="modal" data-target="#newTdItemModal">INPUT ITEM</a>
             <a href="" class="badge badge-primary mb-3" data-toggle="modal" data-target="#newKeteranganModal">ADD KETERANGAN</a>
 
-            <table class="table table-bordered table-responsive">
+            <table class="table table-bordered ">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>ITEM</th>
                         <th>UNIT</th>
                         <th>QTY</th>
-                        <?php foreach ($sizes as $label): ?>
-                            <th><?= strtoupper($label) ?></th>
-                        <?php endforeach; ?>
-                        <th>KETERANGAN</th>
+                        <?php for ($s = 36; $s <= 50; $s++): ?>
+                            <th><?= $s ?></th>
+                        <?php endfor; ?>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -81,10 +80,9 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                             <td><?= $po['item_name'] ?></td>
                             <td><?= $po['unit_name'] ?></td>
                             <td><?= $po['qty_return'] ?></td>
-                            <?php foreach ($sizes as $label): ?>
-                                <td><?= $po['size_' . $label] ?? '-' ?></td>
-                            <?php endforeach; ?>
-                            <td><?= $po['keterangan'] ?></td>
+                            <?php for ($s = 36; $s <= 50; $s++): ?>
+                                    <td><?= $po['size_' . $s] ?></td>
+                                <?php endfor; ?>
                             <td>
                                 <a href="<?= base_url('warehouse/delete_retur_rossi/' . $po['id_iritem']) ?>" class="badge badge-danger">Delete</a>
                             </td>
@@ -105,7 +103,7 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
 <div class="modal fade" id="newTdItemModal" tabindex="-1" aria-labelledby="newTdItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <form action="<?= base_url('warehouse/sj_item_retur_rossi/' . $sp['id_ir']); ?>" method="post">
+            <form action="<?= base_url('warehouse/sj_item_retur_blackstone/' . $sp['id_ir']); ?>" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="newTdItemModalLabel">Add New SPK Item</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
@@ -160,11 +158,11 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                     <div id="sizerun-fields" style="display: none;">
                         <label>Size Run:</label>
                         <div class="row">
-                            <?php foreach ($sizes as $label): ?>
+                            <?php for ($i = 36; $i <= 50; $i++): ?>
                                 <div class="col-2 mb-2">
-                                    <input type="text" name="size_<?= $label ?>" class="form-control" placeholder="<?= strtoupper($label) ?>">
+                                    <input type="text" name="size_<?= $i ?>" class="form-control" placeholder="<?= $i ?>">
                                 </div>
-                            <?php endforeach; ?>
+                            <?php endfor; ?>
                         </div>
                     </div>   
 

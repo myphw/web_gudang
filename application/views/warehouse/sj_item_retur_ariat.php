@@ -1,5 +1,7 @@
 <?php
-$sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9', '9t', '10', '10t', '11', '11t', '12', '13', '14', '15'];
+$sizes = ['6d', '6_5d', '7d', '7_5d', '8d', '8_5d',
+            '9d', '9_5d', '10d', '10_5d', '11d', '11_5d',
+            '12d', '13d', '14d', '15d', '16d'];
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -52,7 +54,7 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                             </div>
                         </div>  
                         <?php endif; ?>
-                <a href="<?= base_url('warehouse/export_retur_rossi/' . $sp['id_ir']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
+                <a href="<?= base_url('warehouse/export_retur_ariat/' . $sp['id_ir']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
             <?php endforeach; ?>
 
             <a href="<?= base_url('warehouse/retur') ?>" class="badge badge-warning mb-3">BACK TO SJ</a>
@@ -105,7 +107,7 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
 <div class="modal fade" id="newTdItemModal" tabindex="-1" aria-labelledby="newTdItemModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <form action="<?= base_url('warehouse/sj_item_retur_rossi/' . $sp['id_ir']); ?>" method="post">
+            <form action="<?= base_url('warehouse/sj_item_retur_ariat/' . $sp['id_ir']); ?>" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="newTdItemModalLabel">Add New SPK Item</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
