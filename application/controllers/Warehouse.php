@@ -457,7 +457,6 @@ class Warehouse extends CI_Controller {
     $this->form_validation->set_rules('no_do', 'Nomor DO', 'required');
     $this->form_validation->set_rules('tgl_checkin', 'tanggal checkin', 'required');
     $this->form_validation->set_rules('supplier_name', 'Nama Supplier', 'required');
-    $this->form_validation->set_rules('no_plat', 'Nomor Plat', 'required');
 
     if($this->form_validation->run() == false) {
         $this->load->view('templates/header', $data);
@@ -660,7 +659,6 @@ class Warehouse extends CI_Controller {
         $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
         $this->form_validation->set_rules('no_do', 'NO DO', 'required');
         $this->form_validation->set_rules('supplier_name', 'Supplier Name', 'required');
-        $this->form_validation->set_rules('no_plat', 'No Plat', 'required');
         $this->form_validation->set_rules('tgl_checkin', 'Tanggal Checkin', 'required');
         $this->form_validation->set_rules('item_name', 'Item Name', 'required');
         $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
@@ -780,7 +778,6 @@ class Warehouse extends CI_Controller {
         $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
         $this->form_validation->set_rules('no_do', 'NO DO', 'required');
         $this->form_validation->set_rules('supplier_name', 'Supplier Name', 'required');
-        $this->form_validation->set_rules('no_plat', 'No Plat', 'required');
         $this->form_validation->set_rules('tgl_checkin', 'Tanggal Checkin', 'required');
         $this->form_validation->set_rules('item_name', 'Item Name', 'required');
         $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
@@ -902,7 +899,6 @@ class Warehouse extends CI_Controller {
         $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
         $this->form_validation->set_rules('no_do', 'NO DO', 'required');
         $this->form_validation->set_rules('supplier_name', 'Supplier Name', 'required');
-        $this->form_validation->set_rules('no_plat', 'No Plat', 'required');
         $this->form_validation->set_rules('tgl_checkin', 'Tanggal Checkin', 'required');
         $this->form_validation->set_rules('item_name', 'Item Name', 'required');
         $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
