@@ -44,7 +44,6 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Code</th>
                 <th>Part</th>
                 <th>Descriptions</th>
                 <th>Colour</th>
@@ -58,7 +57,6 @@
             <?php $i = 1; foreach ($spkitem as $item): ?>
             <tr>
                 <td><?= $i++ ?></td>
-                <td style="text-align: justify;"><?= $item['item_code'] ?? '' ?></td>
                 <td style="text-align: justify;"><?= $item['part_name'] ?></td>
                 <td style="text-align: justify;"><?= $item['item_name'] ?></td>
                 <td style="text-align: justify;"><?= $item['color_name'] ?></td>

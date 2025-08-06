@@ -68,7 +68,7 @@ class Production extends CI_Controller {
 
     public function progress()
     {
-        $data['title'] = 'Production Progress';
+        $data['title'] = 'PRODUCTION PROGRESS';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
         $data['datanosj'] = $this->General_model->buat_dataterima_auto();
@@ -648,7 +648,7 @@ class Production extends CI_Controller {
 
     public function production_report()
     {
-        $data['title'] = 'Menu Production Report';
+        $data['title'] = 'PRODUCTION REPORT';
         $data['users'] = $this->db->get_where('users', ['email' => 
         $this->session->userdata('email')])->row_array();
 

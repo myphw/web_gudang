@@ -2343,6 +2343,250 @@ class Warehouse extends CI_Controller {
         }
     }
 
+    public function return()
+    {
+        $data['title'] = 'RETURN ITEM';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['datanoir'] = $this->General_model->buat_dataitemreturn_auto();
+        $data['spk'] = $this->General_model->get('form_spk');   
+        $data['report'] = $this->General_model->get('return_sj');
+        $data['uns'] = $this->General_model->get('form_checkin_item');
+        
+
+
+        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        $this->form_validation->set_rules('no_ir', 'Nomor Item Retur', 'required');
+        $this->form_validation->set_rules('dept_name1', 'From Departement', 'required');
+        $this->form_validation->set_rules('to', 'To Departement', 'required');
+        $this->form_validation->set_rules('item_name', 'Item Name', 'required');
+        $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
+        $this->form_validation->set_rules('qty_return', 'Qty Return', 'required|numeric');
+
+        if($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('warehouse/return', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // 1. Capture inputs
+            $insert_data = [
+                'po_number'      => strtoupper($this->input->post('po_number', TRUE)),
+                'brand_name'     => $this->input->post('brand_name', TRUE),
+                'dept_name1'     => strtoupper($this->input->post('dept_name1', TRUE)),
+                'to'             => strtoupper($this->input->post('to', TRUE)),
+                'item_name'      => strtoupper($this->input->post('item_name', TRUE)),
+                'unit_name'      => strtoupper($this->input->post('unit_name', TRUE)),
+                'qty_return'     => $this->input->post('qty_return', TRUE),
+                'no_ir'          => strtoupper($this->input->post('no_ir', TRUE)),
+                
+                'created_at'     => date('Y-m-d H:i:s'),
+            ];
+
+
+            // 2. Insert detail row (qty is per-item)
+            $this->General_model->insert('return_sj', $insert_data);
+
+            // 3. Update total in form_spk
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Surat Jalan baru berhasil ditambahkan ke SPK!</div>');
+            redirect('warehouse/return');
+        }
+
+    }
+
+    public function retur()
+    {
+        $data['title'] = 'RETURN ITEM ';
+        $data['users'] = $this->db->get_where('users', ['email' => 
+        $this->session->userdata('email')])->row_array();
+        $data['datanoir'] = $this->General_model->buat_dataitemreturn_auto();
+        $data['spk'] = $this->General_model->get('form_spk');
+        $data['report'] = $this->General_model->get('return_sj');
+        
+
+        if (!$data['spk']) {
+            show_error('SPK data not found for ID: ' . $id_spk);
+        }
+
+        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+        $this->form_validation->set_rules('no_ir', 'Nomor Surat Production', 'required');
+        $this->form_validation->set_rules('dept_name1', 'From Departement', 'required');
+        $this->form_validation->set_rules('to', 'To Departement', 'required');
+
+        if($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('warehouse/return', $data);
+            $this->load->view('templates/footer');
+        } else {
+            // 1. Capture inputs
+            $insert_data = [
+                'po_number'      => strtoupper($this->input->post('po_number', TRUE)),
+                'brand_name'     => $this->input->post('brand_name', TRUE),
+                'total_qty'      => $this->input->post('total_qty', TRUE),
+                'no_ir'          => strtoupper($this->input->post('no_ir', TRUE)),
+                'dept_name1'     => strtoupper($this->input->post('dept_name1', TRUE)),
+                'to'     => strtoupper($this->input->post('to', TRUE)),
+                'created_at'     => date('Y-m-d H:i:s'),
+                'id_spk'         => $this->input->post('id_spk', TRUE),
+            ];
+
+
+            // 2. Insert detail row (qty is per-item)
+            $this->General_model->insert('return_sj', $insert_data);
+
+            // 3. Update total in form_spk
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Surat Jalan baru berhasil ditambahkan ke SPK!</div>');
+            redirect('warehouse/retur');
+        }
+
+    }
+
+    public function sj_retur_item($id_spk)
+    {
+        $spk = $this->General_model->get_data('return_sj', ['id_ir' => $id_spk])->row_array();
+
+        if (!$spk) {
+            redirect('warehouse/retur');
+        }
+
+        $brand_name = $spk['brand_name'];
+
+        // Redirect to the correct handler
+        if ($brand_name === 'BLACK STONE') {
+            redirect('warehouse/sj_item_retur_blackstone/' . $id_spk);
+        } elseif ($brand_name === 'ROSSI') {
+            redirect('warehouse/sj_item_retur_rossi/' . $id_spk);
+        } elseif ($brand_name === 'ARIAT') {
+            redirect('warehouse/td_item_ariat/' . $id_spk);
+        } else {
+            redirect('warehouse/retur');
+        }
+    }
+
+    
+    public function sj_item_retur_rossi($id)
+{
+    $data['title'] = 'RETURN ITEM ROSSI';
+    $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+    
+    // Ambil data return_sj berdasarkan ID
+    $data['spk'] = $this->General_model->get_data('return_sj', ['id_ir' => $id])->result_array();
+    $retur = end($data['spk']); // Ambil data terakhir
+    $id_spk = $retur['id_spk'];
+    
+
+    $data['id_spk'] = $id_spk;
+    $data['id_ir'] = $id;
+
+    // Ambil item yang belum dikurangi qty-nya
+    $data['uns'] = $this->General_model->get_data('form_checkin_item', ['id_spk' => $id_spk])->result_array();
+
+    // Ambil data retur item
+    $data['in'] = $this->General_model->get_data('return_sj_item_rossi', ['id_ir' => $id])->result_array();
+
+    // Proses simpan jika form disubmit
+    if ($this->input->server('REQUEST_METHOD') == 'POST') {
+        $item_type   = $this->input->post('item_type');
+        $item_name   = $this->input->post('item_name');
+        $unit_name   = $this->input->post('unit_name');
+        $qty_return  = 0;
+
+        $input_data = [
+            'id_ir'       => $id,
+            'id_spk'      => $id_spk,
+            'po_number'   => $this->input->post('po_number'),
+            'brand_name'  => $this->input->post('brand_name'),
+            'dept_name1'  => $this->input->post('dept_name1'),
+            'to'          => $this->input->post('to'),
+            'keterangan'  => $this->input->post('keterangan'),
+            'item_name'   => $item_name,
+            'unit_name'   => $unit_name,
+            'no_ir'       => $this->input->post('no_ir'),
+            'tgl_ir'      => date('Y-m-d H:i:s'),
+        ];
+
+        // Jika tipe GLOBAL
+        if ($item_type === 'GLOBAL') {
+            $qty_return = (int)$this->input->post('qty');
+        }
+
+        // Jika tipe SIZERUN
+        if ($item_type === 'SIZERUN') {
+            $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t',
+                      '9', '9t', '10', '10t', '11', '11t', '12', '13', '14', '15'];
+
+            foreach ($sizes as $sz) {
+                $val = (int)$this->input->post('size_' . $sz);
+                $input_data['size_' . $sz] = $val;
+                $qty_return += $val;
+            }
+        }
+
+        $input_data['qty_return'] = $qty_return;
+        $input_data['total_qty'] = $qty_return;
+
+        // Simpan ke tabel return_sj_item_rossi
+        $this->General_model->insert('return_sj_item_rossi', $input_data);
+
+        // Update qty di form_checkin_item
+        $check = $this->db->get_where('form_checkin_item', [
+            'id_spk'     => $id_spk,
+            'item_name'  => $item_name,
+            'unit_name'  => $unit_name
+        ])->row_array();
+
+        if ($check) {
+            $new_qty = (int)$check['qty'] - $qty_return;
+            $this->General_model->update2('form_checkin_item', [
+                'qty' => $new_qty
+            ], [
+                'id_spk'     => $id_spk,
+                'item_name'  => $item_name,
+                'unit_name'  => $unit_name
+            ]);
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Item retur berhasil ditambahkan.</div>');
+        redirect('warehouse/sj_item_retur_rossi/' . $id);
+    }
+
+    // Load view
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/sidebar', $data);
+    $this->load->view('templates/topbar', $data);
+    $this->load->view('warehouse/sj_item_retur_rossi', $data);
+    $this->load->view('templates/footer');
+}
+
+    public function export_retur_rossi($id_spk)
+    {
+        $this->load->model('General_model'); // or your model name
+        $data['title'] = 'Form Retur Item Rossi';
+
+        $data['spk'] = $this->General_model->get_data('return_sj', ['id_ir' => $id_spk])->row_array();
+        $data['in'] = $this->General_model->get_data('return_sj_item_rossi', ['id_ir' => $id_spk])->row_array();
+
+        
+        // Load view into HTML
+        $html = $this->load->view('warehouse/pdf_retur_rossi', $data, TRUE);
+
+        // Dompdf options
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        // Output the PDF
+        $dompdf->stream("return_rossi_$id_spk.pdf", ['Attachment' => false]); // true = force download
+    }
 
 
 }

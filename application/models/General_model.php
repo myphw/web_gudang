@@ -934,4 +934,23 @@ class General_model extends CI_Model
 		return $no_prjadi;  
 	}
 
+    public function buat_dataitemreturn_auto()   {
+
+		$this->db->select('RIGHT(return_sj.no_ir,3) as no_ir', FALSE);
+		$this->db->order_by('no_ir','DESC');
+		$this->db->limit(1);
+		$query = $this->db->get('return_sj');    
+		if($query->num_rows() <> 0){          
+			$data = $query->row();      
+			$no_ir = intval($data->no_ir) + 1;    
+		}
+		else {          
+			$no_ir = 1;    
+		}
+		
+		$no_irmax = str_pad($no_ir, 4, "0", STR_PAD_LEFT);
+		$no_irjadi = "RETUR-AI-".$no_irmax;
+		return $no_irjadi;  
+	}
+
 }
