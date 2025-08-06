@@ -49,6 +49,25 @@
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('assets/');?>js/sb-admin-2.min.js"></script>
 
+
+    <!-- DataTables core -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+    <!-- DataTables Semantic UI integration -->
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.semanticui.min.js"></script>
+
+    <!-- Your DataTable init -->
+    <script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+        // optional: enable Semantic UI styling
+        "pagingType": "full_numbers"
+        });
+    });
+    </script>
+
+
     <script>
         $('.form-check-input').on('click', function(){
             const menuId = $(this).data('menu');
