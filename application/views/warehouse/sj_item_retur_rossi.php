@@ -130,7 +130,6 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                         </select>
                     </div>
 
-                    <!-- Common Fields -->
                     <div id="common-fields">
                         <div class="form-group">
                         <div class="ui fluid search selection dropdown" id="item_name_dropdown">
@@ -141,7 +140,8 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
                                 <?php foreach ($uns as $c): ?>
                                 <div class="item" 
                                     data-value="<?= $c['item_name'] ?>"
-                                    data-unit="<?= $c['unit_name'] ?>">
+                                    data-unit="<?= $c['unit_name'] ?>"
+                                    data-rate="<?= $c['cons_rate'] ?>">
                                     <?= $c['item_name'] ?>
                                 </div>
                                 <?php endforeach; ?>

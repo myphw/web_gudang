@@ -1776,6 +1776,8 @@ class Warehouse extends CI_Controller {
                     'item_type'     => $item_type,
                     'item_name'     => $item_name,
                     'unit_name'     => $unit_name,
+
+                    'created_at'     => date('Y-m-d H:i:s'),
                 ];
 
                 $final_qty = 0;
@@ -1912,6 +1914,7 @@ class Warehouse extends CI_Controller {
                     'item_name'     => $item_name,
                     'unit_name'     => $unit_name,
 
+                    'created_at'     => date('Y-m-d H:i:s'),
                 ];
 
                 $final_qty = 0;
@@ -2039,6 +2042,8 @@ class Warehouse extends CI_Controller {
                     'item_type'     => $item_type,
                     'item_name'     => $item_name,
                     'unit_name'     => $unit_name,
+
+                    'created_at'     => date('Y-m-d H:i:s'),
                 ];
 
                 $final_qty = 0;
@@ -2846,7 +2851,8 @@ public function sj_item_retur_ariat($id)
         $data['title'] = 'Form Retur Item Rossi';
 
         $data['spk'] = $this->General_model->get_data('return_sj', ['id_ir' => $id_spk])->row_array();
-        $data['in'] = $this->General_model->get_data('return_sj_item_rossi', ['id_ir' => $id_spk])->row_array();
+        $data['in'] = $this->General_model->get_data('return_sj_item_rossi', ['id_ir' => $id_spk])->result_array();
+
 
        
         
