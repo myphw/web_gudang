@@ -8,7 +8,7 @@
         
 
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
 
             <?= form_error('form/listitem','<div class="alert alert-danger" role="alert">', '
                 </div>'); ?>
@@ -17,7 +17,7 @@
             
                 <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newListItemModal">Add New</a>
 
-                <table class="table table-hover">
+                <table id="myTable" class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

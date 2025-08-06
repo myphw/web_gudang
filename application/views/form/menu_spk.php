@@ -16,38 +16,36 @@
                 <?= $this->session->flashdata('message'); ?>
             
                 <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSpkModal">Add New</a>
-
-                <table class="table table-bordered">
+                <table id="myTable" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col-lg-2">#</th>
-                        <th scope="col-lg-2">PO Number</th>
-                        <th scope="col-lg-2">XFD</th>
-                        <th scope="col-lg-2">Brand Name</th>
-                        <th scope="col-lg-2">Art&Color Name</th>
-                        <th scope="col-lg-2">Total QTY</th>
-                        <th scope="col-lg-2">Action</th>
+                        <th>#</th>
+                        <th>PO Number</th>
+                        <th>XFD</th>
+                        <th>Brand Name</th>
+                        <th>Art&Color Name</th>
+                        <th>Total QTY</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1; ?>
-                    <?php foreach($spk as $po) : ?>
+                    <?php $i = 1; foreach($spk as $po): ?>
                     <tr>
-                        <th scope="row"><?= $i; ?></th>
-                        <td><?= $po['po_number'];?></td>
-                        <td><?= $po['xfd'];?></td>
-                        <td><?= $po['brand_name'];?></td>
-                        <td><?= $po['artcolor_name'];?></td>
-                        <td><?= $po['total_qty'];?></td>
+                        <td><?= $i++; ?></td>
+                        <td><?= $po['po_number']; ?></td>
+                        <td><?= $po['xfd']; ?></td>
+                        <td><?= $po['brand_name']; ?></td>
+                        <td><?= $po['artcolor_name']; ?></td>
+                        <td><?= $po['total_qty']; ?></td>
                         <td>
-                            <a type="button" class="badge badge-success"  href="<?=base_url('form/update_spk_size_brand/'.$po['id_spk'])?>" name="btn_add" style="margin:auto;">EDIT</a>
-                            <a href="<?= base_url('form/delete_spk/'.$po['id_spk'])?>" name="btn-delete" class="badge badge-danger">DELETE</a>
+                            <a class="badge badge-success" href="<?= base_url('form/update_spk_size_brand/'.$po['id_spk']) ?>">EDIT</a>
+                            <a class="badge badge-danger" href="<?= base_url('form/delete_spk/'.$po['id_spk']) ?>">DELETE</a>
                         </td>
                     </tr>
-                    <?php $i++; ?>
                     <?php endforeach; ?>
                 </tbody>
-                </table>
+            </table>
+
             </div>
         </div>
 
@@ -57,6 +55,7 @@
 
 </div>
 <!-- End of Main Content -->
+
 
 
 <!-- Modal -->
