@@ -68,15 +68,18 @@ $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9',
         </tr>
     </thead>
     <tbody>
+        <?php $i = 1;
+                    foreach ($in as $a): ?>
                 <tr>
                     <td>1</td>
-                    <td><?= $in['item_name'] ?></td>
-                    <td><?= $in['unit_name'] ?></td>
-                    <td><?= $in['total_qty'] ?></td>
+                    <td><?= $a['item_name'] ?></td>
+                    <td><?= $a['unit_name'] ?></td>
+                    <td><?= $a['total_qty'] ?></td>
                     <?php foreach ($sizes as $label): ?>
-                    <td><?= $in['size_' . $label] ?? '-' ?></td>
+                    <td><?= $a['size_' . $label] ?? '-' ?></td>
                     <?php endforeach; ?>
                 </tr>
+            <?php endforeach; ?>
     </tbody>
 </table>
 

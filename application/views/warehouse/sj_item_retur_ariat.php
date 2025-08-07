@@ -71,7 +71,6 @@ $sizes = ['6d', '6_5d', '7d', '7_5d', '8d', '8_5d',
                         <?php foreach ($sizes as $label): ?>
                             <th><?= strtoupper($label) ?></th>
                         <?php endforeach; ?>
-                        <th>KETERANGAN</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -86,9 +85,8 @@ $sizes = ['6d', '6_5d', '7d', '7_5d', '8d', '8_5d',
                             <?php foreach ($sizes as $label): ?>
                                 <td><?= $po['size_' . $label] ?? '-' ?></td>
                             <?php endforeach; ?>
-                            <td><?= $po['keterangan'] ?></td>
                             <td>
-                                <a href="<?= base_url('warehouse/delete_retur_rossi/' . $po['id_iritem']) ?>" class="badge badge-danger">Delete</a>
+                                <a href="<?= base_url('warehouse/delete_retur_ariat/' . $po['id_iritem']) ?>" class="badge badge-danger">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -135,19 +133,24 @@ $sizes = ['6d', '6_5d', '7d', '7_5d', '8d', '8_5d',
                     <!-- Common Fields -->
                     <div id="common-fields">
                         <div class="form-group">
-                        <select name="item_name" id="item_name" class="form-control" required>
-                            <option value="">Select Item</option>
-                            <?php foreach($uns as $c): ?>
-                                <option value="<?= $c['item_name']; ?>" 
-                                        data-unit="<?= $c['unit_name']; ?>">
-                                    <?= $c['item_name']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <div class="ui fluid search selection dropdown" id="item_name_dropdown">
+                            <input type="hidden" name="item_name">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Item</div>
+                            <div class="menu">
+                                <?php foreach ($uns as $c): ?>
+                                <div class="item" 
+                                    data-value="<?= $c['item_name'] ?>"
+                                    data-unit="<?= $c['unit_name'] ?>">
+                                    <?= $c['item_name'] ?>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-                            <div class="form-group">
-                            <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" readonly>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" readonly>
+                    </div>
                     </div>
 
                     <!-- GLOBAL Fields -->
@@ -208,3 +211,18 @@ $sizes = ['6d', '6_5d', '7d', '7_5d', '8d', '8_5d',
 </div>
 <?php endif; ?>
 
+<script>
+$(document).ready(function() {
+    $('#item_name_dropdown').dropdown();
+});
+$('#item_name_dropdown').dropdown({
+    onChange: function(value, text, $selectedItem) {
+        let unit = $selectedItem.data('unit');
+        let rate = $selectedItem.data('rate');
+
+        $('#unit_name').val(unit);
+        $('#cons_rate').val(rate);
+        // you can also use `rate` if needed
+    }
+});
+</script>
