@@ -37,7 +37,7 @@
             <?php endforeach; ?>
             
             <!-- Action Buttons -->
-            <a href="<?= base_url('production/production_report'); ?>" class="btn btn-secondary mb-3">
+            <a href="<?= base_url('executive/production'); ?>" class="btn btn-secondary mb-3">
                 <i class="fas fa-reply"></i> BACK
             </a>
 
@@ -48,8 +48,10 @@
                         <th scope="col-lg-2">#</th>
                         <th scope="col-lg-2">Departement</th>
                         <th scope="col-lg-2">Total Production</th>
+                        <?php for ($s = 36; $s <= 50; $s++): ?>
+                            <th><?= $s ?></th>
+                        <?php endfor; ?>
                         <th scope="col-lg-2">Total Order</th>
-                        <th scope="col-lg-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,10 +62,10 @@
                         <th scope="row"><?= $i; ?></th>
                         <td><?= $po['dept_name1']?></td>
                         <td><?= $po['qty']?></td>
+                        <?php for ($s = 36; $s <= 50; $s++): ?>
+                                    <td><?= $po['size_' . $s] ?></td>
+                                <?php endfor; ?>
                         <td><?= $po['total_qty']?></td>
-                        <td>
-                            <a type="button" class="badge badge-success" href="<?= base_url('production/dept_detail_item/'.$po['id_spk']. '/' . $po['id_dept'])?>" name="btn_add" style="margin:auto;">Detail View</a>
-                         </td>
                     </tr>
                     <?php $i++; ?>
                     <?php endif; ?>

@@ -1,0 +1,120 @@
+<?php
+$sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t', '8', '8t', '9', '9t', '10', '10t', '11', '11t', '12', '13', '14', '15'];
+
+// assign currently selected SJ
+$current_sj = !empty($insj) ? $insj[0] : null;
+?>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800"><?= $title?></h1>
+
+        
+
+        <div class="row">
+            <div class="col-lg-12">
+
+            <?= form_error('executive/stock','<div class="alert alert-danger" role="alert">', '
+                </div>'); ?>
+
+                <?= $this->session->flashdata('message'); ?>
+
+                <?php foreach ($spk as $sp): ?>
+                <div class="box-body mb-4">
+                    <input type="hidden" name="id_spk" value="<?= $sp['id_spk'] ?>">
+                    <div class="form-group d-inline-block" style="width: 18%;">
+                        <label for="po_number">PO Number</label>
+                        <input type="text" name="po_number" class="form-control" value="<?= $sp['po_number'] ?>" readonly>
+                    </div>
+                    <div class="form-group d-inline-block" style="width: 18%;">
+                        <label for="xfd">XFD</label>
+                        <input type="date" name="xfd" class="form-control" value="<?= $sp['xfd'] ?>" readonly>
+                    </div>
+                    <div class="form-group d-inline-block" style="width: 18%;">
+                        <label for="brand_name">Brand</label>
+                        <input type="text" name="brand_name" class="form-control" value="<?= $sp['brand_name'] ?>" readonly>
+                    </div>
+                    <div class="form-group d-inline-block" style="width: 18%;">
+                        <label for="artcolor_name">Art & Color</label>
+                        <input type="text" name="artcolor_name" class="form-control" value="<?= $sp['artcolor_name'] ?>" readonly>
+                    </div>
+                    <div class="form-group d-inline-block" style="width: 18%;">
+                        <label for="qty_total">Total QTY</label>
+                        <input type="text" name="total_qty" class="form-control" value="<?= $sp['total_qty'] ?>" readonly>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+                <a href="<?= base_url().'executive/stock';?>" class="btn btn-secondary mb-3" ><i class="fas fa-reply"></i> BACK</a>
+                <table id="myTable" class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col-lg-2">#</th>
+                        <th scope="col-lg-2">Part</th>
+                        <th scope="col-lg-2">Descriptions</th>
+                        <th scope="col-lg-2">Colour</th>
+                        <th scope="col-lg-2">Ukuran MTRL</th>
+                        <th scope="col-lg-2">Unit</th>
+                        <th scope="col-lg-2">Total Cons Rate</th>
+                        <th scope="col-lg-2">Checkin QTY</th>
+                        <th scope="col-lg-2">Checkout QTY</th>
+                        <th scope="col-lg-2">Total Stock</th>
+                        <?php foreach ($sizes as $label): ?>
+                            <th><?= strtoupper($label) ?></th>
+                        <?php endforeach; ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1; ?>
+                    <?php foreach($spkitem as $po) : ?>
+                         <?php if ($po['id_spk'] == $sp['id_spk']): ?>
+                    <tr>
+                        <th scope="row"><?= $i; ?></th>
+                        <td><?= $po['part_name']?></td>
+                        <td><?= $po['item_name']?></td>
+                        <td><?= $po['color_name']?></td>
+                        <td><?= $po['mtrl_name']?></td>
+                        <td><?= $po['unit_name']?></td>
+                        <td><?= $po['total_consrate']?></td>
+                        <td><?= $po['checkin_qty']?></td>
+                        <td><?= $po['checkout_qty']?></td>
+                        <td><?= $po['qty']?></td>
+                        <?php foreach ($sizes as $label): ?>
+                                <td><?= $po['size_' . $label] ?? '-' ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <?php $i++; ?>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+                    
+                </tbody>
+                </table>
+ 
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+
+
+<script>
+
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+
+</script>
