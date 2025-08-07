@@ -76,12 +76,10 @@ $current_sj = !empty($insj) ? $insj[0] : null;
                         <td><?= $po['color_name']?></td>
                         <td><?= $po['mtrl_name']?></td>
                         <td><?= $po['unit_name']?></td>
-                        <td><?= $po['qty']?></td>
                         <td><?= $po['total_consrate']?></td>
                         <td><?= $po['checkin_qty']?></td>
-                        <td><?= $po['checkin_balance']?></td>
                         <td><?= $po['checkout_qty']?></td>
-                        <td><?= $po['checkout_balance']?></td>
+                        <td><?= $po['qty']?></td>
                         <?php foreach ($sizes as $s): ?>
                             <td><?= $po['size_' . $s] ?? '-' ?></td>
                         <?php endforeach; ?>

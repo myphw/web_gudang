@@ -740,11 +740,29 @@ class Warehouse extends CI_Controller {
                 $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
                 $adjusted_checkin_qty = $new_total_qty - $total_consrate;
                 // Update with new total
+                $updateData = 
+                [
+                    'qty' => $new_total_qty,
+                    'checkin_balance' => $adjusted_checkin_qty,
+                    'checkin_qty' => $new_total_qty
+                ];
+
+                // If SIZERUN, update size fields too
+                if ($item_type === 'SIZERUN') {
+                    for ($i = 36; $i <= 50; $i++) {
+                        $sizeKey = 'size_' . $i;
+                        $newSizeQty = (int) $this->input->post($sizeKey);
+                        $existingSizeQty = isset($existing[$sizeKey]) ? (int) $existing[$sizeKey] : 0;
+                        $updateData[$sizeKey] = $existingSizeQty + $newSizeQty;
+                    }
+                }
+
                 $this->General_model->update2(
                     'form_checkin_item',
-                    ['qty' => $new_total_qty, 'checkin_balance' => $adjusted_checkin_qty, 'checkin_qty' => $new_total_qty],
+                    $updateData,
                     ['id_spk' => $id, 'item_name' => $item_name, 'unit_name' => $unit_name]
                 );
+
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success">Item added and quantity updated successfully.</div>');
                 redirect('warehouse/sj_item_blackstone/' . $id. '/' . $id_sj);
@@ -865,11 +883,29 @@ class Warehouse extends CI_Controller {
                 $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
                 $adjusted_checkin_qty = $new_total_qty - $total_consrate;
                 // Update with new total
+               $updateData = 
+               [
+                    'qty' => $new_total_qty,
+                    'checkin_balance' => $adjusted_checkin_qty,
+                    'checkin_qty' => $new_total_qty
+                ];
+
+                // If SIZERUN, add size field updates
+                if ($item_type === 'SIZERUN') {
+                    foreach ($sizes as $size) {
+                        $key = 'size_' . $size;
+                        $newQty = (int) $this->input->post($key);
+                        $existingQty = isset($existing[$key]) ? (int) $existing[$key] : 0;
+                        $updateData[$key] = $existingQty + $newQty;
+                    }
+                }
+
                 $this->General_model->update2(
                     'form_checkin_item',
-                    ['qty' => $new_total_qty, 'checkin_balance' => $adjusted_checkin_qty, 'checkin_qty' => $new_total_qty],
+                    $updateData,
                     ['id_spk' => $id_spk, 'item_name' => $item_name, 'unit_name' => $unit_name]
                 );
+
                 $this->session->set_flashdata('message', '<div class="alert alert-success">Item added and quantity updated successfully.</div>');
             }
 
@@ -982,11 +1018,29 @@ class Warehouse extends CI_Controller {
                 $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
                 $adjusted_checkin_qty = $new_total_qty - $total_consrate;
                 // Update with new total
+                $updateData = 
+                [
+                    'qty' => $new_total_qty,
+                    'checkin_balance' => $adjusted_checkin_qty,
+                    'checkin_qty' => $new_total_qty
+                ];
+
+                // If item is SIZERUN, also update each size field
+                if ($item_type === 'SIZERUN') {
+                    foreach ($sizes as $size) {
+                        $key = 'size_' . $size;
+                        $newQty = (int) $this->input->post($key);
+                        $existingQty = isset($existing[$key]) ? (int) $existing[$key] : 0;
+                        $updateData[$key] = $existingQty + $newQty;
+                    }
+                }
+
                 $this->General_model->update2(
                     'form_checkin_item',
-                    ['qty' => $new_total_qty, 'checkin_balance' => $adjusted_checkin_qty, 'checkin_qty' => $new_total_qty],
+                    $updateData,
                     ['id_spk' => $id, 'item_name' => $item_name, 'unit_name' => $unit_name]
                 );
+
                 $this->session->set_flashdata('message', '<div class="alert alert-success">Item added and quantity updated successfully.</div>');
             }
 
@@ -1794,6 +1848,21 @@ class Warehouse extends CI_Controller {
                         $final_qty += $sizeQty;
                     }
                     $insertData['qty'] = $final_qty;
+                    // Fetch existing sizes from form_checkin_item
+                    $existing_sizes = $this->db->get_where('form_checkin_item', [
+                        'id_spk'     => $id,
+                        'item_name'  => $item_name,
+                        'unit_name'  => $unit_name
+                    ])->row_array();
+
+                    // Build size update array
+                    $updated_sizes = [];
+                    for ($i = 36; $i <= 50; $i++) {
+                        $key = 'size_' . $i;
+                        $old_size = isset($existing_sizes[$key]) ? (int)$existing_sizes[$key] : 0;
+                        $new_size = (int)$this->input->post($key);
+                        $updated_sizes[$key] = $old_size - $new_size;
+                    }
                 }
 
                 // ✅ Insert into sjitem table
@@ -1820,17 +1889,18 @@ class Warehouse extends CI_Controller {
                 // ✅ Update qty and checkout_qty in one go
                 $this->General_model->update2(
                     'form_checkin_item',
-                    [
+                    array_merge([
                         'qty' => $new_total_qty,
                         'checkout_qty' => $checkout_qty_with_addition,
                         'checkout_balance' => $adjusted_checkout_qty,
-                    ],
+                    ], $updated_sizes),
                     [
                         'id_spk' => $id,
                         'item_name' => $item_name,
                         'unit_name' => $unit_name
                     ]
                 );
+
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success">Item added and quantity updated successfully.</div>');
                 redirect('warehouse/sj_item_checkout_blackstone/' . $id. '/' . $id_sj);
@@ -1839,141 +1909,150 @@ class Warehouse extends CI_Controller {
     }
 
     public function sj_item_checkout_rossi($id_spk, $id_sj)
-    {
-        $data['title'] = 'Rossi Checkout SJ View';
-        $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
-        
-        // Get SPK detail
-        $data['spk'] = $this->General_model->get_data('form_spk_checkout', ['id_spk' => $id_spk])->result_array();
-        $data['out'] = $this->General_model->get_data('form_sjitem_checkout_rossi', ['id_spk' => $id_spk])->result_array();
-        $data['uns'] = $this->General_model->get_data('form_checkin_item', ['id_spk' => $id_spk])->result_array();
-        $data['outsj'] = $this->General_model->get_data('form_sj_checkout', ['id_sj' => $id_sj])->result_array();
+{
+    $data['title'] = 'Rossi Checkout SJ View';
+    $data['users'] = $this->db->get_where('users', ['email' => $this->session->userdata('email')])->row_array();
+    
+    // Fetch all data needed for the view
+    $data['spk'] = $this->General_model->get_data('form_spk_checkout', ['id_spk' => $id_spk])->result_array();
+    $data['out'] = $this->General_model->get_data('form_sjitem_checkout_rossi', ['id_spk' => $id_spk])->result_array();
+    $data['uns'] = $this->General_model->get_data('form_checkin_item', ['id_spk' => $id_spk])->result_array();
+    $data['outsj'] = $this->General_model->get_data('form_sj_checkout', ['id_sj' => $id_sj])->result_array();
 
-         $data['spkitem'] = $this->General_model->get('form_sjitem_checkout_rossi', [
-            'id_spk' => $id_spk,
-            'id_sj'  => $id_sj
+    $data['spkitem'] = $this->General_model->get('form_sjitem_checkout_rossi', [
+        'id_spk' => $id_spk,
+        'id_sj'  => $id_sj
+    ]);
+    $data['id_spk'] = $id_spk;
+    $data['id_sj']  = $id_sj;
+
+    // Validation
+    $this->form_validation->set_rules('po_number', 'Po Number', 'required');
+    $this->form_validation->set_rules('xfd', 'xfd', 'required');
+    $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
+    $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
+    $this->form_validation->set_rules('tgl_checkout', 'Tanggal Checkout', 'required');
+    $this->form_validation->set_rules('item_name', 'Item Name', 'required');
+    $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
+    $this->form_validation->set_rules('id_sj', 'ID SJ', 'required');
+
+    // SIZERUN keys (Rossi-specific)
+    $sizes = ['3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t',
+              '8', '8t', '9', '9t', '10', '10t', '11', '11t', '12','12t', '13','13t', '14', '15'];
+
+    if ($this->form_validation->run() == false) {
+        // Load view
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('warehouse/sj_item_checkout_rossi', $data);
+        $this->load->view('templates/footer');
+    } else {
+        $item_name  = $this->input->post('item_name');
+        $unit_name  = $this->input->post('unit_name');
+        $item_type  = $this->input->post('item_type');
+
+        // Duplicate check
+        $exists = $this->General_model->get_one('form_sjitem_checkout_rossi', [
+            'id_spk'     => $id_spk,
+            'id_sj'      => $id_sj,
+            'item_name'  => $item_name,
+            'unit_name'  => $unit_name
         ]);
-        $data['id_spk'] = $id_spk;
-        $data['id_sj']  = $id_sj;
 
+        if ($exists) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Data with the same Item and Unit already exists. No new entry added.</div>');
+            redirect('warehouse/sj_item_checkout_rossi/' . $id_spk . '/' . $id_sj);
+        }
 
-        // Validation rules
-        $this->form_validation->set_rules('po_number', 'Po Number', 'required');
-        $this->form_validation->set_rules('xfd', 'xfd', 'required');
-        $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
-        $this->form_validation->set_rules('artcolor_name', 'ArtColor Name', 'required');
-        $this->form_validation->set_rules('tgl_checkout', 'Tanggal Checkout', 'required');
-        $this->form_validation->set_rules('item_name', 'Item Name', 'required');
-        $this->form_validation->set_rules('unit_name', 'Unit Name', 'required');
-        $this->form_validation->set_rules('id_sj', 'ID SJ', 'required');
-
-        // Defined sizes for SIZERUN
-        $sizes = [
-            '3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t',
-            '8', '8t', '9', '9t', '10', '10t', '11', '11t', '12', '13', '14', '15'
+        // Base insert data
+        $insertData = [
+            'id_spk'        => $id_spk,
+            'po_number'     => $this->input->post('po_number'),
+            'xfd'           => $this->input->post('xfd'),
+            'brand_name'    => $this->input->post('brand_name'),
+            'artcolor_name' => $this->input->post('artcolor_name'),
+            'no_sj'         => $this->input->post('no_sj'),
+            'from'          => $this->input->post('from'),
+            'to_dept'       => $this->input->post('to_dept'),
+            'tgl_checkout'  => $this->input->post('tgl_checkout'),
+            'id_sj'         => $id_sj,
+            'item_type'     => $item_type,
+            'item_name'     => $item_name,
+            'unit_name'     => $unit_name,
+            'created_at'    => date('Y-m-d H:i:s'),
         ];
 
-        if ($this->form_validation->run() == false) {
-            // Show view
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('warehouse/sj_item_checkout_rossi', $data);
-            $this->load->view('templates/footer');
-        } else {
-            // Handle form submission
-            $item_name = $this->input->post('item_name');
-            $unit_name = $this->input->post('unit_name');
-            $item_type = $this->input->post('item_type');
+        $final_qty = 0;
 
-            // ✅ Check if item already exists for the same SPK and unit
-            $exists = $this->General_model->get_one('form_sjitem_checkout_rossi', [
-                'id_spk' => $id_spk,
-                'id_sj'     => $id_sj,
-                'item_name' => $item_name,
-                'unit_name' => $unit_name
-            ]);
+        // Size update array (used later for checkin table update)
+        $updated_sizes = [];
 
-            if ($exists) {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger">Data with the same Item and Unit already exists. No new entry added.</div>');
-                 redirect('warehouse/sj_item_checkout_rossi/' . $id. '/' . $id_sj);
-            } else {
-                // Prepare insert data
-                $insertData = [
-                    'id_spk'        => $id_spk,
-                    'po_number'     => $this->input->post('po_number'),
-                    'xfd'           => $this->input->post('xfd'),
-                    'brand_name'    => $this->input->post('brand_name'),
-                    'artcolor_name' => $this->input->post('artcolor_name'),
-                    'no_sj'         => $this->input->post('no_sj'),
-                    'from'          => $this->input->post('from'),
-                    'to_dept'       => $this->input->post('to_dept'),
-                    'tgl_checkout'  => $this->input->post('tgl_checkout'),
-                    'id_sj'         => $this->input->post('id_sj'),
-                    'item_type'     => $item_type,
-                    'item_name'     => $item_name,
-                    'unit_name'     => $unit_name,
-
-                    'created_at'     => date('Y-m-d H:i:s'),
-                ];
-
-                $final_qty = 0;
-
-                if ($item_type === 'GLOBAL') {
-                    // GLOBAL type - single qty field
-                    $final_qty = $this->input->post('qty');
-                    $insertData['qty'] = $final_qty;
-                } elseif ($item_type === 'SIZERUN') {
-                    // SIZERUN type - multiple sizes
-                    foreach ($sizes as $size) {
-                        $value = $this->input->post('size_' . $size);
-                        $insertData['size_' . $size] = $value;
-                        $final_qty += $value;
-                    }
-                    $insertData['qty'] = $final_qty;
-                }
-
-                $this->General_model->insert('form_sjitem_checkout_rossi', $insertData);
-
-                $this->db->where([
-                        'id_spk'     => $id_spk,
-                        'item_name'  => $item_name,
-                        'unit_name'  => $unit_name
-                    ]);
-                    $existing = $this->db->get('form_checkin_item')->row_array();
-
-                    $existing_qty = isset($existing['qty']) && is_numeric($existing['qty']) ? $existing['qty'] : 0;
-                    $current_checkout_qty = isset($existing['checkout_qty']) && is_numeric($existing['checkout_qty']) ? $existing['checkout_qty'] : 0;
-                    $total_consrate = isset($existing['total_consrate']) && is_numeric($existing['total_consrate']) ? $existing['total_consrate'] : 0;
-
-                    $new_total_qty = $existing_qty - $final_qty;
-                    
-
-                    // ✅ Compute adjusted checkout_qty
-                    $checkout_qty_with_addition = $current_checkout_qty + $final_qty;
-                    $adjusted_checkout_qty = $final_qty - $total_consrate;
-
-                    // ✅ Update qty and checkout_qty in one go
-                    $this->General_model->update2(
-                        'form_checkin_item',
-                        [
-                            'qty' => $new_total_qty,
-                            'checkout_qty' => $checkout_qty_with_addition,
-                            'checkout_balance' => $adjusted_checkout_qty,
-                        ],
-                        [
-                            'id_spk' => $id_spk,
-                            'item_name' => $item_name,
-                            'unit_name' => $unit_name
-                        ]
-                    );
-
-                $this->session->set_flashdata('message', '<div class="alert alert-success">Item added and quantity updated successfully.</div>');
+        if ($item_type === 'GLOBAL') {
+            $final_qty = (int) $this->input->post('qty');
+            $insertData['qty'] = $final_qty;
+        } elseif ($item_type === 'SIZERUN') {
+            foreach ($sizes as $size) {
+                $inputQty = (int) $this->input->post('size_' . $size);
+                $insertData['size_' . $size] = $inputQty;
+                $final_qty += $inputQty;
             }
+            $insertData['qty'] = $final_qty;
 
-            redirect('warehouse/sj_item_checkout_rossi/' . $id_spk .'/' . $id_sj);
+            // Fetch current check-in item record
+            $existing_sizes = $this->db->get_where('form_checkin_item', [
+                'id_spk'     => $id_spk,
+                'item_name'  => $item_name,
+                'unit_name'  => $unit_name
+            ])->row_array();
+
+            // Update each size
+            foreach ($sizes as $size) {
+                $key = 'size_' . $size;
+                $existingQty = isset($existing_sizes[$key]) ? (int) $existing_sizes[$key] : 0;
+                $checkoutQty = (int) $this->input->post($key);
+                $updated_sizes[$key] = $existingQty - $checkoutQty;
+            }
         }
+
+        // Insert new checkout entry
+        $this->General_model->insert('form_sjitem_checkout_rossi', $insertData);
+
+        // Handle overall qty + checkout_qty + balance updates
+        $existing = $this->db->get_where('form_checkin_item', [
+            'id_spk'     => $id_spk,
+            'item_name'  => $item_name,
+            'unit_name'  => $unit_name
+        ])->row_array();
+
+        $existing_qty           = isset($existing['qty']) ? (int) $existing['qty'] : 0;
+        $current_checkout_qty   = isset($existing['checkout_qty']) ? (int) $existing['checkout_qty'] : 0;
+        $total_consrate         = isset($existing['total_consrate']) ? (int) $existing['total_consrate'] : 0;
+
+        $new_total_qty = $existing_qty - $final_qty;
+        $checkout_qty_with_addition = $current_checkout_qty + $final_qty;
+        $adjusted_checkout_qty = $final_qty - $total_consrate;
+
+        // Final update to form_checkin_item
+        $this->General_model->update2(
+            'form_checkin_item',
+            array_merge([
+                'qty'              => $new_total_qty,
+                'checkout_qty'     => $checkout_qty_with_addition,
+                'checkout_balance' => $adjusted_checkout_qty,
+            ], $updated_sizes),
+            [
+                'id_spk'     => $id_spk,
+                'item_name'  => $item_name,
+                'unit_name'  => $unit_name
+            ]
+        );
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Item added and quantity updated successfully.</div>');
+        redirect('warehouse/sj_item_checkout_rossi/' . $id_spk . '/' . $id_sj);
     }
+}
+
 
     public function sj_item_checkout_ariat($id, $id_sj)
     {
@@ -2048,17 +2127,32 @@ class Warehouse extends CI_Controller {
 
                 $final_qty = 0;
 
-                if ($item_type === 'GLOBAL') {
-                    $final_qty = $this->input->post('qty');
+                 if ($item_type === 'GLOBAL') {
+                    $final_qty = (int) $this->input->post('qty');
                     $insertData['qty'] = $final_qty;
-
                 } elseif ($item_type === 'SIZERUN') {
                     foreach ($sizes as $size) {
-                        $value = $this->input->post('size_' . $size);
-                        $insertData['size_' . $size] = $value;
-                        $final_qty += $value;
+                        $inputQty = (int) $this->input->post('size_' . $size);
+                        $insertData['size_' . $size] = $inputQty;
+                        $final_qty += $inputQty;
                     }
                     $insertData['qty'] = $final_qty;
+
+                    // Fetch current check-in item record
+                    $existing_sizes = $this->db->get_where('form_checkin_item', [
+                        'id_spk'     => $id,
+                        'item_name'  => $item_name,
+                        'unit_name'  => $unit_name
+                    ])->row_array();
+
+
+                    // Update each size
+                    foreach ($sizes as $size) {
+                        $key = 'size_' . $size;
+                        $existingQty = isset($existing_sizes[$key]) ? (int) $existing_sizes[$key] : 0;
+                        $checkoutQty = (int) $this->input->post($key);
+                        $updated_sizes[$key] = $existingQty - $checkoutQty;
+                    }
                 }
 
                 $this->General_model->insert('form_sjitem_checkout_ariat', $insertData);
@@ -2084,17 +2178,18 @@ class Warehouse extends CI_Controller {
                     // ✅ Update qty and checkout_qty in one go
                     $this->General_model->update2(
                         'form_checkin_item',
-                        [
-                            'qty' => $new_total_qty,
-                            'checkout_qty' => $checkout_qty_with_addition,
+                        array_merge([
+                            'qty'              => $new_total_qty,
+                            'checkout_qty'     => $checkout_qty_with_addition,
                             'checkout_balance' => $adjusted_checkout_qty,
-                        ],
+                        ], $updated_sizes),
                         [
-                            'id_spk' => $id,
-                            'item_name' => $item_name,
-                            'unit_name' => $unit_name
+                            'id_spk'     => $id,  // ← fix here too
+                            'item_name'  => $item_name,
+                            'unit_name'  => $unit_name
                         ]
                     );
+
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success">Item added and quantity updated successfully.</div>');
             }
