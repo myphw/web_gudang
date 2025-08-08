@@ -1396,7 +1396,60 @@ class Form extends CI_Controller {
         redirect('form/update_spk_item/' . $id_spk);
     }
 
-    
+    public function import_consrate_csv()
+{
+    if (isset($_FILES['csv_file']['tmp_name'])) {
+        $file = $_FILES['csv_file']['tmp_name'];
+
+        if (($handle = fopen($file, "r")) !== FALSE) {
+            $row = 0;
+            $imported = 0;
+            $skipped = 0;
+
+            while (($data = fgetcsv($handle, 1000, ';')) !== FALSE) {
+                if ($row == 0) { // Skip header
+                    $row++;
+                    continue;
+                }
+
+                $insert = [
+                    'id_consrate'    => (int) trim($data[0]),
+                    'artcolor_name'  => trim($data[1]),
+                    'item_name'      => trim($data[2]),
+                    'color_name'     => trim($data[3]),
+                    'unit_name'      => trim($data[4]),
+                    'cons_rate'      => floatval(str_replace(',', '.', $data[5]))
+                ];
+
+                // Validasi: Skip jika item_name + unit_name + artcolor_name sudah ada
+                $this->db->where('item_name', $insert['item_name']);
+                $this->db->where('unit_name', $insert['unit_name']);
+                $this->db->where('artcolor_name', $insert['artcolor_name']);
+                $exists = $this->db->get('form_consrate')->num_rows();
+
+                if ($exists > 0) {
+                    $skipped++;
+                    continue; // Skip insert jika duplikat
+                }
+
+                $this->db->insert('form_consrate', $insert);
+                $imported++;
+                $row++;
+            }
+
+            fclose($handle);
+            echo "✅ Import selesai.<br>";
+            echo "✔️ Ditambahkan: $imported data<br>";
+            echo "⚠️ Duplikat dilewati: $skipped data";
+        } else {
+            echo "❌ Gagal membuka file.";
+        }
+    } else {
+        echo "❌ Tidak ada file yang diupload.";
+    }
+}
+
+
 
 
 }
