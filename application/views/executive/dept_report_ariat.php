@@ -37,19 +37,24 @@
             <?php endforeach; ?>
             
             <!-- Action Buttons -->
-            <a href="<?= base_url('production/production_report'); ?>" class="btn btn-secondary mb-3">
+            <a href="<?= base_url('executive/production'); ?>" class="btn btn-secondary mb-3">
                 <i class="fas fa-reply"></i> BACK
             </a>
 
             <!-- Data Table -->
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive">
                 <thead>
                     <tr>
                         <th scope="col-lg-2">#</th>
                         <th scope="col-lg-2">Departement</th>
                         <th scope="col-lg-2">Total Production</th>
+                        <?php
+                                $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','11_5d','12d','13d','14d','15d','16d'];
+                                foreach ($sizes as $s) {
+                                    echo "<th>" . strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) . "</th>";
+                                }
+                                ?>
                         <th scope="col-lg-2">Total Order</th>
-                        <th scope="col-lg-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,10 +65,10 @@
                         <th scope="row"><?= $i; ?></th>
                         <td><?= $po['dept_name1']?></td>
                         <td><?= $po['qty']?></td>
+                        <?php foreach ($sizes as $s): ?>
+                                            <td><?= $po['size_' . $s] ?></td>
+                                        <?php endforeach; ?>
                         <td><?= $po['total_qty']?></td>
-                        <td>
-                            <a type="button" class="badge badge-success" href="<?= base_url('production/dept_detail_item/'.$po['id_spk']. '/' . $po['id_dept'])?>" name="btn_add" style="margin:auto;">Detail View</a>
-                         </td>
                     </tr>
                     <?php $i++; ?>
                     <?php endif; ?>

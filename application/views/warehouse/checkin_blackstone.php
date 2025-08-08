@@ -75,10 +75,10 @@
                         <td><?= $po['color_name']?></td>
                         <td><?= $po['mtrl_name']?></td>
                         <td><?= $po['unit_name']?></td>
-                        <td><?= $po['qty']?></td>
                         <td><?= $po['total_consrate']?></td>
                         <td><?= $po['checkin_qty']?></td>                       
                         <td><?= $po['checkout_qty']?></td>
+                        <td><?= $po['qty']?></td>
                         <?php for ($s = 36; $s <= 50; $s++): ?>
                             <td><?= $po['size_' . $s] ?></td>
                         <?php endfor; ?>

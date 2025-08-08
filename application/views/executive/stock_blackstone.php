@@ -37,19 +37,28 @@
             <?php endforeach; ?>
             
             <!-- Action Buttons -->
-            <a href="<?= base_url('production/production_report'); ?>" class="btn btn-secondary mb-3">
+            <a href="<?= base_url('executive/stock'); ?>" class="btn btn-secondary mb-3">
                 <i class="fas fa-reply"></i> BACK
             </a>
 
             <!-- Data Table -->
-            <table class="table table-bordered">
+            <table id="myTable" class="table table-bordered table-responsive">
                 <thead>
                     <tr>
                         <th scope="col-lg-2">#</th>
-                        <th scope="col-lg-2">Departement</th>
-                        <th scope="col-lg-2">Total Production</th>
-                        <th scope="col-lg-2">Total Order</th>
-                        <th scope="col-lg-2">Action</th>
+                        <th scope="col-lg-2">Part</th>
+                        <th scope="col-lg-2">Descriptions</th>
+                        <th scope="col-lg-2">Colour</th>
+                        <th scope="col-lg-2">Ukuran MTRL</th>
+                        <th scope="col-lg-2">Unit</th>                        
+                        <th scope="col-lg-2">Total Cons Rate</th>
+                        <th scope="col-lg-2">Checkin QTY</th>                
+                        <th scope="col-lg-2">Checkout QTY</th>
+                        <th scope="col-lg-2">Total Stok</th>
+                        <?php for ($s = 36; $s <= 50; $s++): ?>
+                            <th><?= $s ?></th>
+                        <?php endfor; ?>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -58,12 +67,18 @@
                          <?php if ($po['id_spk'] == $sp['id_spk']): ?>
                     <tr>
                         <th scope="row"><?= $i; ?></th>
-                        <td><?= $po['dept_name1']?></td>
+                        <td><?= $po['part_name']?></td>
+                        <td><?= $po['item_name']?></td>
+                        <td><?= $po['color_name']?></td>
+                        <td><?= $po['mtrl_name']?></td>
+                        <td><?= $po['unit_name']?></td>
                         <td><?= $po['qty']?></td>
-                        <td><?= $po['total_qty']?></td>
-                        <td>
-                            <a type="button" class="badge badge-success" href="<?= base_url('production/dept_detail_item/'.$po['id_spk']. '/' . $po['id_dept'])?>" name="btn_add" style="margin:auto;">Detail View</a>
-                         </td>
+                        <td><?= $po['total_consrate']?></td>
+                        <td><?= $po['checkin_qty']?></td>                       
+                        <td><?= $po['checkout_qty']?></td>
+                        <?php for ($s = 36; $s <= 50; $s++): ?>
+                            <td><?= $po['size_' . $s] ?></td>
+                        <?php endfor; ?>
                     </tr>
                     <?php $i++; ?>
                     <?php endif; ?>
@@ -78,3 +93,23 @@
 <!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
+<!-- Modal: Check IN Biasa -->
+
+
+
+<!--MODAL UNTUK CHECK OUT-->
+<script>
+
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+
+</script>
