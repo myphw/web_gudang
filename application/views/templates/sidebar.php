@@ -6,7 +6,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-solid fa-code"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3"> WEB GUDANG </div>
+                <div class="sidebar-brand-text mx-3"> AERROSTAR INDONESIA </div>
             </a>
 
             <!-- Divider -->

@@ -16,7 +16,7 @@
                 <?= $this->session->flashdata('message'); ?>
             
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr>
                         <th scope="col-lg-2">NO</th>
