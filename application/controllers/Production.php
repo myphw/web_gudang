@@ -358,7 +358,9 @@ class Production extends CI_Controller
             '11',
             '11t',
             '12',
+            '12t',
             '13',
+            '13t',
             '14',
             '15'
         ];
