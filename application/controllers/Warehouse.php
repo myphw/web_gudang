@@ -1835,7 +1835,7 @@ class Warehouse extends CI_Controller {
                 ];
 
                 $final_qty = 0;
-
+                $updated_sizes = [];
                 // ✅ Add conditional fields
                 if ($item_type === 'GLOBAL') {
                     $final_qty = $this->input->post('qty');
@@ -1856,7 +1856,7 @@ class Warehouse extends CI_Controller {
                     ])->row_array();
 
                     // Build size update array
-                    $updated_sizes = [];
+                    
                     for ($i = 36; $i <= 50; $i++) {
                         $key = 'size_' . $i;
                         $old_size = isset($existing_sizes[$key]) ? (int)$existing_sizes[$key] : 0;
