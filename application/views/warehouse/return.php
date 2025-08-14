@@ -15,7 +15,7 @@
 
                 <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newSjPrModal">INPUT ITEM</a>
                                    
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="myTable">
                 <thead>
                     <tr>
                         <th scope="col-lg-2">#</th>

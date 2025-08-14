@@ -14,9 +14,15 @@
 
             <?= $this->session->flashdata('message'); ?>
 
+<<<<<<< HEAD
             <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newSjPrModal">INPUT TANDA TERIMA</a>
 
             <table class="table table-bordered">
+=======
+                <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newSjPrModal">INPUT TANDA TERIMA</a>
+                                   
+                <table class="table table-bordered" id="myTable">
+>>>>>>> 867ee44477be4685f11e745e6bd24cd420997506
                 <thead>
                     <tr>
                         <th scope="col-lg-2">#</th>

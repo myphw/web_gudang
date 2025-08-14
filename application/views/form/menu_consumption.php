@@ -16,6 +16,7 @@
                 <?= $this->session->flashdata('message'); ?>
             
                 <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newConsumptionModal">Add New</a>
+                <a href="" class="btn btn-success mb-3" data-toggle="modal" data-target="#insertConsumptionModal">Import</a>
 
                 <table id="myTable" class="table table-bordered">
                 <thead>
@@ -144,3 +145,23 @@
     </div>
 </div>
 <?php endforeach; ?>        
+
+<!-- Modal -->
+<div class="modal fade" id="insertConsumptionModal" tabindex="-1" aria-labelledby="insertConsumptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="insertConsumptionModalLabel">Add New Consumption Rate</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+            <form method="post" action="<?= base_url('form/import_consrate_csv') ?>" enctype="multipart/form-data">
+                <input type="file" class="form-control mb-3" name="csv_file" accept=".csv, .txt" required> <br>
+                <button type="submit"  class="btn btn-primary mb-3">Upload & Import</button>
+            </form>
+
+        </div>
+    </div>
+</div>

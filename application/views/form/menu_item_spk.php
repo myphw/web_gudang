@@ -38,7 +38,7 @@
             <a class="badge badge-danger" href="<?= base_url('form/view_report_spk_brand/' . $spk['id_spk']) ?>">REPORT</a>
             <a href="#" class="badge badge-success" data-toggle="modal" data-target="#newSpkItemModal">INPUT ITEM</a>
 
-            <table class="table table-bordered mt-3">
+            <table class="table table-bordered mt-3" id="myTable">
                 <thead>
                     <tr>
                         <th>#</th>
