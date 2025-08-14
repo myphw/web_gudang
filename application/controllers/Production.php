@@ -1,10 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-class Production extends CI_Controller {
+class Production extends CI_Controller
+{
     public function __construct()
     {
         parent::__construct();
@@ -15,35 +16,34 @@ class Production extends CI_Controller {
     public function dept()
     {
         $data['title'] = 'Form Department';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
 
         $data['dept'] = $this->db->get('production_departement')->result_array();
 
         $this->form_validation->set_rules('dept_name1', 'From Departement', 'required');
         $this->form_validation->set_rules('dept_name2', 'To Departement', 'required');
-        
-        if($this->form_validation->run() == false)
-        {
+
+        if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('production/departement', $data);
             $this->load->view('templates/footer');
         } else {
-            $dept_name1      = strtoupper($this->input->post('dept_name1',TRUE)); 
-            $dept_name2      = strtoupper($this->input->post('dept_name2',TRUE));   
+            $dept_name1      = strtoupper($this->input->post('dept_name1', TRUE));
+            $dept_name2      = strtoupper($this->input->post('dept_name2', TRUE));
 
             $data = array(
-                    'dept_name1' => $dept_name1,
-                    'dept_name2' => $dept_name2,
-                    'created_at' => date('Y-m-d H:i:s'),
+                'dept_name1' => $dept_name1,
+                'dept_name2' => $dept_name2,
+                'created_at' => date('Y-m-d H:i:s'),
             );
             $this->db->insert('production_departement', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">New Departement is Added</div>');
-                redirect('production/dept');
+            redirect('production/dept');
         }
-    }    
+    }
 
     public function delete_dept($id)
     {
@@ -58,8 +58,7 @@ class Production extends CI_Controller {
 
         if ($deleted > 0) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Departement deleted successfully.</div>');
-                redirect('production/dept');
-
+            redirect('production/dept');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Departement not found.</div>');
             redirect('production/dept');
@@ -69,13 +68,13 @@ class Production extends CI_Controller {
     public function progress()
     {
         $data['title'] = 'PRODUCTION PROGRESS';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['datanosj'] = $this->General_model->buat_dataterima_auto();
         $data['spk'] = $this->General_model->get('form_spk');
         $data['dept'] = $this->General_model->get('production_departement');
         $data['report'] = $this->General_model->get('production_progress_report');
-        
+
 
         if (!$data['spk']) {
             show_error('SPK data not found for ID: ' . $id_spk);
@@ -87,7 +86,7 @@ class Production extends CI_Controller {
         $this->form_validation->set_rules('dept_name1', 'From Departement', 'required');
         $this->form_validation->set_rules('dept_name2', 'To Departement', 'required');
 
-        if($this->form_validation->run() == false) {
+        if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -105,6 +104,7 @@ class Production extends CI_Controller {
                 'created_at'     => date('Y-m-d H:i:s'),
                 'id_dept'        => $this->input->post('id_dept', TRUE),
                 'id_spk'         => $this->input->post('id_spk', TRUE),
+                'created_by'    => $this->session->userdata('email'),
             ];
 
 
@@ -115,7 +115,6 @@ class Production extends CI_Controller {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Surat Jalan baru berhasil ditambahkan ke SPK!</div>');
             redirect('production/progress');
         }
-
     }
 
     public function delete_sj($id)
@@ -131,8 +130,7 @@ class Production extends CI_Controller {
 
         if ($deleted > 0) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Departement deleted successfully.</div>');
-                redirect('production/progress');
-
+            redirect('production/progress');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Departement not found.</div>');
             redirect('production/progress');
@@ -255,6 +253,7 @@ class Production extends CI_Controller {
                 'id_dept'     => $id_dept,
                 'id_spk'      => $id_spk, // ✅ correct one now
                 'id_pr'       => $id_pr,
+                'created_by'    => $this->session->userdata('email'),
             ];
 
             $final_qty = 0;
@@ -313,7 +312,7 @@ class Production extends CI_Controller {
         $data['spk'] = $this->General_model->get_data('production_progress_report', ['id_pr' => $id_spk])->row_array();
         $data['in'] = $this->General_model->get_data('production_progress_blackstone', ['id_pr' => $id_spk])->row_array();
 
-        
+
         // Load view into HTML
         $html = $this->load->view('production/pdf_progress_blackstone', $data, TRUE);
 
@@ -340,8 +339,30 @@ class Production extends CI_Controller {
 
         // Use Rossi size set
         $sizes = [
-            '3', '3t', '4', '4t', '5', '5t', '6', '6t', '7', '7t',
-            '8', '8t', '9', '9t', '10', '10t', '11', '11t', '12', '13', '14', '15'
+            '3',
+            '3t',
+            '4',
+            '4t',
+            '5',
+            '5t',
+            '6',
+            '6t',
+            '7',
+            '7t',
+            '8',
+            '8t',
+            '9',
+            '9t',
+            '10',
+            '10t',
+            '11',
+            '11t',
+            '12',
+            '12t',
+            '13',
+            '13t',
+            '14',
+            '15'
         ];
 
         // Validation rules
@@ -386,6 +407,7 @@ class Production extends CI_Controller {
                 'id_dept'     => $id_dept,
                 'id_spk'      => $id_spk,
                 'id_pr'       => $id_pr,
+                'created_by'    => $this->session->userdata('email'),
             ];
 
             $final_qty = 0;
@@ -443,7 +465,7 @@ class Production extends CI_Controller {
         $data['spk'] = $this->General_model->get_data('production_progress_report', ['id_pr' => $id_spk])->row_array();
         $data['in'] = $this->General_model->get_data('production_progress_rossi', ['id_pr' => $id_spk])->row_array();
 
-        
+
         // Load view into HTML
         $html = $this->load->view('production/pdf_progress_rossi', $data, TRUE);
 
@@ -471,9 +493,23 @@ class Production extends CI_Controller {
 
         // Use Rossi size set
         $sizes = [
-            '6d', '6_5d', '7d', '7_5d', '8d', '8_5d',
-            '9d', '9_5d', '10d', '10_5d', '11d', '11_5d',
-            '12d', '13d', '14d', '15d', '16d'
+            '6d',
+            '6_5d',
+            '7d',
+            '7_5d',
+            '8d',
+            '8_5d',
+            '9d',
+            '9_5d',
+            '10d',
+            '10_5d',
+            '11d',
+            '11_5d',
+            '12d',
+            '13d',
+            '14d',
+            '15d',
+            '16d'
         ];
 
         // Validation rules
@@ -518,6 +554,7 @@ class Production extends CI_Controller {
                 'id_dept'     => $id_dept,
                 'id_spk'      => $id_spk,
                 'id_pr'       => $id_pr,
+                'created_by'    => $this->session->userdata('email'),
             ];
 
             $final_qty = 0;
@@ -575,7 +612,7 @@ class Production extends CI_Controller {
         $data['spk'] = $this->General_model->get_data('production_progress_report', ['id_pr' => $id_spk])->row_array();
         $data['in'] = $this->General_model->get_data('production_progress_ariat', ['id_pr' => $id_spk])->row_array();
 
-        
+
         // Load view into HTML
         $html = $this->load->view('production/pdf_progress_ariat', $data, TRUE);
 
@@ -594,37 +631,37 @@ class Production extends CI_Controller {
 
     public function delete_sj_blackstone($id)
     {
-    $this->load->model('General_model');
+        $this->load->model('General_model');
 
-    if (!$id) {
-        show_error("Missing ID");
-        return;
-    }
+        if (!$id) {
+            show_error("Missing ID");
+            return;
+        }
 
-    // 1. Get the deleted item data first
-    $item = $this->General_model->get('form_sjitem_blackstone', ['id_bsj' => $id]);
-    if (!$item) {
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Item not found.</div>');
-        redirect('warehouse/sj_item_blackstone'); // Or another fallback
-        return;
-    }
+        // 1. Get the deleted item data first
+        $item = $this->General_model->get('form_sjitem_blackstone', ['id_bsj' => $id]);
+        if (!$item) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Item not found.</div>');
+            redirect('warehouse/sj_item_blackstone'); // Or another fallback
+            return;
+        }
 
-    $item = $item[0]; // Get the first record
+        $item = $item[0]; // Get the first record
 
-    $id_spk   = $item['id_spk'];
-    $id_sj    = $item['id_sj'];
-   
+        $id_spk   = $item['id_spk'];
+        $id_sj    = $item['id_sj'];
 
-    // 2. Delete the item
-    $deleted = $this->General_model->delete('form_sjitem_blackstone', 'id_bsj', $id);
 
-    if ($deleted > 0) {
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Size deleted successfully and stock updated.</div>');
-    } else {
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Delete failed.</div>');
-    }
+        // 2. Delete the item
+        $deleted = $this->General_model->delete('form_sjitem_blackstone', 'id_bsj', $id);
 
-    redirect('warehouse/sj_item_blackstone/' . $id_spk . '/' . $id_sj);
+        if ($deleted > 0) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Size deleted successfully and stock updated.</div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Delete failed.</div>');
+        }
+
+        redirect('warehouse/sj_item_blackstone/' . $id_spk . '/' . $id_sj);
     }
 
     public function delete_sj_rossi($id)
@@ -651,8 +688,7 @@ class Production extends CI_Controller {
 
         if ($deleted > 0) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Size deleted successfully.</div>');
-                redirect('warehouse/sj_item_rossi/' . $id_spk . '/' . $id_sj);
-
+            redirect('warehouse/sj_item_rossi/' . $id_spk . '/' . $id_sj);
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Size not found.</div>');
             redirect('warehouse/sj_item_rossi/' . $id_spk . '/' . $id_sj);
@@ -683,8 +719,7 @@ class Production extends CI_Controller {
 
         if ($deleted > 0) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Size deleted successfully.</div>');
-                redirect('warehouse/sj_item_ariat/' . $id_spk . '/' . $id_sj);
-
+            redirect('warehouse/sj_item_ariat/' . $id_spk . '/' . $id_sj);
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Size not found.</div>');
             redirect('warehouse/sj_item_ariat/' . $id_spk . '/' . $id_sj);
@@ -694,7 +729,7 @@ class Production extends CI_Controller {
     public function production_report()
     {
         $data['title'] = 'PRODUCTION REPORT';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
 
         $data['artcolor'] = $this->db->get('form_ac')->result_array();
@@ -738,7 +773,7 @@ class Production extends CI_Controller {
     public function production_report_blackstone($id)
     {
         $data['title'] = 'Black Stone Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->result_array();
         $data['spkitem'] = $this->General_model->get('production_progress_report_blackstone', ['id_spk' => $id]);
@@ -753,13 +788,12 @@ class Production extends CI_Controller {
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_report_blackstone', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function production_report_rossi($id)
     {
         $data['title'] = 'Rossi Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->result_array();
         $data['spkitem'] = $this->General_model->get('production_progress_report_rossi', ['id_spk' => $id]);
@@ -774,13 +808,12 @@ class Production extends CI_Controller {
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_report_rossi', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function production_report_ariat($id)
     {
         $data['title'] = 'Ariat Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->result_array();
         $data['spkitem'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
@@ -795,38 +828,37 @@ class Production extends CI_Controller {
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_report_ariat', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function dept_detail_item($id_spk, $id_dept)
-{
-    $spk = $this->General_model->get_data('production_progress_report', [
-        'id_spk' => $id_spk,
-        'id_dept' => $id_dept
-    ])->row_array();
+    {
+        $spk = $this->General_model->get_data('production_progress_report', [
+            'id_spk' => $id_spk,
+            'id_dept' => $id_dept
+        ])->row_array();
 
-    if (!$spk) {
-        redirect('production/pr_detail_item/' . $id_spk);
+        if (!$spk) {
+            redirect('production/pr_detail_item/' . $id_spk);
+        }
+
+        $dept_name1 = $spk['dept_name1'];
+
+        if ($dept_name1 === 'CUTTING') {
+            redirect('production/production_detail_cutting/' . $id_spk . '/' . $id_dept);
+        } elseif ($dept_name1 === 'SEWING') {
+            redirect('production/production_detail_sewing/' . $id_spk . '/' . $id_dept);
+        } elseif ($dept_name1 === 'SEMI WAREHOUSE') {
+            redirect('production/production_detail_semi/' . $id_spk . '/' . $id_dept);
+        } elseif ($dept_name1 === 'LASTING') {
+            redirect('production/production_detail_lasting/' . $id_spk . '/' . $id_dept);
+        } elseif ($dept_name1 === 'FINISHING') {
+            redirect('production/production_detail_finishing/' . $id_spk . '/' . $id_dept);
+        } elseif ($dept_name1 === 'PACKAGING') {
+            redirect('production/production_detail_packaging/' . $id_spk . '/' . $id_dept);
+        } else {
+            redirect('production/pr_detail_item/' . $id_spk);
+        }
     }
-
-    $dept_name1 = $spk['dept_name1'];
-
-    if ($dept_name1 === 'CUTTING') {
-        redirect('production/production_detail_cutting/' . $id_spk . '/' . $id_dept);
-    } elseif ($dept_name1 === 'SEWING') {
-        redirect('production/production_detail_sewing/' . $id_spk . '/' . $id_dept);
-    } elseif ($dept_name1 === 'SEMI WAREHOUSE') {
-        redirect('production/production_detail_semi/' . $id_spk . '/' . $id_dept);
-    } elseif ($dept_name1 === 'LASTING') {
-        redirect('production/production_detail_lasting/' . $id_spk . '/' . $id_dept);
-    } elseif ($dept_name1 === 'FINISHING') {
-        redirect('production/production_detail_finishing/' . $id_spk . '/' . $id_dept);
-    } elseif ($dept_name1 === 'PACKAGING') {
-        redirect('production/production_detail_packaging/' . $id_spk . '/' . $id_dept);
-    } else {
-        redirect('production/pr_detail_item/' . $id_spk);
-    }
-}
     public function export_cutting_pdf($id_spk)
     { // Assuming Dompdf is aliased as 'pdf' in autoload or config
 
@@ -1114,7 +1146,7 @@ class Production extends CI_Controller {
     public function production_detail_cutting($id, $id_dept)
     {
         $data['title'] = 'Cutting Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
         $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
@@ -1127,20 +1159,19 @@ class Production extends CI_Controller {
         $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
         $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
         $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
-        $data['dept'] = ['id_dept' => $id_dept]; 
+        $data['dept'] = ['id_dept' => $id_dept];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_detail_report_cutting', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function production_detail_sewing($id, $id_dept)
     {
         $data['title'] = 'Sewing Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
         $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
@@ -1153,20 +1184,19 @@ class Production extends CI_Controller {
         $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
         $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
         $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
-        $data['dept'] = ['id_dept' => $id_dept]; 
+        $data['dept'] = ['id_dept' => $id_dept];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_detail_report_sewing', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function production_detail_semi($id, $id_dept)
     {
         $data['title'] = 'Semi Warehouse Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
         $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
@@ -1179,20 +1209,19 @@ class Production extends CI_Controller {
         $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
         $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
         $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
-        $data['dept'] = ['id_dept' => $id_dept]; 
+        $data['dept'] = ['id_dept' => $id_dept];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_detail_report_semi', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function production_detail_lasting($id, $id_dept)
     {
         $data['title'] = 'Lasting Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
         $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
@@ -1205,20 +1234,19 @@ class Production extends CI_Controller {
         $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
         $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
         $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
-        $data['dept'] = ['id_dept' => $id_dept]; 
+        $data['dept'] = ['id_dept' => $id_dept];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_detail_report_lasting', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function production_detail_finishing($id, $id_dept)
     {
         $data['title'] = 'Finishing Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
         $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
@@ -1231,20 +1259,19 @@ class Production extends CI_Controller {
         $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
         $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
         $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
-        $data['dept'] = ['id_dept' => $id_dept]; 
+        $data['dept'] = ['id_dept' => $id_dept];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_detail_report_finishing', $data);
         $this->load->view('templates/footer');
-
     }
 
     public function production_detail_packaging($id, $id_dept)
     {
         $data['title'] = 'Packaging Report View';
-        $data['users'] = $this->db->get_where('users', ['email' => 
+        $data['users'] = $this->db->get_where('users', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['spk'] = $this->General_model->get_data('production_spk_report', ['id_spk' => $id])->row_array();
         $data['dept'] = $this->General_model->get_data('production_progress_report', ['id_spk' => $id])->row_array();
@@ -1257,15 +1284,12 @@ class Production extends CI_Controller {
         $data['spkitemAriat'] = $this->General_model->get('production_progress_report_ariat', ['id_spk' => $id]);
         $data['itemAriat'] = $this->General_model->get('production_progress_ariat', ['id_spk' => $id]);
         $data['sizeAriat'] = $this->General_model->get_data('tb_ariat_size', ['id_spk' => $id])->result_array();
-        $data['dept'] = ['id_dept' => $id_dept]; 
+        $data['dept'] = ['id_dept' => $id_dept];
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('production/td_detail_report_packaging', $data);
         $this->load->view('templates/footer');
-
     }
-
-    
 }

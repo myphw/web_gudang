@@ -1,5 +1,5 @@
 <?php
-$sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','11_5d','12d','13d','14d','15d','16d']; 
+$sizes = ['6d', '6_5d', '7d', '7_5d', '8d', '8_5d', '9d', '9_5d', '10d', '10_5d', '11d', '11_5d', '12d', '13d', '14d', '15d', '16d'];
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -45,13 +45,13 @@ $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','1
                     </div>
                 </div>
                 <?php if (!empty($sp['keterangan'])): ?>
-                        <div class="form-group" style="margin-top: 10px;">
-                            <label for="keterangan">Keterangan</label>
-                            <div class="alert alert-info" id="keterangan">
-                                <?= nl2br(htmlspecialchars($sp['keterangan'])) ?>
-                            </div>
-                        </div>  
-                        <?php endif; ?>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="keterangan">Keterangan</label>
+                        <div class="alert alert-info" id="keterangan">
+                            <?= nl2br(htmlspecialchars($sp['keterangan'])) ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <a href="<?= base_url('production/export_progress_ariat/' . $sp['id_pr']) ?>" class="badge badge-danger mb-3" target="_blank">Export PDF</a>
             <?php endforeach; ?>
 
@@ -66,7 +66,7 @@ $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','1
                         <?php foreach ($sizes as $s): ?>
                             <th><?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?></th>
                         <?php endforeach; ?>
-                        <th>Action</th>
+                        <!-- <th>Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -76,18 +76,18 @@ $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','1
                             <th><?= $i++; ?></th>
                             <td><?= $po['qty'] ?></td>
                             <?php foreach ($sizes as $s): ?>
-                            <td><?= $po['size_' . $s] ?? '-' ?></td>
+                                <td><?= $po['size_' . $s] ?? '-' ?></td>
                             <?php endforeach; ?>
-                            <td>
+                            <!-- <td>
                                 <a href="<?= base_url('warehouse/delete_sj_blackstone/' . $po['id_pritem']) ?>" class="badge badge-danger">Delete</a>
-                            </td>
+                            </td> -->
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-        </div>
     </div>
+</div>
 </div>
 <!-- End of Main Content -->
 
@@ -95,71 +95,71 @@ $sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','1
 <?php if (!empty($spk)) :
     $sp = end($spk); // take the last one
 ?>
-<div class="modal fade" id="newTdItemModal" tabindex="-1" aria-labelledby="newTdItemModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <form action="<?= base_url('production/td_item_ariat/' . $sp['id_pr']); ?>" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newTdItemModalLabel">Add New SPK Item</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                </div>
-                <div class="modal-body">
-
-                    <!-- Hidden Fields -->
-                    <input type="hidden" name="id_spk" value="<?= $sp['id_spk'] ?>">
-                    <input type="hidden" name="id_pr" value="<?= $sp['id_pr'] ?>">
-                    <input type="hidden" name="id_dept" value="<?= $sp['id_dept'] ?>">
-                    <input type="hidden" name="po_number" value="<?= $sp['po_number'] ?>">
-                    <input type="hidden" name="no_pr" value="<?= $sp['no_pr'] ?>">
-                    <input type="hidden" name="brand_name" value="<?= $sp['brand_name'] ?>">
-                    <input type="hidden" name="dept_name1" value="<?= $sp['dept_name1'] ?>">
-                    <input type="hidden" name="dept_name2" value="<?= $sp['dept_name2'] ?>">
-                    <input type="hidden" name="total_qty" value="<?= $sp['total_qty'] ?>">
-
-                    <!-- Size Run Fields -->
-                    <div class="form-group">
-                        <label>Size Run:</label>
-                        <div class="row">
-                            <?php foreach ($sizes as $s): ?>
-                    <div class="col-2 mb-2">
-                        <input type="number" name="size_<?= $s ?>" class="form-control" placeholder="<?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?>">
+    <div class="modal fade" id="newTdItemModal" tabindex="-1" aria-labelledby="newTdItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form action="<?= base_url('production/td_item_ariat/' . $sp['id_pr']); ?>" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newTdItemModalLabel">Add New SPK Item</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                     </div>
-                    <?php endforeach; ?>
+                    <div class="modal-body">
+
+                        <!-- Hidden Fields -->
+                        <input type="hidden" name="id_spk" value="<?= $sp['id_spk'] ?>">
+                        <input type="hidden" name="id_pr" value="<?= $sp['id_pr'] ?>">
+                        <input type="hidden" name="id_dept" value="<?= $sp['id_dept'] ?>">
+                        <input type="hidden" name="po_number" value="<?= $sp['po_number'] ?>">
+                        <input type="hidden" name="no_pr" value="<?= $sp['no_pr'] ?>">
+                        <input type="hidden" name="brand_name" value="<?= $sp['brand_name'] ?>">
+                        <input type="hidden" name="dept_name1" value="<?= $sp['dept_name1'] ?>">
+                        <input type="hidden" name="dept_name2" value="<?= $sp['dept_name2'] ?>">
+                        <input type="hidden" name="total_qty" value="<?= $sp['total_qty'] ?>">
+
+                        <!-- Size Run Fields -->
+                        <div class="form-group">
+                            <label>Size Run:</label>
+                            <div class="row">
+                                <?php foreach ($sizes as $s): ?>
+                                    <div class="col-2 mb-2">
+                                        <input type="number" name="size_<?= $s ?>" class="form-control" placeholder="<?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Add</button>
-                </div>
-            </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 <?php endif; ?>
 <?php if (!empty($spk)) : $sp = $spk[0]; ?>
-<div class="modal fade" id="newKeteranganModal" tabindex="-1" aria-labelledby="newKeteranganModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="<?= base_url('production/update_production_keterangan_ariat/' . $sp['id_pr']); ?>" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newKeteranganModalLabel">Keterangan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <textarea name="keterangan" class="form-control" placeholder="Masukkan keterangan"><?= isset($sp['keterangan']) ? $sp['keterangan'] : '' ?></textarea>
+    <div class="modal fade" id="newKeteranganModal" tabindex="-1" aria-labelledby="newKeteranganModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="<?= base_url('production/update_production_keterangan_ariat/' . $sp['id_pr']); ?>" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newKeteranganModalLabel">Keterangan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <textarea name="keterangan" class="form-control" placeholder="Masukkan keterangan"><?= isset($sp['keterangan']) ? $sp['keterangan'] : '' ?></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 <?php endif; ?>

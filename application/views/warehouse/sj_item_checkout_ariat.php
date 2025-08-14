@@ -1,5 +1,5 @@
 <?php
-$sizes = ['6d','6_5d','7d','7_5d','8d','8_5d','9d','9_5d','10d','10_5d','11d','11_5d','12d','13d','14d','15d','16d']; 
+$sizes = ['6d', '6_5d', '7d', '7_5d', '8d', '8_5d', '9d', '9_5d', '10d', '10_5d', '11d', '11_5d', '12d', '13d', '14d', '15d', '16d'];
 
 // assign currently selected SJ
 $current_sj = !empty($outsj) ? $outsj[0] : null;
@@ -38,41 +38,41 @@ $current_sj = !empty($outsj) ? $outsj[0] : null;
                 </div>
             <?php endforeach; ?>
 
-            <?php foreach($outsj as $sj): $sj = $outsj[0]; ?>
-                    <div class="box-body">                        
-                        <div class="form-group" style="display:inline-block;">
-                            <label for="no_sj" style="width:73%;">NO. SJ</label>
-                            <input type="text" name="no_sj" style="width:90%;margin-right: px;" class="form-control" id="no_sj" value="<?=$sj['no_sj']?>" readonly placeholder="No SJ">
+            <?php foreach ($outsj as $sj): $sj = $outsj[0]; ?>
+                <div class="box-body">
+                    <div class="form-group" style="display:inline-block;">
+                        <label for="no_sj" style="width:73%;">NO. SJ</label>
+                        <input type="text" name="no_sj" style="width:90%;margin-right: px;" class="form-control" id="no_sj" value="<?= $sj['no_sj'] ?>" readonly placeholder="No SJ">
+                    </div>
+                    <div class="form-group" style="display:inline-block;">
+                        <label for="supplier_name" style="width:87%;margin-left: 0px;">From Department</label>
+                        <input type="text" name="from" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="supplier_name" value="<?= $sj['from'] ?>" readonly placeholder="Supplier Name">
+                    </div>
+                    <div class="form-group" style="display:inline-block;">
+                        <label for="no_plat" style="width:87%;margin-left: 0px;">TO Department</label>
+                        <input type="text" name="no_plat" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="no_plat" value="<?= $sj['to_dept'] ?>" readonly placeholder="No Plat">
+                    </div>
+                    <div class="form-group" style="display:inline-block;">
+                        <label for="tgl_checkin" style="width: 200px;%;margin-left: 0px;">Tanggal Checkout</label>
+                        <input type="date" name="tgl_checkin" style="width: 110%;margin-right: 0px;margin-left: px;" class="form-control" id="tgl_checkin" value="<?= $sj['tgl_checkout'] ?>" readonly placeholder="">
+                    </div>
+                </div>
+                <?php if (!empty($sj['keterangan'])): ?>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label for="keterangan">Keterangan</label>
+                        <div class="alert alert-info" id="keterangan">
+                            <?= nl2br(htmlspecialchars($sj['keterangan'])) ?>
                         </div>
-                        <div class="form-group" style="display:inline-block;">
-                            <label for="supplier_name" style="width:87%;margin-left: 0px;">From Department</label>
-                            <input type="text" name="from" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="supplier_name" value="<?=$sj['from']?>" readonly placeholder="Supplier Name">
-                        </div>
-                        <div class="form-group" style="display:inline-block;">
-                            <label for="no_plat" style="width:87%;margin-left: 0px;">TO Department</label>
-                            <input type="text" name="no_plat" style="width: 90%;margin-right: 0px;margin-left: px;" class="form-control" id="no_plat" value="<?=$sj['to_dept']?>" readonly placeholder="No Plat">
-                        </div>
-                        <div class="form-group" style="display:inline-block;">
-                            <label for="tgl_checkin" style="width: 200px;%;margin-left: 0px;">Tanggal Checkout</label>
-                            <input type="date" name="tgl_checkin" style="width: 110%;margin-right: 0px;margin-left: px;" class="form-control" id="tgl_checkin" value="<?=$sj['tgl_checkout']?>" readonly placeholder="">
-                        </div>
-                    </div>     
-                    <?php if (!empty($sj['keterangan'])): ?>
-                        <div class="form-group" style="margin-top: 10px;">
-                            <label for="keterangan">Keterangan</label>
-                            <div class="alert alert-info" id="keterangan">
-                                <?= nl2br(htmlspecialchars($sj['keterangan'])) ?>
-                            </div>
-                        </div>  
-                        <?php endif; ?>
-                <?php endforeach; ?>
-                <a type="button" class="badge badge-warning mb-3"  href="<?=base_url('warehouse/update_sj_checkout/'.$sj['id_spk'])?>" name="btn_add" style="margin:auto;">BACK</a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <a type="button" class="badge badge-warning mb-3" href="<?= base_url('warehouse/update_sj_checkout/' . $sj['id_spk']) ?>" name="btn_add" style="margin:auto;">BACK</a>
             <!-- Buttons -->
-                <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newSjItemModal">INPUT ITEM</a>
-                <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newKeteranganModal">KETERANGAN</a>
-                <a type="button" class="badge badge-primary mb-3"  href="<?=base_url('warehouse/update_spk_checkout_brand/'.$sj['id_spk'])?>" name="btn_add" style="margin:auto;">MASTER DATA</a>   
-                <a href="<?= base_url('warehouse/export_sj_checkout_ariat_pdf/' . $sp['id_spk'] . '/' . $sj['id_sj']); ?>" class="badge badge-danger mb-3" target="_blank">PDF</a>
-            
+            <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newSjItemModal">INPUT ITEM</a>
+            <a href="" class="badge badge-success mb-3" data-toggle="modal" data-target="#newKeteranganModal">KETERANGAN</a>
+            <a type="button" class="badge badge-primary mb-3" href="<?= base_url('warehouse/update_spk_checkout_brand/' . $sj['id_spk']) ?>" name="btn_add" style="margin:auto;">MASTER DATA</a>
+            <a href="<?= base_url('warehouse/export_sj_checkout_ariat_pdf/' . $sp['id_spk'] . '/' . $sj['id_sj']); ?>" class="badge badge-danger mb-3" target="_blank">PDF</a>
+
             <!-- Table -->
             <table class="table table-bordered table-responsive">
                 <thead>
@@ -84,161 +84,161 @@ $current_sj = !empty($outsj) ? $outsj[0] : null;
                         <?php foreach ($sizes as $label): ?>
                             <th><?= strtoupper($label) ?></th>
                         <?php endforeach; ?>
-                        <th>Action</th>
+                        <!-- <th>Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($spkitem as $po): ?>
-                    <?php if ($po['id_sj'] == $current_sj['id_sj']): ?>
-                        <tr>
-                            <td><?= $i++ ?></td>
-                            <td><?= $po['item_name'] ?></td>
-                            <td><?= $po['unit_name'] ?></td>
-                            <td><?= $po['qty'] ?></td>
-                            <?php foreach ($sizes as $label): ?>
-                                <td><?= $po['size_' . $label] ?? '-' ?></td>
-                            <?php endforeach; ?>
-                            <td>
-                                <a href="<?= base_url('warehouse/delete_sj_checkout_ariat/'.$po['id_bsj']. '/' .$po['id_bsj']) ?>" class="badge badge-danger">Delete</a>
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                        <?php if ($po['id_sj'] == $current_sj['id_sj']): ?>
+                            <tr>
+                                <td><?= $i++ ?></td>
+                                <td><?= $po['item_name'] ?></td>
+                                <td><?= $po['unit_name'] ?></td>
+                                <td><?= $po['qty'] ?></td>
+                                <?php foreach ($sizes as $label): ?>
+                                    <td><?= $po['size_' . $label] ?? '-' ?></td>
+                                <?php endforeach; ?>
+                                <!-- <td>
+                                <a href="<?= base_url('warehouse/delete_sj_checkout_ariat/' . $po['id_bsj'] . '/' . $po['id_bsj']) ?>" class="badge badge-danger">Delete</a>
+                            </td> -->
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
-            </div>
-                </div>
-                </div>
-                </div>
-                
-            </div>
-    <!-- /.container-fluid -->
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+<!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
 
 
 <!-- Modal -->
- <?php if (!empty($outsj)) : $sp = $outsj[0]; ?>
-<div class="modal fade" id="newSjItemModal" tabindex="-1" aria-labelledby="newSjItemModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="newSjItemModalLabel">Add New Item ARIAT To Check OUT</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= base_url('warehouse/sj_item_checkout_ariat/'.$sp['id_spk'] . '/' . $sp['id_sj']);?>" method="post">
-                <div class="modal-body">
-                    <input type="hidden" name="po_number" value="<?= $sp['po_number']; ?>">
-                    <input type="hidden" name="xfd" value="<?= $sp['xfd']; ?>">
-                    <input type="hidden" name="brand_name" value="<?= $sp['brand_name']; ?>">
-                    <input type="hidden" name="artcolor_name" value="<?= $sp['artcolor_name']; ?>">
-                    <input type="hidden" name="no_sj" value="<?= $sp['no_sj']; ?>">
-                    <input type="hidden" name="from" value="<?= $sp['from']; ?>">
-                    <input type="hidden" name="to_dept" value="<?= $sp['to_dept']; ?>">
-                    <input type="hidden" name="tgl_checkout" value="<?= $sp['tgl_checkout']; ?>">
-                    <input type="hidden" name="id_sj" value="<?= $sp['id_sj']; ?>">
-                    <div class="form-group">
-                        <select name="item_type" id="item_type" class="form-control" required>
-                            <option value="">-- Select Type --</option>
-                            <option value="GLOBAL">GLOBAL</option>
-                            <option value="SIZERUN">SIZERUN</option>
-                        </select>
-                    </div>
-
-                    <!-- Common Fields -->
-                    <div id="common-fields">
-                        <div class="form-group">
-                        <div class="ui fluid search selection dropdown" id="item_name_dropdown">
-                            <input type="hidden" name="item_name">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Select Item</div>
-                            <div class="menu">
-                                <?php foreach ($uns as $c): ?>
-                                <div class="item" 
-                                    data-value="<?= $c['item_name'] ?>"
-                                    data-unit="<?= $c['unit_name'] ?>"
-                                    data-rate="<?= $c['cons_rate'] ?>">
-                                    <?= $c['item_name'] ?>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" readonly>
-                    </div>
-                    </div>
-
-                    <!-- GLOBAL Fields -->
-                    <div id="global-fields" style="display: none;">
-                        <div class="form-group">
-                            <label>Qty</label>
-                            <input type="text" name="qty" class="form-control">
-                        </div>
-                    </div>
-
-                    <!-- SIZERUN Fields -->
-                    <div id="sizerun-fields" style="display: none;">
-                        <label>Size Run:</label>
-                        <div class="row">
-                            <?php foreach ($sizes as $s): ?>
-                                <div class="col-2 mb-2">
-                                <input type="text" name="size_<?= $s ?>" class="form-control" placeholder="<?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?>">
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>      
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
-<?php if (!empty($insj)) : $sp = $insj[0]; ?>
-<div class="modal fade" id="newKeteranganModal" tabindex="-1" aria-labelledby="newKeteranganModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="<?= base_url('warehouse/update_checkout_keterangan_ariat/' . $sp['id_spk'] . '/' . $sp['id_sj']); ?>" method="post">
+<?php if (!empty($outsj)) : $sp = $outsj[0]; ?>
+    <div class="modal fade" id="newSjItemModal" tabindex="-1" aria-labelledby="newSjItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newKeteranganModalLabel">Keterangan</h5>
+                    <h5 class="modal-title" id="newSjItemModalLabel">Add New Item ARIAT To Check OUT</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <textarea name="keterangan" class="form-control" placeholder="Masukkan keterangan"><?= isset($sp['keterangan']) ? $sp['keterangan'] : '' ?></textarea>
+                <form action="<?= base_url('warehouse/sj_item_checkout_ariat/' . $sp['id_spk'] . '/' . $sp['id_sj']); ?>" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="po_number" value="<?= $sp['po_number']; ?>">
+                        <input type="hidden" name="xfd" value="<?= $sp['xfd']; ?>">
+                        <input type="hidden" name="brand_name" value="<?= $sp['brand_name']; ?>">
+                        <input type="hidden" name="artcolor_name" value="<?= $sp['artcolor_name']; ?>">
+                        <input type="hidden" name="no_sj" value="<?= $sp['no_sj']; ?>">
+                        <input type="hidden" name="from" value="<?= $sp['from']; ?>">
+                        <input type="hidden" name="to_dept" value="<?= $sp['to_dept']; ?>">
+                        <input type="hidden" name="tgl_checkout" value="<?= $sp['tgl_checkout']; ?>">
+                        <input type="hidden" name="id_sj" value="<?= $sp['id_sj']; ?>">
+                        <div class="form-group">
+                            <select name="item_type" id="item_type" class="form-control" required>
+                                <option value="">-- Select Type --</option>
+                                <option value="GLOBAL">GLOBAL</option>
+                                <option value="SIZERUN">SIZERUN</option>
+                            </select>
+                        </div>
+
+                        <!-- Common Fields -->
+                        <div id="common-fields">
+                            <div class="form-group">
+                                <div class="ui fluid search selection dropdown" id="item_name_dropdown">
+                                    <input type="hidden" name="item_name">
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">Select Item</div>
+                                    <div class="menu">
+                                        <?php foreach ($uns as $c): ?>
+                                            <div class="item"
+                                                data-value="<?= $c['item_name'] ?>"
+                                                data-unit="<?= $c['unit_name'] ?>"
+                                                data-rate="<?= $c['cons_rate'] ?>">
+                                                <?= $c['item_name'] ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="Unit Name" readonly>
+                            </div>
+                        </div>
+
+                        <!-- GLOBAL Fields -->
+                        <div id="global-fields" style="display: none;">
+                            <div class="form-group">
+                                <label>Qty</label>
+                                <input type="text" name="qty" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- SIZERUN Fields -->
+                        <div id="sizerun-fields" style="display: none;">
+                            <label>Size Run:</label>
+                            <div class="row">
+                                <?php foreach ($sizes as $s): ?>
+                                    <div class="col-2 mb-2">
+                                        <input type="text" name="size_<?= $s ?>" class="form-control" placeholder="<?= strtoupper(str_replace('_', '.', str_replace('_d', 'D', $s))) ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+            </div>
             </form>
         </div>
     </div>
-</div>
+    </div>
+<?php endif; ?>
+<?php if (!empty($insj)) : $sp = $insj[0]; ?>
+    <div class="modal fade" id="newKeteranganModal" tabindex="-1" aria-labelledby="newKeteranganModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="<?= base_url('warehouse/update_checkout_keterangan_ariat/' . $sp['id_spk'] . '/' . $sp['id_sj']); ?>" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newKeteranganModalLabel">Keterangan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <textarea name="keterangan" class="form-control" placeholder="Masukkan keterangan"><?= isset($sp['keterangan']) ? $sp['keterangan'] : '' ?></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 <?php endif; ?>
 <script>
-$(document).ready(function() {
-    $('#item_name_dropdown').dropdown();
-});
-$('#item_name_dropdown').dropdown({
-    onChange: function(value, text, $selectedItem) {
-        let unit = $selectedItem.data('unit');
-        let rate = $selectedItem.data('rate');
+    $(document).ready(function() {
+        $('#item_name_dropdown').dropdown();
+    });
+    $('#item_name_dropdown').dropdown({
+        onChange: function(value, text, $selectedItem) {
+            let unit = $selectedItem.data('unit');
+            let rate = $selectedItem.data('rate');
 
-        $('#unit_name').val(unit);
-        $('#cons_rate').val(rate);
-        // you can also use `rate` if needed
-    }
-});
+            $('#unit_name').val(unit);
+            $('#cons_rate').val(rate);
+            // you can also use `rate` if needed
+        }
+    });
 </script>
